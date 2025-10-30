@@ -10,6 +10,42 @@
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --border-radius: 12px;
+
+  /* D3 schemeCategory10 颜色方案 - 用于不同作者 */
+  --author-color-0: #1f77b4;
+  --author-color-1: #ff7f0e;
+  --author-color-2: #2ca02c;
+  --author-color-3: #d62728;
+  --author-color-4: #9467bd;
+  --author-color-5: #8c564b;
+  --author-color-6: #e377c2;
+  --author-color-7: #7f7f7f;
+  --author-color-8: #bcbd22;
+  --author-color-9: #17becf;
+
+  /* 淡色背景版本 (10% opacity) */
+  --author-bg-0: rgba(31, 119, 180, 0.08);
+  --author-bg-1: rgba(255, 127, 14, 0.08);
+  --author-bg-2: rgba(44, 160, 44, 0.08);
+  --author-bg-3: rgba(214, 39, 40, 0.08);
+  --author-bg-4: rgba(148, 103, 189, 0.08);
+  --author-bg-5: rgba(140, 86, 75, 0.08);
+  --author-bg-6: rgba(227, 119, 194, 0.08);
+  --author-bg-7: rgba(127, 127, 127, 0.08);
+  --author-bg-8: rgba(188, 189, 34, 0.08);
+  --author-bg-9: rgba(23, 190, 207, 0.08);
+
+  /* 标签背景版本 (20% opacity) */
+  --author-tag-0: rgba(31, 119, 180, 0.15);
+  --author-tag-1: rgba(255, 127, 14, 0.15);
+  --author-tag-2: rgba(44, 160, 44, 0.15);
+  --author-tag-3: rgba(214, 39, 40, 0.15);
+  --author-tag-4: rgba(148, 103, 189, 0.15);
+  --author-tag-5: rgba(140, 86, 75, 0.15);
+  --author-tag-6: rgba(227, 119, 194, 0.15);
+  --author-tag-7: rgba(127, 127, 127, 0.15);
+  --author-tag-8: rgba(188, 189, 34, 0.15);
+  --author-tag-9: rgba(23, 190, 207, 0.15);
 }
 
 * {
@@ -148,12 +184,35 @@ main {
   background: var(--accent-light);
   color: var(--accent-color);
   padding: 0.35rem 0.85rem;
-  border-radius: 20px;
+  border-radius: 6px;
   font-weight: 500;
   white-space: nowrap;
   line-height: 1.2;
   flex-shrink: 0;
 }
+
+/* 为每个作者定义不同的颜色 */
+.post-card.author-0 { background: var(--author-bg-0); }
+.post-card.author-1 { background: var(--author-bg-1); }
+.post-card.author-2 { background: var(--author-bg-2); }
+.post-card.author-3 { background: var(--author-bg-3); }
+.post-card.author-4 { background: var(--author-bg-4); }
+.post-card.author-5 { background: var(--author-bg-5); }
+.post-card.author-6 { background: var(--author-bg-6); }
+.post-card.author-7 { background: var(--author-bg-7); }
+.post-card.author-8 { background: var(--author-bg-8); }
+.post-card.author-9 { background: var(--author-bg-9); }
+
+.post-author.author-0 { background: var(--author-tag-0); color: var(--author-color-0); }
+.post-author.author-1 { background: var(--author-tag-1); color: var(--author-color-1); }
+.post-author.author-2 { background: var(--author-tag-2); color: var(--author-color-2); }
+.post-author.author-3 { background: var(--author-tag-3); color: var(--author-color-3); }
+.post-author.author-4 { background: var(--author-tag-4); color: var(--author-color-4); }
+.post-author.author-5 { background: var(--author-tag-5); color: var(--author-color-5); }
+.post-author.author-6 { background: var(--author-tag-6); color: var(--author-color-6); }
+.post-author.author-7 { background: var(--author-tag-7); color: var(--author-color-7); }
+.post-author.author-8 { background: var(--author-tag-8); color: var(--author-color-8); }
+.post-author.author-9 { background: var(--author-tag-9); color: var(--author-color-9); }
 
 .post-date {
   display: inline-flex;
@@ -206,31 +265,114 @@ main {
   font-weight: 500;
 }
 
-/* 文章详情页 */
+/* 文章详情页 - 现代杂志风格 */
+.article-header {
+  background: var(--accent-light);
+  padding: 2.5rem 2rem;
+  margin: -3rem -3rem 2.5rem -3rem;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
 .article-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  line-height: 1.3;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .article-original-title {
-  margin: 0 0 0.75rem 0;
-  font-size: 1rem;
-  color: var(--text-secondary);
-  font-style: italic;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.15rem;
+  color: #8b95a5;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .article-meta {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
   color: var(--text-secondary);
   font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
+
+.article-meta span {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 文章内页 - 基于作者的主题色 */
+article.author-0 .article-header { background: var(--author-bg-0); }
+article.author-1 .article-header { background: var(--author-bg-1); }
+article.author-2 .article-header { background: var(--author-bg-2); }
+article.author-3 .article-header { background: var(--author-bg-3); }
+article.author-4 .article-header { background: var(--author-bg-4); }
+article.author-5 .article-header { background: var(--author-bg-5); }
+article.author-6 .article-header { background: var(--author-bg-6); }
+article.author-7 .article-header { background: var(--author-bg-7); }
+article.author-8 .article-header { background: var(--author-bg-8); }
+article.author-9 .article-header { background: var(--author-bg-9); }
+
+article.author-0 .article-content a { color: var(--author-color-0); }
+article.author-1 .article-content a { color: var(--author-color-1); }
+article.author-2 .article-content a { color: var(--author-color-2); }
+article.author-3 .article-content a { color: var(--author-color-3); }
+article.author-4 .article-content a { color: var(--author-color-4); }
+article.author-5 .article-content a { color: var(--author-color-5); }
+article.author-6 .article-content a { color: var(--author-color-6); }
+article.author-7 .article-content a { color: var(--author-color-7); }
+article.author-8 .article-content a { color: var(--author-color-8); }
+article.author-9 .article-content a { color: var(--author-color-9); }
+
+article.author-0 .article-content a:hover { border-bottom-color: var(--author-color-0); }
+article.author-1 .article-content a:hover { border-bottom-color: var(--author-color-1); }
+article.author-2 .article-content a:hover { border-bottom-color: var(--author-color-2); }
+article.author-3 .article-content a:hover { border-bottom-color: var(--author-color-3); }
+article.author-4 .article-content a:hover { border-bottom-color: var(--author-color-4); }
+article.author-5 .article-content a:hover { border-bottom-color: var(--author-color-5); }
+article.author-6 .article-content a:hover { border-bottom-color: var(--author-color-6); }
+article.author-7 .article-content a:hover { border-bottom-color: var(--author-color-7); }
+article.author-8 .article-content a:hover { border-bottom-color: var(--author-color-8); }
+article.author-9 .article-content a:hover { border-bottom-color: var(--author-color-9); }
+
+article.author-0 .article-content blockquote { border-left-color: var(--author-color-0); background: var(--author-bg-0); }
+article.author-1 .article-content blockquote { border-left-color: var(--author-color-1); background: var(--author-bg-1); }
+article.author-2 .article-content blockquote { border-left-color: var(--author-color-2); background: var(--author-bg-2); }
+article.author-3 .article-content blockquote { border-left-color: var(--author-color-3); background: var(--author-bg-3); }
+article.author-4 .article-content blockquote { border-left-color: var(--author-color-4); background: var(--author-bg-4); }
+article.author-5 .article-content blockquote { border-left-color: var(--author-color-5); background: var(--author-bg-5); }
+article.author-6 .article-content blockquote { border-left-color: var(--author-color-6); background: var(--author-bg-6); }
+article.author-7 .article-content blockquote { border-left-color: var(--author-color-7); background: var(--author-bg-7); }
+article.author-8 .article-content blockquote { border-left-color: var(--author-color-8); background: var(--author-bg-8); }
+article.author-9 .article-content blockquote { border-left-color: var(--author-color-9); background: var(--author-bg-9); }
+
+article.author-0 .article-content code { background: var(--author-bg-0); color: var(--author-color-0); }
+article.author-1 .article-content code { background: var(--author-bg-1); color: var(--author-color-1); }
+article.author-2 .article-content code { background: var(--author-bg-2); color: var(--author-color-2); }
+article.author-3 .article-content code { background: var(--author-bg-3); color: var(--author-color-3); }
+article.author-4 .article-content code { background: var(--author-bg-4); color: var(--author-color-4); }
+article.author-5 .article-content code { background: var(--author-bg-5); color: var(--author-color-5); }
+article.author-6 .article-content code { background: var(--author-bg-6); color: var(--author-color-6); }
+article.author-7 .article-content code { background: var(--author-bg-7); color: var(--author-color-7); }
+article.author-8 .article-content code { background: var(--author-bg-8); color: var(--author-color-8); }
+article.author-9 .article-content code { background: var(--author-bg-9); color: var(--author-color-9); }
+
+article.author-0 .back-link:hover { color: var(--author-color-0); }
+article.author-1 .back-link:hover { color: var(--author-color-1); }
+article.author-2 .back-link:hover { color: var(--author-color-2); }
+article.author-3 .back-link:hover { color: var(--author-color-3); }
+article.author-4 .back-link:hover { color: var(--author-color-4); }
+article.author-5 .back-link:hover { color: var(--author-color-5); }
+article.author-6 .back-link:hover { color: var(--author-color-6); }
+article.author-7 .back-link:hover { color: var(--author-color-7); }
+article.author-8 .back-link:hover { color: var(--author-color-8); }
+article.author-9 .back-link:hover { color: var(--author-color-9); }
 
 .article-content {
   max-width: 800px;
@@ -254,6 +396,10 @@ main {
 
 .article-content h1 {
   font-size: 2rem;
+}
+
+/* 只对正文中的 h1 添加底部边框(不包括 .article-title) */
+.article-content > h1:not(.article-title) {
   border-bottom: 2px solid var(--accent-light);
   padding-bottom: 0.5rem;
 }
@@ -392,7 +538,11 @@ footer {
   }
 
   .article-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .article-original-title {
+    font-size: 1rem;
   }
 
   nav ul {
