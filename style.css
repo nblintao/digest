@@ -316,46 +316,40 @@ main {
   font-weight: 500;
 }
 
-/* 文章详情页 - 现代杂志风格 */
+/* 文章详情页 - 简洁统一设计 */
 .article-header {
   background: var(--accent-light);
-  padding: 2.5rem 2rem;
+  padding: 3rem 2rem 2rem;
   margin: -3rem -3rem 2.5rem -3rem;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .article-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin-bottom: 0.75rem;
-  line-height: 1.2;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.4;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
-}
-
-.article-original-title {
-  margin: 0 0 1.5rem 0;
-  font-size: 1.15rem;
-  color: #8b95a5;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .article-meta {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 .article-meta span {
   display: inline-flex;
   align-items: center;
+}
+
+.article-original-title {
+  font-style: italic;
 }
 
 /* 文章内页 - 基于作者的主题色 */
@@ -678,11 +672,11 @@ footer a:hover {
   }
 
   .article-title {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
   }
 
-  .article-original-title {
-    font-size: 1rem;
+  .article-meta {
+    font-size: 0.85rem;
   }
 }
 
