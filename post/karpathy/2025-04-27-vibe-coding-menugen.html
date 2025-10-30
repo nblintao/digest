@@ -3,8 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
   <title>vibe 编码：MenuGen - 人工智能文摘</title>
-  <link rel="stylesheet" href="/style.css?v=1761784428835">
+  <meta name="description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_"Confit tubers folded with matured curd and fi...">
+  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,vibe 编码：MenuGen,中文翻译">
+  <meta name="author" content="Andrej Karpathy">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/karpathy/2025-04-27-vibe-coding-menugen.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/karpathy/2025-04-27-vibe-coding-menugen.html">
+  <meta property="og:title" content="vibe 编码：MenuGen - 人工智能文摘">
+  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_"Confit tubers folded with matured curd and fi...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-04-27T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-04-27T00:00:00.000Z">
+  <meta property="article:author" content="Andrej Karpathy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/karpathy/2025-04-27-vibe-coding-menugen.html">
+  <meta name="twitter:title" content="vibe 编码：MenuGen - 人工智能文摘">
+  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_"Confit tubers folded with matured curd and fi...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761789374226">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -15,7 +52,6 @@
         <a href="/" class="site-title">人工智能文摘</a>
         <nav>
           <ul>
-            <li><a href="/">首页</a></li>
             <li><a href="/author/paulgraham.html">Paul Graham</a></li>
             <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
             <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
@@ -28,8 +64,6 @@
   <main>
     
   <div class="container">
-    <a href="/" class="back-link">← 返回首页</a>
-
     <article class="author-0">
       <div class="article-content">
         <div class="article-header">
@@ -74,6 +108,34 @@
         </div>
       </div>
     </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "vibe 编码：MenuGen",
+  "author": {
+    "@type": "Person",
+    "name": "Andrej Karpathy"
+  },
+  "datePublished": "2025-04-27T00:00:00.000Z",
+  "dateModified": "2025-04-27T00:00:00.000Z",
+  "description": "我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_\"Confit tubers folded with matured curd and fi...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/karpathy/2025-04-27-vibe-coding-menugen.html"
+  }
+}
+    </script>
   </div>
   </main>
 

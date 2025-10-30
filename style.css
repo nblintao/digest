@@ -89,7 +89,7 @@ header {
 .site-title {
   font-size: 1.8rem;
   font-weight: 600;
-  color: var(--accent-color);
+  color: var(--text-secondary);
   text-decoration: none;
   letter-spacing: -0.5px;
 }
@@ -124,19 +124,47 @@ main {
 .page-header {
   text-align: center;
   margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-header-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.page-header-icon {
+  height: 6rem;
+  width: 6rem;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.page-header-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
 }
 
 .page-title {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
   color: var(--text-primary);
+  line-height: 1.2;
+  margin: 0;
 }
 
 .page-subtitle {
   font-size: 1.1rem;
   color: var(--text-secondary);
   font-weight: 400;
+  margin: 0;
 }
 
 /* 文章列表 */
@@ -526,6 +554,15 @@ footer {
 
   .page-title {
     font-size: 2rem;
+  }
+
+  .page-header-icon {
+    height: 4.5rem;
+    width: 4.5rem;
+  }
+
+  .page-header-content {
+    gap: 1rem;
   }
 
   .posts-grid {

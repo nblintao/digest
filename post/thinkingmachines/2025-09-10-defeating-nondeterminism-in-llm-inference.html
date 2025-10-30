@@ -3,8 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
   <title>击败 LLM 推理中的非确定性 - 人工智能文摘</title>
-  <link rel="stylesheet" href="/style.css?v=1761784428834">
+  <meta name="description" content="【Thinking Machines Lab 文章中文翻译】可复现性是科学进步的基石。然而，要让大语言模型（LLM）给出可复现的结果却出奇地困难。 例如，你可能会发现多次向 ChatGPT 提同一个问题会得到不同的答案。这本身并不奇怪，因为从语言模型获取结果涉及“采样”：把模型输出转...">
+  <meta name="keywords" content="Thinking Machines Lab,AI,人工智能,机器学习,击败 LLM 推理中的非确定性,中文翻译">
+  <meta name="author" content="Thinking Machines Lab">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/thinkingmachines/2025-09-10-defeating-nondeterminism-in-llm-inference.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/thinkingmachines/2025-09-10-defeating-nondeterminism-in-llm-inference.html">
+  <meta property="og:title" content="击败 LLM 推理中的非确定性 - 人工智能文摘">
+  <meta property="og:description" content="【Thinking Machines Lab 文章中文翻译】可复现性是科学进步的基石。然而，要让大语言模型（LLM）给出可复现的结果却出奇地困难。 例如，你可能会发现多次向 ChatGPT 提同一个问题会得到不同的答案。这本身并不奇怪，因为从语言模型获取结果涉及“采样”：把模型输出转...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-09-10T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-09-10T00:00:00.000Z">
+  <meta property="article:author" content="Thinking Machines Lab">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/thinkingmachines/2025-09-10-defeating-nondeterminism-in-llm-inference.html">
+  <meta name="twitter:title" content="击败 LLM 推理中的非确定性 - 人工智能文摘">
+  <meta name="twitter:description" content="【Thinking Machines Lab 文章中文翻译】可复现性是科学进步的基石。然而，要让大语言模型（LLM）给出可复现的结果却出奇地困难。 例如，你可能会发现多次向 ChatGPT 提同一个问题会得到不同的答案。这本身并不奇怪，因为从语言模型获取结果涉及“采样”：把模型输出转...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761789374225">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -15,7 +52,6 @@
         <a href="/" class="site-title">人工智能文摘</a>
         <nav>
           <ul>
-            <li><a href="/">首页</a></li>
             <li><a href="/author/paulgraham.html">Paul Graham</a></li>
             <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
             <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
@@ -28,8 +64,6 @@
   <main>
     
   <div class="container">
-    <a href="/" class="back-link">← 返回首页</a>
-
     <article class="author-2">
       <div class="article-content">
         <div class="article-header">
@@ -275,6 +309,34 @@ Thinking Machines Lab: Connectionism, Sep 2025.
         </div>
       </div>
     </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "击败 LLM 推理中的非确定性",
+  "author": {
+    "@type": "Person",
+    "name": "Thinking Machines Lab"
+  },
+  "datePublished": "2025-09-10T00:00:00.000Z",
+  "dateModified": "2025-09-10T00:00:00.000Z",
+  "description": "可复现性是科学进步的基石。然而，要让大语言模型（LLM）给出可复现的结果却出奇地困难。 例如，你可能会发现多次向 ChatGPT 提同一个问题会得到不同的答案。这本身并不奇怪，因为从语言模型获取结果涉及“采样”：把模型输出转...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/thinkingmachines/2025-09-10-defeating-nondeterminism-in-llm-inference.html"
+  }
+}
+    </script>
   </div>
   </main>
 
