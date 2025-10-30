@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>三起近期问题的事后分析 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】这是一份关于三个间歇性降低 Claude 响应质量问题的技术报告。下面我们将解释发生了什么、为何修复耗时，以及我们正在做出的调整。 在 8 月至 9 月初之间，有三个基础设施缺陷间歇性地降低了 Claude 的响应质量。我们已经解...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,三起近期问题的事后分析,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-09-17-a-postmortem-of-three-recent-issues.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-09-17-a-postmortem-of-three-recent-issues.html">
+  <meta property="og:title" content="三起近期问题的事后分析 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】这是一份关于三个间歇性降低 Claude 响应质量问题的技术报告。下面我们将解释发生了什么、为何修复耗时，以及我们正在做出的调整。 在 8 月至 9 月初之间，有三个基础设施缺陷间歇性地降低了 Claude 的响应质量。我们已经解...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-09-17T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-09-17T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-09-17-a-postmortem-of-three-recent-issues.html">
+  <meta name="twitter:title" content="三起近期问题的事后分析 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】这是一份关于三个间歇性降低 Claude 响应质量问题的技术报告。下面我们将解释发生了什么、为何修复耗时，以及我们正在做出的调整。 在 8 月至 9 月初之间，有三个基础设施缺陷间歇性地降低了 Claude 的响应质量。我们已经解...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761866100915">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">三起近期问题的事后分析</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">A postmortem of three recent issues</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-09-17</span>
+          </div>
+        </div>
+
+        <p>这是一份关于三个间歇性降低 Claude 响应质量问题的技术报告。下面我们将解释发生了什么、为何修复耗时，以及我们正在做出的调整。</p>
+<p>在 8 月至 9 月初之间，有三个基础设施缺陷间歇性地降低了 Claude 的响应质量。我们已经解决了这些问题，并希望解释事件的始末。</p>
+<p>8 月上旬，一些用户开始报告 Claude 的响应质量下降。这些最初的反馈很难与用户反馈的正常波动区分开来。到了 8 月下旬，这类报告的频率和持续性不断增加，促使我们展开调查，最终定位到三个独立的基础设施缺陷。</p>
+<p>坦率地说：我们从不会因为需求、时段或服务器负载而降低模型质量。用户报告的问题完全源于基础设施缺陷。</p>
+<p>我们深知用户期望 Claude 始终如一的质量，并且我们也始终以极高的标准确保基础设施变更不会影响模型输出。可在这些近期事件中，我们没有达到这一标准。下面的事后分析解释了问题出在哪里、为何检测和修复比预期更久，以及我们为避免类似事件所做的改进。</p>
+<p>我们通常不会分享如此详尽的基础设施技术细节，但这些问题的范围与复杂度，让我们认为有必要提供更全面的说明。</p>
+<h2>我们如何在规模上提供 Claude 服务</h2>
+<p>我们通过自有 API、Amazon Bedrock 和 Google Cloud 的 Vertex AI 将 Claude 提供给数百万用户。我们在多种硬件平台上部署 Claude，包括 AWS Trainium、NVIDIA GPU 和 Google TPU。这种方式提供了满足全球用户所需的容量与地域分布。</p>
+<p>不同硬件平台各有特性，需要专门的优化。尽管存在差异，我们对模型实现制定了严格的一致性标准。我们的目标是，无论请求由哪种平台提供服务，用户都应获得相同质量的响应。这种复杂性意味着任何基础设施变更都需要在所有平台和配置中进行仔细验证。</p>
+<h2>事件时间线</h2>
+<figure>
+  <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-266be8e9.jpg" alt="Claude API 事件时间线示意图。黄色：发现问题；红色：劣化加剧；绿色：部署修复。">
+  <figcaption>**Claude API** 上事件时间线的示意图。黄色：发现问题；红色：劣化加剧；绿色：部署修复。</figcaption>
+</figure>
+
+<p>这些缺陷相互交叠，使得诊断尤为困难。第一个缺陷在 8 月 5 日引入，影响了约 0.8% 针对 Sonnet 4 的请求。8 月 25 日与 26 日的部署又引入了两个问题。</p>
+<p>虽然初期影响有限，但 8 月 29 日的一次负载均衡调整开始增加受影响的流量。这让更多用户遇到问题，而其他人仍体验正常性能，从而造成混乱且相互矛盾的报告。</p>
+<h2>三个相互交叠的问题</h2>
+<p>下面我们描述这三个导致性能劣化的缺陷，它们发生的时间以及我们的解决方案：</p>
+<h3>1. 上下文窗口路由错误</h3>
+<p>8 月 5 日，一部分 Sonnet 4 请求被错误路由到了为即将推出的 <a href="https://docs.claude.com/en/docs/build-with-claude/context-windows#1m-token-context-window">100 万 token</a> <a href="https://docs.claude.com/en/docs/build-with-claude/context-windows">上下文窗口</a> 配置的服务器。该缺陷最初影响了 0.8% 的请求。8 月 29 日的一次常规负载均衡调整无意中增加了被路由到 100 万上下文服务器的短上下文请求数量。在 8 月 31 日受影响最严重的一个小时里，16% 的 Sonnet 4 请求受到影响。</p>
+<p>在此期间，大约 30% 的 Claude Code 用户至少有一条消息被路由到了错误的服务器类型，导致响应质量下降。Amazon Bedrock 上的错误路由流量在 8 月 12 日达到了所有 Sonnet 4 请求的 0.18%。在 8 月 27 日至 9 月 16 日之间，Google Cloud Vertex AI 上错误路由的请求低于总请求量的 0.0004%。</p>
+<p>不过，由于我们的路由是“黏性”的，一些用户受到的影响更严重。这意味着一旦请求被错误服务器处理，后续的跟进请求也很可能被同一错误服务器处理。</p>
+<p><strong>解决方案：</strong> 我们修复了路由逻辑，确保短上下文和长上下文请求会被正确地指向对应的服务器池。我们于 9 月 4 日部署了修复，并在 9 月 16 日前完成了对自有平台和 Google Cloud Vertex AI 的全面推广，9 月 18 日前完成了对 AWS Bedrock 的推广。</p>
+<h3>2. 输出损坏</h3>
+<p>8 月 25 日，我们向 Claude API 的 TPU 服务器部署了一项错误配置，导致在生成 token 的过程中出现错误。一个由运行时性能优化引发的问题偶尔会让某些 token 获得不符合上下文的高概率，例如在英文提示中生成泰语或中文字符，或者输出明显的代码语法错误。比如，部分以英语提问的用户可能在回答中途看到“สวัสดี”。</p>
+<p>这类损坏在 8 月 25 日至 28 日影响了 Opus 4.1 和 Opus 4 的请求，并在 8 月 25 日至 9 月 2 日影响了 Sonnet 4 的请求。第三方平台不受该问题影响。</p>
+<p><strong>解决方案：</strong> 我们在 9 月 2 日定位到问题并回滚了该变更。我们已在部署流程中增加了对异常字符输出的检测测试。</p>
+<h3>3. 近似 top-k XLA:TPU 误编译</h3>
+<p>8 月 25 日，我们部署了改进 Claude 在文本生成时选择 token 方式的代码。这次变更无意间触发了 XLA:TPU[1] 编译器中的潜在缺陷，已确认会影响针对 Claude Haiku 3.5 的请求。</p>
+<p>我们也认为，这可能影响到 Claude API 上部分 Sonnet 4 和 Opus 3 的请求。第三方平台未受到影响。</p>
+<p><strong>解决方案：</strong> 我们首先观察到该缺陷影响 Haiku 3.5，并在 9 月 4 日回滚。之后我们注意到用户关于 Opus 3 的问题报告与该缺陷特征一致，并在 9 月 12 日回滚。尽管我们在 Sonnet 4 上无法复现该缺陷，但出于谨慎也进行了回滚。</p>
+<p>与此同时，我们（a）正与 XLA:TPU 团队合作修复该编译器缺陷，并且（b）推出了改用高精度的精确 top-k。详情见下方的深入解析。</p>
+<h2>深入了解 XLA 编译器缺陷</h2>
+<p>为说明这些问题的复杂性，下面介绍 XLA 编译器缺陷的表现及其为何难以诊断。</p>
+<p>当 Claude 生成文本时，它会计算每个可能下一个词的概率，然后从该概率分布中随机采样。我们使用“top-p 采样”来避免输出无意义内容——只考虑累积概率达到阈值（通常为 0.99 或 0.999）的词。在 TPU 上，我们的模型跨多个芯片运行，概率计算分布在不同位置。为了排序这些概率，我们需要在芯片之间协调数据，这非常复杂。[2]</p>
+<p>2024 年 12 月，我们发现 TPU 实现会在 <a href="https://docs.claude.com/en/docs/about-claude/glossary#temperature">temperature</a> 为零时偶尔丢掉最可能的 token。我们部署了一个临时方案来修复这种情况。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-89b61a05.jpg" alt="展示 2024 年 12 月补丁的代码片段，用于绕过 temperature = 0 时意外丢失 token 的缺陷。">
+  <figcaption>展示 2024 年 12 月补丁的代码片段，用于绕过 temperature = 0 时意外丢失 token 的缺陷。</figcaption>
+</figure>
+
+<p>根本原因涉及混合精度运算。我们的模型以 <a href="https://github.com/tensorflow/tensorflow/blob/f41959ccb2d9d4c722fe8fc3351401d53bcf4900/tensorflow/core/framework/bfloat16.h">bf16</a>（16 位浮点）计算下一 token 的概率。然而，向量处理器是 <a href="https://dl.acm.org/doi/pdf/10.1145/3360307">fp32 原生</a> 的，因此 TPU 编译器（XLA）可以通过将部分操作转换为 fp32（32 位）来优化运行时间。这个优化流程受 <code>xla_allow_excess_precision</code> 标志控制，默认开启。</p>
+<p>这导致了不一致：原本应该得出相同最高概率 token 的操作，在不同精度下运行。精度不匹配意味着它们无法就最高概率 token 达成一致，导致该 token 有时完全被排除在外。</p>
+<p>8 月 26 日，我们部署了一个重写后的采样代码，修复精度问题并改善对达到 top-p 阈值的极限概率的处理。但在解决这些问题的同时，我们暴露了一个更棘手的缺陷。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-01dbbf8c.jpg" alt="展示 8 月 11 日变更中合并的最小化复现代码片段，该变更触发了 2024 年 12 月被当作“缺陷”处理的行为；实际上这是 xla_allow_excess_precision 标志的预期表现。">
+  <figcaption>展示 8 月 11 日变更中合并的最小化复现代码片段，该变更触发了 2024 年 12 月被当作“缺陷”处理的行为；实际上这是 `xla_allow_excess_precision` 标志的预期表现。</figcaption>
+</figure>
+
+<p>我们的修复移除了 12 月的临时方案，因为我们认为已经解决了根因。这暴露了 <a href="https://docs.jax.dev/en/latest/_autosummary/jax.lax.approx_max_k.html">近似 top-k</a> 操作中更深层的缺陷——这是一种快速找到最高概率 token 的性能优化。[3] 该近似算法在某些批量大小和模型配置下会返回完全错误的结果。12 月的临时方案无意间掩盖了这个问题。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-c65a85c4.jpg" alt="展示与 XLA:TPU 算法开发工程师分享的底层近似 top-k 缺陷复现代码的 Slack 消息。该代码在 CPU 上运行时会返回正确结果。">
+  <figcaption>与 [开发该算法](https://arxiv.org/pdf/2206.14286) 的 XLA:TPU 工程师分享的底层近似 top-k 缺陷复现代码。该代码在 CPU 上运行时会返回正确结果。</figcaption>
+</figure>
+
+<p>这个缺陷的表现极不稳定。它会随着无关因素而改变，例如在它前后运行的操作、是否启用调试工具等。同一提示在一次请求中可能完全正常，而下一次则失败。</p>
+<p>在调查过程中，我们还发现精确 top-k 操作不再有过去那种难以接受的性能开销。我们改用精确 top-k，并将一些额外操作标准化为 fp32 精度。[4] 模型质量不容妥协，因此我们接受了这点轻微的效率影响。</p>
+<h2>为何难以及时检测</h2>
+<p>我们的验证流程通常依赖基准测试、安全评估与性能指标。工程团队会进行抽检，并先部署到小规模的“金丝雀”组。</p>
+<p>这些问题暴露出我们本应更早发现的关键缺口。我们运行的评估未能捕捉到用户报告的劣化，部分原因在于 Claude 往往能从孤立错误中恢复。我们的隐私实践也给排查带来挑战。内部隐私与安全管控限制了工程师访问用户与 Claude 的互动方式，尤其是在这些互动未作为反馈报告给我们时。这样做保护了用户隐私，但也阻碍了工程师查看或复现问题交互。</p>
+<p>每个缺陷在不同平台上表现出不同症状、进展速度也不一致。这带来了混乱的报告，难以指向任何单一原因，看起来像是随机、前后不一致的劣化。</p>
+<p>更根本地说，我们过度依赖噪声较大的评估。尽管我们知道网络上的负面反馈在增加，但缺乏明确方式将这些反馈与近期的每一次变更联系起来。当 8 月 29 日负面报告激增时，我们未能立即将其与一次看似常规的负载均衡调整联系起来。</p>
+<h2>我们正在做的改进</h2>
+<p>随着我们持续改进基础设施，我们也在改进评估方法，防止上述问题在我们提供 Claude 服务的各个平台上重演。我们正在采取的措施包括：</p>
+<ul>
+<li><strong>更加敏感的评估：</strong> 为了帮助发现任何问题的根因，我们开发了能够更可靠区分正常实现与出错实现的评估。我们将持续改进这些评估，以更密切地关注模型质量。</li>
+<li><strong>在更多场景进行质量评估：</strong> 虽然我们定期在系统上运行评估，但我们将持续在真实生产系统上执行，以捕捉类似上下文窗口负载均衡错误的问题。</li>
+<li><strong>更快的调试工具：</strong> 我们将构建基础设施与工具，更好地在不牺牲用户隐私的情况下调试来自社区的反馈。此外，这里开发的一些定制工具将在未来类似事件中用于缩短修复时间（若再次发生）。</li>
+</ul>
+<p>评估和监控固然重要，但这些事件表明，我们还需要持续从用户获取信号，当 Claude 的响应不达标时尤为如此。用户报告的具体变化、遇到的异常示例以及跨不同用例的模式，都帮助我们定位了问题。</p>
+<p>我们仍然鼓励用户继续直接向我们提供反馈。你可以在 Claude Code 中使用 <code>/bug</code> 命令，也可以在 Claude 应用中点击“倒拇指”按钮。开发者和研究者经常创造新的、有趣的方式来评估模型质量，以补充我们的内部测试。如果你想分享你的方法，欢迎联系 <a href="mailto:feedback@anthropic.com">feedback@anthropic.com</a>。</p>
+<p>我们对社区的贡献始终心怀感激。</p>
+<p>[1] XLA:TPU 是一种优化编译器，会将 <a href="https://openxla.org/xla/architecture">XLA</a> 高级优化语言——通常通过 <a href="https://docs.jax.dev/en/latest">JAX</a> 编写——转换为 TPU 机器指令。</p>
+<p>[2] 我们的模型规模过大，无法放在单颗芯片上运行，需要跨几十颗甚至更多芯片分布，因此排序操作是分布式的。TPU（与 GPU 和 Trainium 类似）与 CPU 有不同的性能特征，需要使用向量化操作而非串行算法等不同实现技术。</p>
+<p>[3] 我们一直使用这种近似操作是因为它能带来可观的性能提升。该近似通过接受最低概率 token 的潜在不准确性来工作，本不应影响质量——除非该缺陷导致最高概率 token 被丢弃。</p>
+<p>[4] 需要注意，如今正确的 top-k 实现可能会在接近 top-p 阈值的 token 包含上出现细微差异，在极少数情况下，用户可能需要重新调整他们的 top-p 取值。</p>
+<h2>订阅开发者通讯</h2>
+<p>产品更新、操作指南、社区亮点等，按月发送至你的收件箱。</p>
+<p>如果你希望收到我们的月度开发者通讯，请留下你的邮箱地址。你可随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "三起近期问题的事后分析",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-09-17T00:00:00.000Z",
+  "dateModified": "2025-09-17T00:00:00.000Z",
+  "description": "这是一份关于三个间歇性降低 Claude 响应质量问题的技术报告。下面我们将解释发生了什么、为何修复耗时，以及我们正在做出的调整。 在 8 月至 9 月初之间，有三个基础设施缺陷间歇性地降低了 Claude 的响应质量。我们已经解...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-09-17-a-postmortem-of-three-recent-issues.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | 联系方式: <a href="mailto:nblintao+digest@gmail.com">nblintao+digest@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

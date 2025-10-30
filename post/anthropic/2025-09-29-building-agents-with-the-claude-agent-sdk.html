@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>使用 Claude Agent SDK 构建智能体 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】Claude Agent SDK 是一组工具，帮助开发者在 Claude Code 之上构建功能强大的智能体。本文将介绍如何入门，并分享我们的最佳实践。 去年，我们与客户一起分享了构建高效智能体的经验。从那以后，我们发布了Claude Code，这是...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,使用 Claude Agent SDK 构建智能体,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk.html">
+  <meta property="og:title" content="使用 Claude Agent SDK 构建智能体 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】Claude Agent SDK 是一组工具，帮助开发者在 Claude Code 之上构建功能强大的智能体。本文将介绍如何入门，并分享我们的最佳实践。 去年，我们与客户一起分享了构建高效智能体的经验。从那以后，我们发布了Claude Code，这是...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-09-29T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-09-29T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk.html">
+  <meta name="twitter:title" content="使用 Claude Agent SDK 构建智能体 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】Claude Agent SDK 是一组工具，帮助开发者在 Claude Code 之上构建功能强大的智能体。本文将介绍如何入门，并分享我们的最佳实践。 去年，我们与客户一起分享了构建高效智能体的经验。从那以后，我们发布了Claude Code，这是...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761866100913">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">使用 Claude Agent SDK 构建智能体</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Building agents with the Claude Agent SDK</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-09-29</span>
+          </div>
+        </div>
+
+        <p>Claude Agent SDK 是一组工具，帮助开发者在 Claude Code 之上构建功能强大的智能体。本文将介绍如何入门，并分享我们的最佳实践。</p>
+<p>去年，我们与客户一起分享了<a href="https://www.anthropic.com/engineering/building-effective-agents">构建高效智能体</a>的经验。从那以后，我们发布了<a href="https://www.anthropic.com/claude-code">Claude Code</a>，这是一款我们最初为提升 Anthropic 内部开发者效率而打造的智能体编程解决方案。</p>
+<p>过去几个月里，Claude Code 已经远不止是一款编程工具。在 Anthropic，我们一直在<a href="https://www.anthropic.com/news/how-anthropic-teams-use-claude-code">使用它</a>进行深度研究、视频制作和笔记整理，以及无数其他非编码用途。事实上，它已经开始驱动我们几乎所有主要的智能体循环。</p>
+<p>换句话说，为 Claude Code 提供动力的智能体框架（Claude Code SDK）同样可以驱动许多其他类型的智能体。为了体现这一更广阔的愿景，我们将 Claude Code SDK 更名为 Claude Agent SDK。</p>
+<p>本文将重点介绍我们为什么构建 Claude Agent SDK、如何用它构建你自己的智能体，以及我们团队在部署过程中总结出的最佳实践。</p>
+<h2>让 Claude 拥有一台电脑</h2>
+<p><a href="https://www.youtube.com/watch?v=vLIDHi-1PVU">Claude Code 背后的关键设计原则</a>是：Claude 需要使用程序员每天使用的同样工具。它需要能够在代码库中找到合适的文件、编写和编辑文件、进行代码检查、运行代码、调试，并在必要时迭代地采取这些行动，直到代码运行成功。</p>
+<p>我们发现，只要让 Claude 访问用户的电脑（通过终端），它就拥有像程序员一样写代码所需的一切。</p>
+<p>但这也让 Claude Code 中的 Claude 在<em>非</em> 编码任务上同样高效。通过为它提供运行 bash 命令、编辑文件、创建文件和搜索文件的工具，Claude 能够读取 CSV 文件、搜索网页、构建可视化、解读指标，以及完成各种数字化工作——简而言之，用一台电脑打造通用智能体。Claude Agent SDK 背后的关键设计原则就是给你的智能体一台电脑，让它们像人类一样工作。</p>
+<h2>创建新类型的智能体</h2>
+<p>我们相信，为 Claude 配备一台电脑能够释放构建更高效智能体的能力。例如，借助我们的 SDK，开发者可以构建：</p>
+<ul>
+<li><strong>财务智能体</strong> :** 构建能够理解你的投资组合和目标的智能体，并通过访问外部 API、存储数据和运行代码进行计算，帮助你评估投资。</li>
+<li><strong>个人助理智能体</strong>。构建能够帮助你预订行程和管理日程的智能体，还可以通过连接内部数据源并在应用之间追踪上下文，安排会议、整理简报等。</li>
+<li>**客户支持智能体：**构建能够处理高度模糊用户请求（如客服工单）的智能体，通过收集和审查用户数据、连接外部 API、回复用户并在必要时升级给人工处理。</li>
+<li><strong>深度研究智能体</strong> : 构建能够在大型文档集合中开展全面研究的智能体，通过搜索文件系统、分析并综合多个来源的信息、跨文件交叉引用数据并生成详尽报告。</li>
+</ul>
+<p>还有更多可能。从核心上来说，SDK 为你提供了构建任何你希望自动化工作流的智能体所需的基本元素。</p>
+<h2>构建你的智能体循环</h2>
+<p>在 Claude Code 中，Claude 通常遵循一个特定的反馈循环：收集上下文 -&gt; 采取行动 -&gt; 验证结果 -&gt; 重复。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk-8aea1517.jpg" alt="Agent feedback loop">
+  <figcaption>智能体通常遵循特定的反馈循环：收集上下文 -> 采取行动 -> 验证结果 -> 重复。</figcaption>
+</figure>
+
+<p>这一思路同样适用于其他智能体，以及它们应具备的能力。为了说明这一点，我们将以在 Claude Agent SDK 中构建邮件智能体为例。</p>
+<h2>收集上下文</h2>
+<p>开发智能体时，你希望给它的不仅仅是一条提示：它还需要能够自行获取和更新上下文。以下是 SDK 中的功能如何提供帮助。</p>
+<h3><strong>智能体式搜索与文件系统</strong></h3>
+<p>文件系统代表了可以被纳入模型上下文的信息。</p>
+<p>当 Claude 遇到日志或用户上传文件等大型文件时，它会决定如何通过 <code>grep</code>、<code>tail</code> 等 bash 脚本将这些内容加载到上下文中。从本质上说，智能体的文件夹和文件结构是一种<a href="http://anthropic.com/news/context-management">上下文工程</a>。</p>
+<p>我们的邮件智能体可能会将先前的对话存放在一个名为“Conversations”的文件夹中。这样，当被问及相关内容时，它就能在其中搜索并获取上下文。</p>
+<h3><strong>语义搜索</strong></h3>
+<p><a href="https://www.anthropic.com/news/contextual-retrieval">语义搜索</a>通常比智能体式搜索更快，但准确性更低、维护更难、透明度也更差。它需要对相关上下文进行“分块”，把这些分块向量化，再通过查询这些向量来检索概念。鉴于其局限性，我们建议从智能体式搜索开始，只有在需要更快的结果或更多变体时再补充语义搜索。</p>
+<h3><strong>子智能体</strong></h3>
+<p>Claude Agent SDK 默认支持子智能体。<a href="https://docs.claude.com/en/api/agent-sdk/subagents">子智能体</a>主要有两个好处。其一是支持并行化：你可以同时启动多个子智能体处理不同任务。其二是帮助管理上下文：子智能体使用独立的上下文窗口，只将相关信息返回给调度者，而不是传回全部上下文。这对于需要筛选大量信息且大部分并无用处的任务尤为合适。</p>
+<p>在设计邮件智能体时，我们可能会赋予它“搜索子智能体”的能力。邮件智能体可以并行启动多个搜索子智能体——每个子智能体针对邮件历史运行不同的查询——并让它们只返回相关摘要，而非完整的邮件线程。</p>
+<h3><strong>压缩</strong></h3>
+<p>当智能体长时间运行时，上下文维护变得至关重要。Claude Agent SDK 的压缩功能会在接近上下文限制时自动总结之前的消息，从而避免智能体耗尽上下文。这一特性基于 Claude Code 的<a href="https://docs.claude.com/en/docs/claude-code/sdk/sdk-slash-commands#%2Fcompact-compact-conversation-history">compact 斜杠命令</a>。</p>
+<h2>采取行动</h2>
+<p>一旦收集到上下文，你会希望为智能体提供灵活的行动方式。</p>
+<h3><strong>工具</strong></h3>
+<p><a href="https://www.anthropic.com/engineering/writing-tools-for-agents">工具</a>是智能体执行任务的主要构建块。工具会在 Claude 的上下文窗口中占据显著位置，因此它们是 Claude 在决定如何完成任务时优先考虑的行动。这意味着你在设计工具时应注意上下文效率最大化。更多最佳实践可参见我们的博文《<a href="https://www.anthropic.com/engineering/writing-tools-for-agents">用智能体编写智能体工具</a>》。</p>
+<p>因此，你的工具应当是你希望智能体执行的主要行动。在 Claude Agent SDK 中了解如何<a href="https://docs.claude.com/en/api/agent-sdk/custom-tools">构建自定义工具</a>。</p>
+<p>对于我们的邮件智能体，我们可以将“<code>fetchInbox</code>”或“<code>searchEmails</code>”定义为智能体最主要、最常用的行动。</p>
+<h3><strong>Bash 与脚本</strong></h3>
+<p>Bash 是一种通用工具，可以让智能体通过电脑完成灵活的工作。</p>
+<p>在邮件智能体中，用户的附件里可能存有重要信息。Claude 可以编写代码来下载 PDF，将其转换为文本，并在其中搜索以找到有用的信息，如下所示：</p>
+<h3><strong>代码生成</strong></h3>
+<p>Claude Agent SDK 在代码生成方面表现出色，这是有充分理由的。代码精确、可组合且可无限复用，使其成为需要可靠执行复杂操作的智能体的理想输出。</p>
+<p>构建智能体时，不妨思考：哪些任务如果以代码形式表达会获益最大？很多时候，这个答案会打开显著的能力空间。</p>
+<p>例如，我们最近发布的<a href="https://www.anthropic.com/news/create-files">在</a><a href="http://claude.ai/redirect/website.v1.51f73c97-b077-44e7-85ba-8b27a025dfdf">Claude.AI</a> 中上线的文件创建功能完全依赖于代码生成。Claude 会编写 Python 脚本来创建 Excel 表格、PowerPoint 演示文稿和 Word 文档，从而确保一致的格式和其他方法难以实现的复杂功能。</p>
+<p>在我们的邮件智能体中，我们可能希望允许用户为收件邮件创建规则。为此，我们可以编写代码，在相应事件发生时运行：</p>
+<h3><strong>MCPs</strong></h3>
+<p><a href="https://modelcontextprotocol.io/">模型上下文协议</a>（Model Context Protocol，MCP）提供了标准化的外部服务集成方式，自动处理身份验证和 API 调用。这意味着你可以不必编写自定义集成代码或自行管理 OAuth 流程，就能把智能体连接到 Slack、GitHub、Google Drive 或 Asana 等工具上。</p>
+<p>对于我们的邮件智能体，我们可能希望 <code>search Slack messages</code> 来了解团队上下文，或 <code>check Asana tasks</code> 以确认是否已经有人被指派处理某个客户请求。有了 MCP 服务器，这些集成即开即用——智能体只需调用诸如 search_slack_messages 或 get_asana_tasks 之类的工具，剩下的交给 MCP。</p>
+<p>不断壮大的<a href="https://github.com/modelcontextprotocol/servers">MCP 生态系统</a>意味着，随着现成集成的增加，你可以快速为智能体添加新能力，从而把精力集中在智能体行为本身。</p>
+<h2>验证你的工作</h2>
+<p>Claude Code SDK 通过评估成果来完成智能体循环。能够检查并改进自身输出的智能体从根本上更可靠——它们能在错误扩大前发现问题、在偏离时自行纠正，并在迭代中不断进步。</p>
+<p>关键是为 Claude 提供评估自身工作的具体方式。以下是我们发现的三种有效方法：</p>
+<h3><strong>定义规则</strong></h3>
+<p>最佳的反馈形式是为输出提供明确的规则，并解释哪些规则未通过以及原因。</p>
+<p><a href="https://stackoverflow.com/questions/8503559/what-is-linting">代码检查（Linting）</a>是一种极佳的基于规则的反馈形式。反馈越深入越好。例如，生成 TypeScript 并对其进行代码检查通常比直接生成纯 JavaScript 更好，因为它会提供多个额外的反馈层。</p>
+<p>在生成邮件时，你可能希望 Claude 检查邮件地址是否有效（如果无效则抛出错误），以及用户过去是否曾给该地址发送过邮件（如果发送过则给出警告）。</p>
+<h3><strong>视觉反馈</strong></h3>
+<p>在使用智能体完成视觉任务（例如 UI 生成或测试）时，视觉反馈（截图或渲染形式）会很有帮助。例如，在发送带有 HTML 格式的邮件时，你可以对生成的邮件进行截图，并反馈给模型进行视觉验证和迭代改进。模型随后会检查视觉输出是否符合需求。</p>
+<p>例如：</p>
+<ul>
+<li><strong>布局</strong> - 元素的位置是否正确？间距是否合适？</li>
+<li><strong>样式</strong> - 颜色、字体和格式是否如预期呈现？</li>
+<li><strong>内容层次</strong> - 信息是否以正确顺序呈现，并给予适当强调？</li>
+<li><strong>响应式</strong> - 它看起来是否破版或过于拥挤？（尽管单个截图的视窗信息有限）</li>
+</ul>
+<p>借助像 Playwright 这样的 MCP 服务器，你可以自动化这一视觉反馈循环——在智能体工作流内对渲染出的 HTML 进行截图、捕捉不同视窗尺寸，甚至测试交互元素。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk-084d4b3c.jpg" alt="Claude provides visual feedback on the body of an email generated by an agent.">
+  <figcaption>来自大语言模型（LLM）的视觉反馈能够为你的智能体提供有益指导。</figcaption>
+</figure>
+
+<h3><strong>让 LLM 充当评审</strong></h3>
+<p>你也可以让另一种语言模型根据模糊规则来“评审”智能体的输出。这通常不是特别稳健的方法，并且可能带来较大的时延开销，但在任何性能提升都值得付出的场景中，它会有所帮助。</p>
+<p>我们的邮件智能体可以让一个单独的子智能体评估草稿的语气，以判断是否符合用户以往的表达风格。</p>
+<h2>测试并改进你的智能体</h2>
+<p>在完成几轮智能体循环后，我们建议对智能体进行测试，确保它为任务配备了充分能力。改进智能体的最佳方式是仔细审视它的输出，尤其是失败的情况，并设身处地地思考：它是否拥有完成任务所需的<a href="https://www.anthropic.com/engineering/writing-tools-for-agents">正确工具</a>？</p>
+<p>在评估智能体是否胜任时，可以思考以下问题：</p>
+<ul>
+<li>如果智能体误解了任务，它可能缺少关键信息。你能否调整搜索 API 的结构，让它更容易找到所需信息？</li>
+<li>如果智能体重复失败，你能否在工具调用中加入正式规则，以识别并修复这些失败？</li>
+<li>如果智能体无法修复错误，你能否为它提供更有用或更有创意的工具，从不同角度解决问题？</li>
+<li>如果随着功能增加智能体的表现出现波动，能否基于客户使用情况构建具有代表性的测试集，用于程序化评估（或称 eval）？</li>
+</ul>
+<h2>开始上手</h2>
+<p>Claude Agent SDK 通过让 Claude 访问一台可以写文件、运行命令并迭代其工作的电脑，帮助你更轻松地构建自主智能体。</p>
+<p>牢记智能体循环（收集上下文、采取行动、验证成果），你就能构建可靠、易于部署与迭代的智能体。</p>
+<p>你可以立即<a href="https://docs.claude.com/en/api/agent-sdk/overview">开始体验</a> Claude Agent SDK。对于已经在使用 SDK 的开发者，我们建议按照<a href="https://docs.claude.com/en/docs/claude-code/sdk/migration-guide">本指南</a>迁移到最新版本。</p>
+<h2>致谢</h2>
+<p>本文作者为 Thariq Shihipar，Molly Vorwerck、Suzanne Wang、Alex Isken、Cat Wu、Keir Bradwell、Alexander Bricken 与 Ashwin Bhat 提供了笔记和编辑支持。</p>
+<h2>订阅开发者通讯</h2>
+<p>产品更新、操作教程、社区亮点等，每月送达你的收件箱。</p>
+<p>如果你希望收到我们的月度开发者通讯，请留下你的电子邮箱地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "使用 Claude Agent SDK 构建智能体",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-09-29T00:00:00.000Z",
+  "dateModified": "2025-09-29T00:00:00.000Z",
+  "description": "Claude Agent SDK 是一组工具，帮助开发者在 Claude Code 之上构建功能强大的智能体。本文将介绍如何入门，并分享我们的最佳实践。 去年，我们与客户一起分享了构建高效智能体的经验。从那以后，我们发布了Claude Code，这是...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | 联系方式: <a href="mailto:nblintao+digest@gmail.com">nblintao+digest@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

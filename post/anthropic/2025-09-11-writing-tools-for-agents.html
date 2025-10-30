@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>与智能体一起编写高效工具 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】<figure> <img src="../../images/anthropic/2025-09-11-writing-tools-for-agents-5727b74b.svg" alt="这是《与智能体合作编写高效工具》工程博客文章的抽象插图。"> </figure> 智能体的效能取决于我们提供给它们的工具...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,与智能体一起编写高效工具,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-09-11-writing-tools-for-agents.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-09-11-writing-tools-for-agents.html">
+  <meta property="og:title" content="与智能体一起编写高效工具 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】<figure> <img src="../../images/anthropic/2025-09-11-writing-tools-for-agents-5727b74b.svg" alt="这是《与智能体合作编写高效工具》工程博客文章的抽象插图。"> </figure> 智能体的效能取决于我们提供给它们的工具...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-09-11T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-09-11T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-09-11-writing-tools-for-agents.html">
+  <meta name="twitter:title" content="与智能体一起编写高效工具 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】<figure> <img src="../../images/anthropic/2025-09-11-writing-tools-for-agents-5727b74b.svg" alt="这是《与智能体合作编写高效工具》工程博客文章的抽象插图。"> </figure> 智能体的效能取决于我们提供给它们的工具...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761866100915">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">与智能体一起编写高效工具</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Writing effective tools for agents — with agents</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-09-11</span>
+          </div>
+        </div>
+
+        <figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-5727b74b.svg" alt="这是《与智能体合作编写高效工具》工程博客文章的抽象插图。">
+</figure>
+
+<p>智能体的效能取决于我们提供给它们的工具。本文分享了如何编写高质量的工具与评测，以及如何借助 Claude 为自己优化工具，从而提升表现。</p>
+<p><a href="https://modelcontextprotocol.io/docs/getting-started/intro">模型上下文协议（MCP）</a> 能够为大型语言模型（LLM）智能体赋予数量可达数百的工具，帮助它们解决真实世界中的任务。但我们该如何让这些工具发挥最大效用呢？</p>
+<p>在本文中，我们总结了在多种智能体系统中提升性能的最有效技巧1。</p>
+<p>我们首先将介绍如何：</p>
+<ul>
+<li>构建并测试工具原型</li>
+<li>使用智能体为工具创建并运行全面的评测</li>
+<li>与 Claude Code 等智能体协作，自动提升工具性能</li>
+</ul>
+<p>最后，我们会给出在实践中总结出的编写高质量工具的关键原则：</p>
+<ul>
+<li>选择该实现（或不该实现）的正确工具</li>
+<li>通过命名空间为工具划定清晰的功能边界</li>
+<li>让工具返回对智能体真正有用的上下文</li>
+<li>优化工具响应的令牌效率</li>
+<li>对工具描述和规格进行提示工程</li>
+</ul>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-ccf3fd17.jpg" alt="这幅图展示了一位工程师如何使用 Claude Code 评估智能体工具的效果。">
+  <figcaption>构建评测能够让你系统性地衡量工具的表现。你可以使用 Claude Code 基于此评测自动优化工具。</figcaption>
+</figure>
+
+<h2>什么是工具？</h2>
+<p>在计算领域，确定性系统在给定相同输入时每次都会产生同样的输出，而<em>非确定性</em>系统——比如智能体——即便在相同的初始条件下也会生成不同的响应。</p>
+<p>传统编写软件时，我们是在确定性系统之间建立契约。例如，调用 <code>getWeather(&quot;NYC&quot;)</code> 这样的函数，每次都会以完全相同的方式获取纽约市的天气。</p>
+<p>工具是一类新型软件，体现的是确定性系统与非确定性智能体之间的契约。当用户询问“我今天需要带伞吗？”时，智能体可能会调用天气工具、基于通识回答，或者先询问位置等澄清问题。偶尔，智能体也可能产生幻觉，甚至无法理解如何使用工具。</p>
+<p>这意味着，在为智能体编写软件时，我们必须从根本上重新思考方法：编写工具和 <a href="https://modelcontextprotocol.io/">MCP 服务器</a> 不再像为其他开发者或系统编写函数与 API，而是要为智能体量身设计。</p>
+<p>我们的目标是通过工具，让智能体在更广泛的任务范围内采用多种成功策略，从而提高它们解决问题的有效覆盖面。值得庆幸的是，根据我们的经验，对智能体“符合人体工学”的工具，往往也非常容易被人类理解。</p>
+<h2>如何编写工具</h2>
+<p>本节将介绍如何与智能体协作，编写并改进提供给它们的工具。先快速搭建工具原型并在本地测试。然后运行全面的评测，衡量后续的改动。与智能体并肩作战，你可以反复评测与改进工具，直到智能体在真实任务中的表现令人满意。</p>
+<h3>构建原型</h3>
+<p>如果不亲自上手，很难预判智能体会觉得哪些工具顺手、哪些不顺手。先快速搭建工具原型。如果你使用 <a href="https://www.anthropic.com/claude-code">Claude Code</a>（甚至一次性）来编写工具，务必要为 Claude 提供工具将依赖的软件库、API 或 SDK 的文档（可能包括 <a href="https://modelcontextprotocol.io/docs/sdk">MCP SDK</a>）。面向 LLM 的文档常见于官方文档网站上的 <code>llms.txt</code> 平面文件（这是我们的 <a href="https://docs.anthropic.com/llms.txt">API 文档</a>）。</p>
+<p>将工具包装到<a href="https://modelcontextprotocol.io/docs/develop/connect-local-servers">本地 MCP 服务器</a>或<a href="https://www.anthropic.com/engineering/desktop-extensions">桌面扩展</a>（DXT）中，就能在 Claude Code 或 Claude 桌面应用里连接并测试它们。</p>
+<p>要将本地 MCP 服务器接入 Claude Code，运行 <code>claude mcp add &lt;name&gt; &lt;command&gt; [args...]</code>。</p>
+<p>要将本地 MCP 服务器或 DXT 接入 Claude 桌面应用，分别前往 <code>Settings &gt; Developer</code> 或 <code>Settings &gt; Extensions</code>。</p>
+<p>工具也可以直接传入 <a href="https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview">Anthropic API</a> 调用，用于编程式测试。</p>
+<p>自己测试工具，识别任何粗糙之处。收集用户反馈，建立关于工具预期支持的使用场景与提示语的直觉。</p>
+<h3>运行评测</h3>
+<p>接下来，需要通过运行评测来衡量 Claude 对工具的使用效果。首先生成大量基于真实世界使用场景的评测任务。我们建议与智能体协作，分析结果并确定如何改进工具。可在我们的<a href="https://github.com/anthropics/anthropic-cookbook/blob/main/tool_evaluation/tool_evaluation.ipynb">工具评测手册</a>中看到完整流程。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-76571765.jpg" alt="该图展示了人工编写的 Slack MCP 服务器与 Claude 优化版本在测试集准确率上的对比。">
+  <figcaption>我们内部 Slack 工具在留出测试集上的表现</figcaption>
+</figure>
+
+<p><strong>生成评测任务</strong></p>
+<p>借助早期原型，Claude Code 可以快速探索你的工具，并创建数十个提示与响应对。提示应源于真实使用场景，并基于现实的数据源和服务（例如内部知识库与微服务）。我们建议避免过于简单或浅显的“沙盒”环境，因为它们无法对工具进行足够复杂的压力测试。优质的评测任务可能需要多次工具调用——甚至几十次。</p>
+<p>以下是一些高质量任务示例：</p>
+<ul>
+<li>安排下周与 Jane 的会议，讨论我们最新的 Acme Corp 项目。附上上次项目规划会议的笔记，并预订会议室。</li>
+<li>客户 ID 9182 报告一次购买尝试被收取三次费用。查找所有相关日志条目，并判断是否有其他客户受到同样问题影响。</li>
+<li>客户 Sarah Chen 刚提交了取消请求。准备一个挽留方案。请确定：（1）他们离开的原因，（2）最有吸引力的挽留方案，以及（3）在提出方案前我们应留意的任何风险因素。</li>
+</ul>
+<p>以下是一些较弱的任务示例：</p>
+<ul>
+<li>安排下周与 <a href="mailto:jane@acme.corp">jane@acme.corp</a> 的会议。</li>
+<li>在支付日志中搜索 <code>purchase_complete</code> 和 <code>customer_id=9182</code>。</li>
+<li>查找客户 ID 45892 的取消请求。</li>
+</ul>
+<p>每个评测提示都应配有可验证的响应或结果。验证方式可以简单到将真实答案与采样响应进行字符串精确匹配，也可以像邀请 Claude 充当评审那样高级。避免过于严苛的验证器，因为它们可能因格式、标点或同义表述等偶然差异而拒绝正确的响应。</p>
+<p>对于每个提示-响应对，你还可以选择性地指定期望智能体在解决任务时调用的工具，用于衡量智能体是否成功理解了每个工具的用途。不过，由于解决任务可能有多条有效路径，请尽量避免对策略过度限定或过拟合。</p>
+<p><strong>运行评测</strong></p>
+<p>我们建议通过直接调用 LLM API，以编程方式运行评测。使用简单的智能体循环（<code>while</code> 循环交替调用 LLM API 与工具）：每个评测任务对应一个循环。每个评测智能体应获得单个任务提示以及你的工具。</p>
+<p>在评测智能体的系统提示中，我们建议不仅要求智能体输出结构化的响应块（用于验证），还要输出推理与反馈块。要求智能体在工具调用与响应块<em>之前</em>输出这些内容，可能通过触发链式思维（CoT）行为来提升 LLM 的有效智力。</p>
+<p>如果你使用 Claude 运行评测，可以开启<a href="https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking#interleaved-thinking">交错思考</a>，以获得类似的“开箱即用”功能。这有助于你探究智能体为何调用或未调用特定工具，并突出工具描述与规格中的具体改进点。</p>
+<p>除了整体准确率，我们建议收集其他指标，例如单个工具调用与任务的总运行时间、工具调用次数、令牌消耗总量以及工具错误。跟踪工具调用可以帮助揭示智能体常用的工作流，并为工具整合提供契机。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-cf4001ba.jpg" alt="该图展示了人工编写的 Asana MCP 服务器与 Claude 优化版本在测试集准确率上的对比。">
+  <figcaption>我们内部 Asana 工具在留出测试集上的表现</figcaption>
+</figure>
+
+<hr>
+<p><strong>分析结果</strong>
+智能体是你识别问题、提供反馈的得力伙伴，涵盖从互相矛盾的工具描述到低效的工具实现、甚至令人困惑的工具模式。然而，请记住，智能体在反馈与响应中<em>未提及</em>的内容往往比提及的更重要。LLM 并不总是<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">言出必行</a>。</p>
+<p>观察智能体在哪些地方卡壳或困惑。通读评测智能体的推理与反馈（或 CoT），找出瑕疵。查看原始对话（包括工具调用与工具响应），捕捉推理中未明确描述的行为。需要读懂弦外之音；记住，评测智能体未必知道正确答案与策略。</p>
+<p>分析工具调用指标。大量冗余调用可能意味着需要合理设置分页或令牌上限参数；大量因参数无效导致的工具错误，则可能说明工具需要更清晰的描述或更好的示例。我们上线 Claude 的<a href="https://www.anthropic.com/news/web-search">网页搜索工具</a>时发现，Claude 会无谓地在工具的 <code>query</code> 参数后附加 <code>2025</code>，从而偏移搜索结果、降低表现（我们通过改进工具描述引导 Claude 走上正轨）。</p>
+<h3>与智能体协作</h3>
+<p>你甚至可以让智能体为你分析结果并改进工具。只需将评测智能体的对话串联起来，粘贴到 Claude Code 中。Claude 擅长分析对话，并同时重构大量工具——例如，当进行新改动时，确保工具实现与描述保持一致。</p>
+<p>事实上，本文的大部分建议都来自我们反复借助 Claude Code 优化内部工具实现的实践。我们的评测建立在内部工作区之上，反映了内部工作流的复杂性，包括真实的项目、文档与消息。</p>
+<p>我们依赖留出测试集，确保不会对“训练”评测过拟合。这些测试集揭示，即便是在“专家”工具实现基础之上（无论是研究人员手动编写还是 Claude 自动生成），我们仍可进一步挖掘性能提升空间。</p>
+<p>下一节将分享我们在此过程中获得的一些洞见。</p>
+<h2>编写高效工具的原则</h2>
+<p>本节将把经验提炼为若干指导原则，帮助你编写高效的工具。</p>
+<h3>为智能体选择合适的工具</h3>
+<p>更多工具并不总是带来更好的结果。我们常见的一个错误是：仅仅将现有软件功能或 API 端点包一层就当作工具——不管这些工具是否适合智能体。原因在于，智能体与传统软件拥有不同的“可供性”，即它们在理解可采取行动的方式上截然不同。</p>
+<p>LLM 智能体的“上下文”有限（也就是说，它们一次能处理的信息量有限），而计算机内存则廉价且充裕。以在通讯录中搜索联系人为例。传统软件可以高效地一次存储并处理一个联系人，逐个检查。</p>
+<p>然而，若 LLM 智能体使用的工具一次返回<em>所有</em>联系人，它就必须逐 token 阅读这些信息，浪费有限的上下文空间在无关内容上（想象一下，你要在通讯录中查人，却得自上而下逐页翻阅，这就像暴力搜索）。更好、更自然的方法（对智能体和人类都一样）是先跳转到相关页面（例如按字母定位）。</p>
+<p>我们建议先构建少量经过深思熟虑、针对高影响工作流的工具，使之与评测任务相匹配，再从那里扩展。在通讯录示例中，你或许应该实现 <code>search_contacts</code> 或 <code>message_contact</code> 工具，而不是 <code>list_contacts</code>。</p>
+<p>工具可以整合功能，在幕后处理多个离散操作（或 API 调用）。例如，工具可以在响应中补充相关元数据，或在一次工具调用中完成常见的多步链式任务。</p>
+<p>以下是一些例子：</p>
+<ul>
+<li>与其实现 <code>list_users</code>、<code>list_events</code> 和 <code>create_event</code> 工具，不如考虑实现 <code>schedule_event</code>，用于寻找空闲时间并安排事件。</li>
+<li>与其实现 <code>read_logs</code> 工具，不如实现 <code>search_logs</code>，只返回相关日志行及周边上下文。</li>
+<li>与其实现 <code>get_customer_by_id</code>、<code>list_transactions</code> 和 <code>list_notes</code> 工具，不如实现 <code>get_customer_context</code>，一次性整合客户近期且相关的全部信息。</li>
+</ul>
+<p>确保每个工具都有明确、独特的用途。工具应帮助智能体像人类在拥有相同资源时那样拆解并解决任务，同时减少中间输出占用的上下文。</p>
+<p>过多或功能重叠的工具也会分散智能体对高效策略的注意力。对要构建（或不构建）哪些工具进行细致、选择性的规划，确实能够带来丰厚回报。</p>
+<h3>为工具划分命名空间</h3>
+<p>你的 AI 智能体可能会接入数十个 MCP 服务器和上百个不同的工具——其中还包括其他开发者的工具。当工具在功能上重叠或用途含糊时，智能体会搞不清该用哪个。</p>
+<p>通过命名空间（为相关工具添加统一前缀）可以帮助在大量工具之间划清界限；部分 MCP 客户端默认会这样做。例如，按服务为工具命名空间（如 <code>asana_search</code>、<code>jira_search</code>），再按资源划分（如 <code>asana_projects_search</code>、<code>asana_users_search</code>），有助于智能体在正确的时间选择合适的工具。</p>
+<p>我们发现，选择前缀式或后缀式命名空间会对工具使用评测产生非平凡影响。不同 LLM 的效果各异，我们鼓励你根据自身评测选择命名方案。</p>
+<p>智能体可能调用错工具、用错参数、调用次数不足，或错误处理工具响应。通过精挑细选名称反映任务自然划分的工具，你既减少了智能体上下文中加载的工具与描述数量，也把智能体的推理负担从上下文转移回工具调用本身，从而降低整体出错风险。</p>
+<h3>从工具返回有意义的上下文</h3>
+<p>同样地，工具实现应谨慎地只向智能体返回高信号信息。优先提供与上下文高度相关的内容，而非追求灵活性；避开诸如 <code>uuid</code>、<code>256px_image_url</code>、<code>mime_type</code> 等低层技术标识。<code>name</code>、<code>image_url</code>、<code>file_type</code> 等字段更可能直接影响智能体后续的行动和响应。</p>
+<p>智能体处理自然语言名称、术语或标识符的能力，远胜于对晦涩标识符的理解。我们发现，仅仅将随机的字母数字 UUID 转换为语义更明确、易于理解的语言（或甚至转为从 0 开始的 ID 方案），就能显著降低 Claude 在检索任务中的幻觉率，提高准确性。</p>
+<p>在某些情况下，智能体可能需要既能处理自然语言、又能处理技术标识符的输出，哪怕只是为了触发后续工具调用（例如 <code>search_user(name=&#39;jane&#39;)</code> → <code>send_message(id=12345)</code>）。你可以通过在工具中暴露简单的 <code>response_format</code> 枚举参数，让智能体控制工具返回 <code>&quot;concise&quot;</code> 还是 <code>&quot;detailed&quot;</code>（下图所示）。</p>
+<p>你还可以添加更多格式以获得更高灵活性，类似 GraphQL 可以选择返回的具体信息。下面是一个控制工具响应详略的 ResponseFormat 枚举示例：</p>
+<pre><code>enum ResponseFormat {
+   DETAILED = &quot;detailed&quot;,
+   CONCISE = &quot;concise&quot;
+}
+</code></pre>
+<p>复制</p>
+<p>以下是一个详细的工具响应示例（206 个令牌）：</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-278ede24.jpg" alt="此代码片段展示了详细的工具响应示例。">
+</figure>
+
+<p>以下是一个简洁的工具响应示例（72 个令牌）：</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-3b33440a.jpg" alt="此代码片段展示了简洁的工具响应示例。">
+  <figcaption>Slack 线程及其回复由唯一的 `thread_ts` 标识，在抓取线程回复时必需。`thread_ts` 以及其他 ID（`channel_id`、`user_id`）可以通过 `"detailed"` 工具响应获取，用于后续需要这些参数的工具调用。`"concise"` 工具响应仅返回线程内容，省略 ID。本例中，使用 `"concise"` 响应将令牌数降至原来的约 1/3。</figcaption>
+</figure>
+
+<p>即便是工具响应结构（例如 XML、JSON 或 Markdown）也会影响评测表现：不存在通用方案。这是因为 LLM 通过下一 token 预测进行训练，通常更擅长处理与训练数据相似的格式。最佳响应结构会因任务与智能体而异。我们鼓励你依据自身评测选择最优结构。</p>
+<h3>优化工具响应的令牌效率</h3>
+<p>优化上下文的质量固然重要，优化返回给智能体的上下文<em>数量</em>也同样关键。</p>
+<p>我们建议在可能耗费大量上下文的工具响应中，实施分页、区间选择、过滤和/或截断的组合，并设置合理的默认参数。对于 Claude Code，我们默认将工具响应限制在 25,000 个令牌以内。我们预计智能体的有效上下文长度会随时间增长，但对上下文高效工具的需求仍会存在。</p>
+<p>如果选择截断响应，请务必通过清晰的指令引导智能体。你可以直接鼓励智能体采用更节省令牌的策略，例如在知识检索任务中进行多次小而精准的搜索，而不是一次广泛搜索。同样地，若工具调用引发错误（例如输入验证失败），可以通过提示工程让错误响应清楚传达具体可执行的改进建议，而非晦涩的错误码或追踪信息。</p>
+<p>以下是一个截断的工具响应示例：</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-7130fa85.jpg" alt="此图展示了一个截断的工具响应示例。">
+</figure>
+
+<p>以下是一个无用的错误响应示例：</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-28829b8c.jpg" alt="此图展示了一个无用的工具响应示例。 ">
+</figure>
+
+<p>以下是一个有用的错误响应示例：</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-3f041d04.jpg" alt="此图展示了一个有用的错误响应示例。">
+  <figcaption>工具截断与错误响应可以引导智能体采用更节省令牌的工具使用行为（如使用过滤器或分页），或给出正确格式的工具输入示例。</figcaption>
+</figure>
+
+<h3>对工具描述进行提示工程</h3>
+<p>现在来到改进工具最有效的方法之一：对工具描述和规格进行提示工程。因为这些内容会加载进智能体的上下文，它们能够整体上引导智能体采取高效的工具调用行为。</p>
+<p>在编写工具描述与规格时，设想你正在向团队中的新成员介绍这款工具。思考你可能隐含的上下文——特殊的查询格式、专业术语的定义、底层资源之间的关系——并将其显性化。通过严格的数据模型明确期望的输入与输出，从而消除歧义。特别是，输入参数的命名必须明确：把 <code>user</code> 改成 <code>user_id</code> 这样的命名会更清楚。</p>
+<p>借助评测，你可以更有信心地衡量提示工程的影响。即便是对工具描述的细微调整，也能带来巨大改进。在我们对 <a href="https://www.anthropic.com/engineering/swe-bench-sonnet">SWE-bench Verified</a> 评测的优化中，Claude Sonnet 3.5 在对工具描述进行精准调整后取得了最先进的表现，错误率大幅降低，任务完成度显著提升。</p>
+<p>你可以在我们的<a href="https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implement-tool-use#best-practices-for-tool-definitions">开发者指南</a>中找到更多工具定义的最佳实践。如果你在为 Claude 构建工具，我们也推荐阅读工具如何动态加载到 Claude 的<a href="https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implement-tool-use#tool-use-system-prompt">系统提示</a>。最后，如果你在为 MCP 服务器编写工具，<a href="https://modelcontextprotocol.io/specification/2025-06-18/server/tools">工具注解</a>有助于披露哪些工具需要开放世界访问或会进行破坏性修改。</p>
+<h2>展望未来</h2>
+<p>要为智能体打造高效工具，我们需要将软件开发实践从可预测、确定性的模式转向非确定性的范式。</p>
+<p>通过本文所述的迭代、以评测驱动的流程，我们总结出让工具取得成功的一些一致模式：高效工具经过深思熟虑、定义清晰；合理使用智能体的上下文；能在多样的工作流中组合使用；并能让智能体直观地解决真实任务。</p>
+<p>未来，我们预计智能体与世界交互的具体机制会不断演进——从 MCP 协议的更新到底层 LLM 的升级。只要坚持系统化、以评测驱动的工具改进方法，就能确保随着智能体能力的提升，它们使用的工具也能同步进化。</p>
+<h2>致谢</h2>
+<p>本文由 Ken Aizawa 撰写，研究团队（Barry Zhang、Zachary Witten、Daniel Jiang、Sami Al-Sheikh、Matt Bell、Maggie Vo）、MCP 团队（Theodora Chu、John Welsh、David Soria Parra、Adam Jones）、产品工程团队（Santiago Seira）、市场团队（Molly Vorwerck）、设计团队（Drew Roper）以及应用 AI 团队（Christian Ryan、Alexander Bricken）的同事们提供了宝贵贡献。</p>
+<p>1除了训练底层 LLM 之外。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-11-writing-tools-for-agents-24db79e8.svg" alt="互相嵌合的拼图块，具有复杂几何形状和精细表面纹理">
+</figure>
+
+<h3>想要了解更多？</h3>
+<p>在 Anthropic Academy 上通过课程掌握 API 开发、模型上下文协议和 Claude Code。完成课程即可获得证书。</p>
+<p><a href="https://anthropic.skilljar.com/">探索课程</a></p>
+<h2>订阅开发者通讯</h2>
+<p>获取产品更新、操作指南、社区聚焦等更多信息，每月送达你的收件箱。</p>
+<p>如果你想订阅我们的月度开发者通讯，请提供你的邮箱。你可随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/writing-tools-for-agents" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "与智能体一起编写高效工具",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-09-11T00:00:00.000Z",
+  "dateModified": "2025-09-11T00:00:00.000Z",
+  "description": "<figure> <img src=\"../../images/anthropic/2025-09-11-writing-tools-for-agents-5727b74b.svg\" alt=\"这是《与智能体合作编写高效工具》工程博客文章的抽象插图。\"> </figure> 智能体的效能取决于我们提供给它们的工具...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-09-11-writing-tools-for-agents.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | 联系方式: <a href="mailto:nblintao+digest@gmail.com">nblintao+digest@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

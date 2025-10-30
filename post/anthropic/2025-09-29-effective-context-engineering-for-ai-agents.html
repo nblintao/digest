@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>AI代理的高效上下文工程 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】对于AI代理而言，上下文是一种至关重要但有限的资源。本文将探讨如何高效地策划与管理支撑代理运行的上下文策略。 经过数年提示工程在应用型AI领域成为焦点之后，一个新术语开始走入视野：上下文工程。构建语言模型应用不再...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,AI代理的高效上下文工程,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-09-29-effective-context-engineering-for-ai-agents.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-09-29-effective-context-engineering-for-ai-agents.html">
+  <meta property="og:title" content="AI代理的高效上下文工程 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】对于AI代理而言，上下文是一种至关重要但有限的资源。本文将探讨如何高效地策划与管理支撑代理运行的上下文策略。 经过数年提示工程在应用型AI领域成为焦点之后，一个新术语开始走入视野：上下文工程。构建语言模型应用不再...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-09-29T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-09-29T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-09-29-effective-context-engineering-for-ai-agents.html">
+  <meta name="twitter:title" content="AI代理的高效上下文工程 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】对于AI代理而言，上下文是一种至关重要但有限的资源。本文将探讨如何高效地策划与管理支撑代理运行的上下文策略。 经过数年提示工程在应用型AI领域成为焦点之后，一个新术语开始走入视野：上下文工程。构建语言模型应用不再...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761866100913">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">AI代理的高效上下文工程</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Effective context engineering for AI agents</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-09-29</span>
+          </div>
+        </div>
+
+        <p>对于AI代理而言，上下文是一种至关重要但有限的资源。本文将探讨如何高效地策划与管理支撑代理运行的上下文策略。</p>
+<p>经过数年提示工程在应用型AI领域成为焦点之后，一个新术语开始走入视野：<strong>上下文工程</strong>。构建语言模型应用不再只是寻找提示中恰当的词句，而是更多地在回答一个更宏观的问题：“哪种上下文配置最有可能让模型产生我们期待的行为？”</p>
+<p><strong>上下文</strong>指的是从大型语言模型（LLM）采样时包含的那组标记。当前的<strong>工程</strong>问题在于，在LLM固有的约束下优化这些标记的效用，以便持续地获得期望的结果。要有效驯服LLM，往往需要<em>在上下文中思考</em>——换句话说：要考虑LLM在任何时刻所能看到的整体状态，以及该状态可能导致的潜在行为。</p>
+<p>本文将探讨新兴的上下文工程实践，并提供一个用于构建可调控、高效代理的精炼心智模型。</p>
+<h2>上下文工程 vs. 提示工程</h2>
+<p>在Anthropic，我们认为上下文工程是提示工程的自然演进。提示工程指的是为了获得最佳结果而编写并组织LLM指令的方法（参见<a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview">我们的文档</a>，了解概览和实用的提示工程策略）。<strong>上下文工程</strong>指的是在LLM推理过程中，为策划和维护最优标记集合（信息）的一整套策略，并包含了提示之外可能落入上下文的所有其他信息。</p>
+<p>在使用LLM进行工程的早期，提示是AI工程工作的最大组成部分，因为大多数非日常聊天的用例都需要针对一次分类或文本生成任务优化的提示。顾名思义，提示工程的重点是如何编写有效的提示，尤其是系统提示。然而，随着我们迈向能够在多轮推理和更长时间跨度上运行的更强代理，我们需要管理整个上下文状态（系统指令、工具、<a href="https://modelcontextprotocol.io/docs/getting-started/intro">Model Context Protocol</a>（MCP）、外部数据、消息历史等）的策略。</p>
+<p>一个在循环中运行的代理会生成越来越多可能与下一轮推理相关的数据，这些信息必须循环式地加以提炼。上下文工程就是从这片不断演化的潜在信息宇宙中，策划出将放入有限上下文窗口的内容这一<a href="https://x.com/karpathy/status/1937902205765607626?lang=en">艺术与科学</a>。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-29-effective-context-engineering-for-ai-agents-3a86d922.jpg" alt="提示工程与上下文工程">
+  <figcaption>*与编写提示这一离散任务不同，上下文工程是迭代式的，每次我们决定向模型传递什么时都会发生策划环节。*</figcaption>
+</figure>
+
+<h2>为什么上下文工程对打造高能力代理至关重要</h2>
+<p>尽管LLM速度快、能够处理越来越多的数据量，但我们观察到它们和人类一样，在某个节点后会失焦或陷入混乱。对needle-in-a-haystack样式基准测试的研究揭示了<a href="https://research.trychroma.com/context-rot">上下文腐烂</a>这一概念：随着上下文窗口中的标记数量增加，模型从该上下文准确回忆信息的能力会下降。</p>
+<p>虽然一些模型的性能退化更为平缓，但这一特性在所有模型中都会出现。因此，上下文必须被视为一种具有递减边际收益的有限资源。就像人类拥有<a href="https://journals.sagepub.com/doi/abs/10.1177/0963721409359277">有限的工作记忆容量</a>，LLM也有它们在解析大体量上下文时所倚重的“注意力预算”。每个新引入的标记都会不同程度地消耗这份预算，从而更加需要我们仔细策划可供LLM使用的标记。</p>
+<p>这种注意力的稀缺源于LLM的架构约束。LLM基于<a href="https://arxiv.org/abs/1706.03762">Transformer架构</a>，该架构让上下文中的每个标记都可以跨整个上下文<a href="https://huggingface.co/blog/Esmail-AGumaan/attention-is-all-you-need">关注每一个其他标记</a>。这会为n个标记带来n²种成对关系。</p>
+<p>随着上下文长度增加，模型捕捉这些成对关系的能力会被拉伸，从而在上下文规模与注意力聚焦之间形成自然张力。此外，模型是在训练数据分布中形成关注模式的，而短序列通常比长序列更常见。这意味着模型在全局上下文依赖方面的经验更少、专门参数也更少。</p>
+<p>像<a href="https://arxiv.org/pdf/2306.15595">位置编码插值</a>这样的技术可以通过将模型适配到最初训练时的较小上下文来处理更长序列，不过对标记位置信息的理解会有所退化。这些因素使性能呈现梯度下降而非断崖式下滑：模型在较长上下文下依然非常强大，但与短上下文场景相比，信息检索与长距离推理的精确度可能有所降低。</p>
+<p>这些现实意味着，深思熟虑的上下文工程对于构建能力出众的代理至关重要。</p>
+<h2>有效上下文的构成</h2>
+<p>鉴于LLM受限于有限的注意力预算，<em>良好</em>的上下文工程意味着找出<em>尽可能小</em>且信号强的标记集合，以最大化实现某个期望结果的概率。要将这一做法付诸实践并不容易，下面我们会围绕上下文的不同组成部分，阐述这一指导原则在实践中的具体含义。</p>
+<p><strong>系统提示</strong>应当极为清晰，使用简单、直接的语言，在适当的<em>高度</em>向代理呈现理念。合适的高度是两个常见失败模式之间的“恰到好处”区间。一端是我们看到工程师在提示中硬编码复杂而脆弱的逻辑，以获得精确的代理行为；这种方式会造成脆弱性，并随着时间推移增加维护复杂度。另一端是工程师只给出模糊的高层指导，既未为LLM提供明确的输出信号，也错误地假设存在共享上下文。最佳高度需要平衡：既要足够具体，能有效引导行为，又要足够灵活，为模型提供强有力的启发式。</p>
+<figure>
+  <img src="/images/anthropic/2025-09-29-effective-context-engineering-for-ai-agents-f01bde49.jpg" alt="在上下文工程过程中校准系统提示。">
+  <figcaption>*光谱的一端是脆弱的 if-else 硬编码提示，另一端是过于笼统或误以为存在共享上下文的提示。*</figcaption>
+</figure>
+
+<p>我们建议将提示组织成独立的区块（例如<code>&lt;background_information&gt;</code>、<code>&lt;instructions&gt;</code>、<code>## Tool guidance</code>、<code>## Output description</code>等），并使用XML标记或Markdown标题来划分这些区块，尽管随着模型能力增强，提示的具体格式可能变得不那么重要。</p>
+<p>无论你最终如何组织系统提示，都应力求使用最精简的信息全面描述预期行为。（需要注意的是，精简并不等于短小；你仍需要在一开始提供足够的信息，确保代理遵循所需行为。）最好先使用能力最强的模型，搭配一个精简提示，在你的任务上进行测试，之后根据初始测试暴露出的失败模式，逐步添加清晰的指令和示例来提升表现。</p>
+<p><strong>工具</strong>使代理能够与其环境互动，并在工作过程中引入新的额外上下文。由于工具定义了代理与其信息/行动空间之间的契约，因此工具必须促进效率，既要返回在标记上高效的信息，也要鼓励高效的代理行为。</p>
+<p>在<a href="https://www.anthropic.com/engineering/writing-tools-for-agents">《Writing tools for AI agents – with AI agents》</a>中，我们讨论了如何构建LLM易于理解且功能重叠最小的工具。类似于设计良好的代码库中的函数，工具应当是自包含的、对错误具有韧性，并且对其预期用途极为清晰。输入参数同样应当描述明确、毫不含糊，并符合模型的固有优势。</p>
+<p>我们看到的最常见失败模式之一，是臃肿的工具集覆盖了过多功能，或导致在选择使用哪一个工具时产生模糊的决策点。如果一位人类工程师都无法明确指出在给定情境中该使用哪种工具，就不能指望AI代理表现得更好。正如我们稍后将讨论的，为代理策划一组最小可行的工具，也有助于在长时间交互中更可靠地维护和修剪上下文。</p>
+<p>提供示例（也称为小样本提示）是广为人知的最佳实践，我们仍强烈推荐。然而，团队往往会在提示中塞入长长的边界案例清单，企图阐明LLM在特定任务上应遵循的每一条规则。我们并不建议这样做。相反，我们建议精心策划一组多样而典型的示例，充分展现代理的预期行为。对于LLM来说，示例就是“胜过千言万语的图像”。</p>
+<p>我们针对上下文不同组成部分（系统提示、工具、示例、消息历史等）的总体建议是：保持审慎，让上下文信息量高且紧凑。接下来，我们来深入探讨如何在运行时动态检索上下文。</p>
+<h2>上下文检索与代理式搜索</h2>
+<p>在<a href="https://www.anthropic.com/research/building-effective-agents">《Building effective AI agents》</a>一文中，我们强调了基于LLM的工作流与代理之间的差异。自那篇文章以来，我们逐渐倾向于对代理给出一个<a href="https://simonwillison.net/2025/Sep/18/agents/">简单的定义</a>：在循环中自主使用工具的LLM。</p>
+<p>与客户协作的过程中，我们看到整个领域正逐渐收敛到这一简单范式。随着底层模型愈发强大，代理的自主性可以不断提升：更聪明的模型使代理能够独立探索复杂的问题空间，并从错误中恢复。</p>
+<p>我们现在也看到工程师在设计代理上下文的方式上出现转变。如今，许多AI原生应用会在推理前使用某种基于嵌入的检索方式，为代理筛选出重要的上下文。随着行业向更具代理性的做法转型，我们越来越常看到团队在这些检索系统之上，增添“即时”（just in time）上下文策略。</p>
+<p>与其预先处理所有相关数据，采用“即时”方法构建的代理会维护轻量级标识符（文件路径、存储的查询、网页链接等），并使用这些引用在运行时通过工具将数据动态加载进上下文。Anthropic的代理式编码解决方案<a href="https://www.anthropic.com/claude-code">Claude Code</a>就使用了这种方式，对大型数据库执行复杂的数据分析。模型可以编写有针对性的查询、存储结果，并利用head和tail等Bash命令，在不将完整数据对象加载进上下文的情况下分析海量数据。这种方式类似于人类的认知方式：我们通常不会记住全部信息，而是引入文件系统、收件箱、书签等外部组织与索引系统，按需检索相关信息。</p>
+<p>除了存储效率之外，这些引用的元数据还提供了一种高效调优行为的机制，无论是显式提供的，还是模型直觉得出的。对于在文件系统中操作的代理来说，<code>tests</code>文件夹中名为<code>test_utils.py</code>的文件，与位于<code>src/core_logic/</code>中的同名文件，其用途有天壤之别。文件夹层级、命名约定和时间戳都会提供重要信号，帮助人类和代理理解如何以及何时使用信息。</p>
+<p>让代理自主导航并检索数据还能实现渐进式披露——换言之，使代理能够通过探索逐步发现相关上下文。每一次交互都会产生指导下一步决策的上下文：文件大小暗示复杂度，命名约定提示用途，时间戳可以作为相关性的代理指标。代理可以层层构建理解，只在工作记忆中保留必要的信息，并利用记笔记策略来获得额外的持久化能力。这种自主管理的上下文窗口让代理专注于相关子集，而不会被详尽但可能无关的信息淹没。</p>
+<p>当然，这其中存在权衡：运行时探索比检索预先计算的数据更慢。不仅如此，还需要带有明确观点且深思熟虑的工程设计，确保LLM拥有合适的工具和启发式，能够高效地在其信息版图中导航。缺乏恰当的引导，代理可能会误用工具、追逐死胡同，或忽视关键信息，从而浪费上下文。</p>
+<p>在某些场景中，最有效的代理可能采用混合策略：为了速度预先检索部分数据，其余的自主探索则按需进行。决定“适当”自治程度的边界取决于任务本身。Claude Code 就是采用该混合模式的代理：<a href="http://claude.md">CLAUDE.md</a>文件会在前期直接放入上下文，而glob和grep等原语则让它能够在环境中导航，并即时检索文件，有效避开索引陈旧和复杂语法树的问题。</p>
+<p>这种混合策略可能更适用于内容变化较少的场景，例如法律或金融工作。随着模型能力提升，代理设计的趋势将是让聪明的模型更智能地行事，逐渐减少人工策划。鉴于该领域进展迅速，对于在Claude之上构建代理的团队来说，“做最简单且有效的事”可能仍是最佳建议。</p>
+<h3>面向长时程任务的上下文工程</h3>
+<p>长时程任务要求代理在一系列行动中保持连贯、具备上下文意识并持续朝目标前进，而这些行动所需的标记数量会超过LLM的上下文窗口。对于持续数十分钟甚至数小时的连续工作（如大型代码库迁移或全面的调研项目），代理需要专门的技术来绕过上下文窗口大小的限制。</p>
+<p>等待更大的上下文窗口似乎是显而易见的策略。但在可预见的未来，各种大小的上下文窗口都可能面临上下文污染和信息相关性的问题——至少在追求最强代理表现的场景中如此。为了让代理在延长的时间跨度上仍能高效工作，我们研发了几项直接应对上下文污染约束的技术：压缩、结构化记笔记和多代理架构。</p>
+<p><strong>压缩</strong></p>
+<p>压缩是指在对话接近上下文窗口上限时，对其内容进行总结，并用该摘要重新启动新的上下文窗口。压缩通常是上下文工程中提升长期连贯性的首要杠杆。其核心在于高保真地提炼上下文窗口的内容，使代理能够在几乎不降低性能的情况下继续工作。</p>
+<p>以Claude Code为例，我们会让模型总结消息历史，并压缩出最关键的细节。模型会保留架构决策、未解决的缺陷以及实现细节，同时丢弃冗余的工具输出或消息。随后，代理可以使用这个压缩后的上下文，加上最近访问的五个文件继续工作。用户得以保持连续性，而无需担心上下文窗口的限制。</p>
+<p>压缩的艺术在于决定保留什么、舍弃什么，因为过度激进的压缩可能导致丢失那些暂时看似不重要、但之后至关重要的细节。对于实现压缩系统的工程师，我们建议在复杂代理轨迹上仔细调优提示。先最大化召回率，确保压缩提示能捕获轨迹中每个相关信息，再迭代提升精准度，去除多余内容。</p>
+<p>一个显而易见的冗余内容例子是清理工具调用及其结果——当某个工具在消息历史深处被调用后，代理为何还需要再次看到原始结果？最安全、最轻量的压缩形式之一就是清理工具结果，这也是<a href="https://www.anthropic.com/news/context-management">Claude开发者平台</a>近期上线的功能。</p>
+<p><strong>结构化记笔记</strong></p>
+<p>结构化记笔记（或代理式记忆）是一种让代理定期将笔记写入上下文窗口之外的持久化存储的技术。这些笔记会在之后被重新拉回上下文窗口中。</p>
+<p>这种策略以极小的开销提供了持久记忆能力。无论是Claude Code创建待办列表，还是你的自定义代理维护一份NOTES.md文件，这种简单的模式都能让代理在复杂任务中跟踪进度，保留那些否则会在几十次工具调用后丢失的关键上下文和依赖。</p>
+<p><a href="https://www.twitch.tv/claudeplayspokemon">Claude玩宝可梦</a>展示了记忆如何在非编码领域改变代理的能力。代理在数千个游戏步骤中保持精确的统计——跟踪诸如“过去1,234步里我一直在1号道路训练宝可梦，比卡丘朝10级目标提升了8级”这样的目标。在没有任何关于记忆结构的明示提示下，它会绘制探索区域的地图，记住获得的关键成就，并保留战斗策略笔记，帮助它学习哪些招式更适合对抗不同对手。</p>
+<p>在上下文重置后，代理会读取自己的笔记，继续时长数小时的训练或迷宫探索。跨越多次总结仍保持的连贯性，使得那些仅靠LLM上下文窗口无法实现的长时程策略成为可能。</p>
+<p>作为<a href="https://www.anthropic.com/effective-context-engineering-for-ai-agents">Sonnet 4.5 发布</a>的一部分，我们在Claude开发者平台上发布了处于公开测试阶段的<a href="http://anthropic.com/news/context-management">记忆工具</a>，让在上下文窗口之外更轻松地存储和查阅信息成为可能。借助这一文件式系统，代理可以随时间累积知识库，在会话之间维持项目状态，并在无需将所有内容置于上下文中的情况下引用既往工作。</p>
+<p><strong>子代理架构</strong></p>
+<p>子代理架构提供了规避上下文限制的另一种方式。与其让单个代理尝试在整个项目中维持状态，不如让专门的子代理在干净的上下文窗口中处理聚焦任务。主代理负责编排高层计划，而子代理则执行深入的技术工作，或使用工具寻找相关信息。每个子代理可以进行大量探索，使用成千上万甚至数万标记，但只会返回其工作的精炼总结（通常为1,000至2,000个标记）。</p>
+<p>这种方法实现了责任的清晰分离——详尽的搜索上下文留在子代理内部，而主代理专注于综合和分析结果。我们在<a href="https://www.anthropic.com/engineering/multi-agent-research-system">《How we built our multi-agent research system》</a>中讨论过这一模式，在复杂研究任务上，该模式相较于单代理系统展现出显著的性能提升。</p>
+<p>选择哪种方法取决于任务特征。例如：</p>
+<ul>
+<li>压缩适用于需要大量往返交互、必须保持对话流畅性的任务；</li>
+<li>记笔记擅长处理有明确里程碑的迭代式开发；</li>
+<li>多代理架构适合并行探索能带来回报的复杂研究与分析。</li>
+</ul>
+<p>即便模型持续进步，在长时间交互中保持连贯性这一挑战仍将是打造更高效代理的核心。</p>
+<h2>结论</h2>
+<p>上下文工程代表着我们构建LLM方式的根本转变。随着模型愈发强大，挑战不再只是打造完美提示——而是在每一步都慎重策划进入模型有限注意力预算的信息。无论你是在为长时程任务实施压缩、为工具设计节省标记的接口，还是让代理按需探索其环境，指导原则始终如一：找到那组最小且高信号的标记，以最大化实现目标结果的可能性。</p>
+<p>随着模型进步，我们提出的技术也会持续演化。我们已经看到更聪明的模型需要更少的规范化工程，使代理能够以更高的自主性运行。但即便能力持续扩展，将上下文视为宝贵且有限的资源仍会是打造可靠高效代理的核心。</p>
+<p>立即在Claude开发者平台上开始你的上下文工程实践吧，并通过我们的<a href="https://github.com/anthropics/claude-cookbooks/blob/main/tool_use/memory_cookbook.ipynb">记忆与上下文管理</a>烹饪书获取实用技巧与最佳实践。</p>
+<h2>致谢</h2>
+<p>本文由Anthropic应用AI团队的Prithvi Rajasekaran、Ethan Dixon、Carly Ryan和Jeremy Hadfield撰写，团队成员Rafi Ayub、Hannah Moran、Cal Rueb和Connor Jennings亦有贡献。特别感谢Molly Vorwerck、Stuart Ritchie和Maggie Vo的支持。</p>
+<h2>订阅开发者通讯</h2>
+<p>产品更新、操作指南、社区聚焦等内容，每月送达你的收件箱。</p>
+<p>如果你希望收到我们的月度开发者通讯，请留下电子邮箱地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI代理的高效上下文工程",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-09-29T00:00:00.000Z",
+  "dateModified": "2025-09-29T00:00:00.000Z",
+  "description": "对于AI代理而言，上下文是一种至关重要但有限的资源。本文将探讨如何高效地策划与管理支撑代理运行的上下文策略。 经过数年提示工程在应用型AI领域成为焦点之后，一个新术语开始走入视野：上下文工程。构建语言模型应用不再...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-09-29-effective-context-engineering-for-ai-agents.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | 联系方式: <a href="mailto:nblintao+digest@gmail.com">nblintao+digest@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

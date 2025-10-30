@@ -13,6 +13,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2025-10-20-claude-code-sandboxing.html</loc>
+    <lastmod>2025-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills.html</loc>
+    <lastmod>2025-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/karpathy/2025-10-01-animals-vs-ghosts.html</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -25,6 +37,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk.html</loc>
+    <lastmod>2025-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2025-09-29-effective-context-engineering-for-ai-agents.html</loc>
+    <lastmod>2025-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-29-lora.html</loc>
     <lastmod>2025-09-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -33,6 +57,18 @@
   <url>
     <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-26-modular-manifolds.html</loc>
     <lastmod>2025-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2025-09-17-a-postmortem-of-three-recent-issues.html</loc>
+    <lastmod>2025-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2025-09-11-writing-tools-for-agents.html</loc>
+    <lastmod>2025-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -86,6 +122,12 @@
   </url>
   <url>
     <loc>https://digest.qcngt.com/author/thinkingmachines.html</loc>
+    
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://digest.qcngt.com/author/anthropic.html</loc>
     
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

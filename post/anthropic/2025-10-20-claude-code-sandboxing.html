@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>超越权限提示：让 Claude Code 更安全、更自主 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】Claude Code 的新沙箱功能（沙箱化 Bash 工具和 Web 版 Claude Code）通过启用文件系统和网络隔离这两道边界，减少权限提示并提升用户安全性。 在 Claude Code 中，Claude 会与你并肩编写、测试和调试代码，浏览你的代码库、...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,超越权限提示：让 Claude Code 更安全、更自主,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-10-20-claude-code-sandboxing.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-10-20-claude-code-sandboxing.html">
+  <meta property="og:title" content="超越权限提示：让 Claude Code 更安全、更自主 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】Claude Code 的新沙箱功能（沙箱化 Bash 工具和 Web 版 Claude Code）通过启用文件系统和网络隔离这两道边界，减少权限提示并提升用户安全性。 在 Claude Code 中，Claude 会与你并肩编写、测试和调试代码，浏览你的代码库、...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-10-20T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-10-20T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-10-20-claude-code-sandboxing.html">
+  <meta name="twitter:title" content="超越权限提示：让 Claude Code 更安全、更自主 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】Claude Code 的新沙箱功能（沙箱化 Bash 工具和 Web 版 Claude Code）通过启用文件系统和网络隔离这两道边界，减少权限提示并提升用户安全性。 在 Claude Code 中，Claude 会与你并肩编写、测试和调试代码，浏览你的代码库、...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761866100913">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">超越权限提示：让 Claude Code 更安全、更自主</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Beyond permission prompts: making Claude Code more secure and autonomous</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-10-20</span>
+          </div>
+        </div>
+
+        <p>Claude Code 的新沙箱功能（沙箱化 Bash 工具和 Web 版 Claude Code）通过启用文件系统和网络隔离这两道边界，减少权限提示并提升用户安全性。</p>
+<p>在 <a href="https://www.claude.com/product/claude-code">Claude Code</a> 中，Claude 会与你并肩编写、测试和调试代码，浏览你的代码库、编辑多个文件，并运行命令来验证自己的工作。让 Claude 拥有如此多的代码库和文件访问权限可能带来风险，尤其是在遭遇提示词注入时。</p>
+<p>为此，我们基于沙箱为 Claude Code 引入了两项新功能，它们既能为开发者提供更安全的工作环境，也让 Claude 以更少的权限提示更加自主地运行。在我们的内部使用中，我们发现沙箱可以安全地将权限提示次数减少 84%。通过界定 Claude 可以自由工作的边界，我们既提升了安全性，也增强了自主性。</p>
+<h3><strong>在 Claude Code 中保障用户安全</strong></h3>
+<p>Claude Code 采用基于权限的模型运行：默认情况下它是只读的，这意味着在进行修改或运行任何命令前都会征求你的许可。也有一些例外，例如我们会自动允许 echo 或 cat 这类安全命令，但大多数操作仍然需要明确批准。</p>
+<p>不断点击“批准”会拖慢开发节奏，还可能导致“批准疲劳”，让用户无法仔细关注自己正在批准的内容，从而降低开发安全性。</p>
+<p>为了解决这一问题，我们为 Claude Code 启用了沙箱功能。</p>
+<h2><strong>沙箱：更安全、更自主的方式</strong></h2>
+<p>沙箱会创建预设的边界，使 Claude 可以在其中更自由地工作，而不是对每个操作都请求许可。启用沙箱后，你会看到权限提示大幅减少，同时安全性提升。</p>
+<p>我们的沙箱方案构建在操作系统层特性之上，建立了两道边界：</p>
+<ol>
+<li><strong>文件系统隔离</strong> ,**** 它确保 Claude 只能访问或修改特定目录。这对防止遭遇提示词注入的 Claude 修改敏感系统文件尤为重要。</li>
+<li><strong>网络隔离</strong> ,**** 它确保 Claude 只能连接到已批准的服务器。这可以阻止遭遇提示词注入的 Claude 泄露敏感信息或下载恶意软件。</li>
+</ol>
+<p>值得注意的是，高效的沙箱需要同时具备文件系统隔离和网络隔离。没有网络隔离，被攻破的代理可能会窃取 SSH 密钥等敏感文件；没有文件系统隔离，被攻破的代理可以轻松逃离沙箱并获取网络访问权限。正是通过同时采用这两种技术，我们才能为 Claude Code 用户提供更安全、更高效的智能体体验。</p>
+<h3>Claude Code 中的两项全新沙箱功能</h3>
+<h4><strong>沙箱化 Bash 工具：无权限提示的安全 Bash 执行</strong></h4>
+<p>我们推出了 <a href="https://docs.claude.com/en/docs/claude-code/sandboxing">新的沙箱运行时</a>，目前以研究预览形式提供测试版本，允许你精确指定代理可以访问的目录和网络主机，而无需付出启动和管理容器的开销。它可以用于沙箱化任意进程、代理和 MCP 服务器，并以 <a href="https://github.com/anthropic-experimental/sandbox-runtime">开源研究预览</a> 的形式提供。</p>
+<p>在 Claude Code 中，我们使用该运行时为 Bash 工具提供沙箱，使 Claude 能在你设定的限制内运行命令。在安全的沙箱内，Claude 可以更自主地工作，并在无需权限提示的情况下安全执行命令。如果 Claude 试图访问 <em>沙箱之外</em> 的内容，你会立即收到通知，并可选择是否允许。</p>
+<p>我们构建的方案基于操作系统级原语，例如 <a href="https://github.com/containers/bubblewrap">Linux bubblewrap</a> 和 MacOS seatbelt，在操作系统层实施这些限制。它不仅覆盖 Claude Code 的直接操作，还覆盖命令所衍生的任何脚本、程序或子进程。如上所述，该沙箱同时强制执行：</p>
+<ol>
+<li><strong>文件系统隔离，</strong> 允许对当前工作目录进行读写，但阻止修改其之外的任何文件。</li>
+<li><strong>网络隔离，</strong> 仅允许通过连接到沙箱外部代理服务器的 Unix 域套接字访问互联网。该代理服务器会对进程可连接的域名实施限制，并在请求新域名时处理用户确认。如果你希望进一步提升安全性，我们也支持自定义该代理来对出站流量施加任意规则。</li>
+</ol>
+<p>两大组件都可以配置：你可以轻松地允许或拒绝特定文件路径或域名。</p>
+<figure>
+  <img src="/images/anthropic/2025-10-20-claude-code-sandboxing-2e29a9b4.jpg" alt="这幅插图展示了 Claude Code 中沙箱的工作方式。">
+  <figcaption>Claude Code 的沙箱架构通过文件系统和网络控制隔离代码执行，自动允许安全操作、拦截恶意操作，并仅在必要时请求许可。</figcaption>
+</figure>
+
+<p>沙箱确保即便提示词注入成功也会被完全隔离，不会影响整体的用户安全性。这样一来，被攻破的 Claude Code 既无法窃取你的 SSH 密钥，也无法与攻击者的服务器通信。</p>
+<p>要使用这一功能，只需在 Claude Code 中运行 /sandbox，并查阅我们有关安全模型的 <a href="https://docs.claude.com/en/docs/claude-code/sandboxing">更多技术细节</a>。</p>
+<p>为了让更多团队构建更安全的代理，我们已经将这一功能 <a href="https://github.com/anthropic-experimental/sandbox-runtime">开源</a>。我们也鼓励其他团队在其代理中采用这项技术，以增强代理的安全防护能力。</p>
+<h4><strong>Web 版 Claude Code：在云端安全运行 Claude Code</strong></h4>
+<p>今天我们还发布了 <a href="https://docs.claude.com/en/docs/claude-code/claude-code-on-the-web">Web 版 Claude Code</a>，让用户能够在云端的隔离沙箱中运行 Claude Code。Web 版 Claude Code 会在隔离沙箱中执行每个会话，在安全的前提下完全访问其服务器。我们设计的沙箱确保敏感凭证（如 git 凭证或签名密钥）绝不会与 Claude Code 同处沙箱内。这样，即使沙箱中的代码遭受攻击，用户也能免受进一步伤害。</p>
+<p>Web 版 Claude Code 使用自定义代理服务透明地处理所有 git 交互。在沙箱内，git 客户端会使用专门构建的范围凭证对该服务进行身份验证。代理会验证此凭证以及 git 交互的内容（例如确保只推送到配置好的分支），然后再附加正确的身份验证令牌，将请求发送到 GitHub。</p>
+<figure>
+  <img src="/images/anthropic/2025-10-20-claude-code-sandboxing-fd6d21d5.jpg" alt="这幅插图展示了 Web 版 Claude Code 如何使用自定义代理处理所有 git 交互。">
+  <figcaption>Claude Code 的 Git 集成会将命令路由至安全代理，由其验证身份令牌、分支名称和仓库目标——从而在防止未经授权推送的同时，支持安全的版本控制工作流。</figcaption>
+</figure>
+
+<h2>入门指南</h2>
+<p>我们新的沙箱化 Bash 工具以及 Web 版 Claude Code，为使用 Claude 开展工程工作的开发者带来了显著的安全性和生产力提升。</p>
+<p>要开始使用这些工具：</p>
+<ol>
+<li>在 Claude 中运行 <code>/sandbox</code>，并查看<a href="https://docs.claude.com/en/docs/claude-code/sandboxing">我们的文档</a>，了解如何配置该沙箱。</li>
+<li>前往 <a href="http://claude.ai/redirect/website.v1.8f30b491-2bc6-43b9-b000-c6572abf1516/code">claude.com/code</a> 体验 Web 版 Claude Code。</li>
+</ol>
+<p>或者，如果你正在构建自己的代理，不妨查看我们<a href="https://github.com/anthropic-experimental/sandbox-runtime">开源的沙箱代码</a>，并考虑将其整合进你的工作流程。我们期待看到你们的成果。</p>
+<p>想进一步了解 Web 版 Claude Code，请阅读我们的<a href="https://www.anthropic.com/news/claude-code-on-the-web">发布博文</a>。</p>
+<h2>致谢</h2>
+<p>本文由 David Dworken 和 Oliver Weller-Davies 撰写，Catherine Wu、Molly Vorwerck、Alex Isken、Kier Bradwell 以及 Kevin Garcia 协助完成。</p>
+<h2>订阅开发者通讯</h2>
+<p>产品更新、操作指南、社区精选等信息，每月发送到你的收件箱。</p>
+<p>如果你希望收到我们的月度开发者通讯，请留下你的电子邮箱地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/claude-code-sandboxing" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "超越权限提示：让 Claude Code 更安全、更自主",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-10-20T00:00:00.000Z",
+  "dateModified": "2025-10-20T00:00:00.000Z",
+  "description": "Claude Code 的新沙箱功能（沙箱化 Bash 工具和 Web 版 Claude Code）通过启用文件系统和网络隔离这两道边界，减少权限提示并提升用户安全性。 在 Claude Code 中，Claude 会与你并肩编写、测试和调试代码，浏览你的代码库、...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-10-20-claude-code-sandboxing.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | 联系方式: <a href="mailto:nblintao+digest@gmail.com">nblintao+digest@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

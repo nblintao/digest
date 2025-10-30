@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>用 Agent Skills 让智能体适应真实世界 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,用 Agent Skills 让智能体适应真实世界,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills.html">
+  <meta property="og:title" content="用 Agent Skills 让智能体适应真实世界 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-10-16T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-10-16T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills.html">
+  <meta name="twitter:title" content="用 Agent Skills 让智能体适应真实世界 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1761866100913">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">用 Agent Skills 让智能体适应真实世界</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Equipping agents for the real world with Agent Skills</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-10-16</span>
+          </div>
+        </div>
+
+        <p>Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。</p>
+<p>随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 <a href="https://claude.com/product/claude-code">Claude Code</a> 可以通过本地代码执行和文件系统，在多个领域完成复杂任务。但随着这些智能体变得更强，我们需要更具组合性、可扩展性和可移植性的方式，为它们注入领域专长。</p>
+<p>因此，我们打造了 <a href="https://www.anthropic.com/news/skills"><strong>Agent Skills</strong></a>：这是由指令、脚本和资源组成的有序文件夹，智能体可以动态地发现并加载它们，从而在特定任务上表现更好。**** Skills 通过把你的专业知识封装成 Claude 可组合使用的资源，扩展了 Claude 的能力，将通用智能体转化为符合你需求的专用智能体。</p>
+<p>为智能体构建一个技能，就像为新员工整理一份入职指南。与其为每个用例搭建割裂的定制智能体，现在任何人都能通过捕获和共享自己的流程知识，让智能体凭借可组合的能力实现专精。在本文中，我们解释什么是 Skills、它们如何运作，并分享打造自定义技能的最佳实践。</p>
+<figure>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4caa1848.jpg" alt="要启用技能，你只需编写一个包含自定义指引的 SKILL.md 文件。">
+  <figcaption>一个技能是包含 SKILL.md 文件的目录，其中组织了指令、脚本和资源，为智能体提供额外能力。</figcaption>
+</figure>
+
+<h2>技能的组成</h2>
+<p>为了看看 Skills 如何发挥作用，我们来走查一个真实案例：它是支撑 <a href="https://www.anthropic.com/news/create-files">Claude 新上线的文档编辑能力</a> 的技能之一。Claude 已经非常擅长理解 PDF，但在直接操作它们（例如填写表单）方面仍受限。这个 <a href="https://github.com/anthropics/skills/tree/main/document-skills/pdf">PDF 技能</a> 让我们能够赋予 Claude 这些新能力。</p>
+<p>在最简单的情况下，一个技能就是一个包含 <code>SKILL.md file</code> 的目录。该文件必须以 YAML 前言开头，其中包含一些必需的元数据：<code>name</code> 和 <code>description</code>。在启动时，智能体会将每个已安装技能的 <code>name</code> 和 <code>description</code> 预加载到其系统提示中。</p>
+<p>这些元数据是<strong>渐进披露</strong>的<strong>第一层</strong>：它们为 Claude 提供恰到好处的信息，让它知道何时应该使用某个技能，而无需把全部内容加载进上下文。该文件的正文是<strong>第二层</strong>细节。如果 Claude 认为这个技能与当前任务相关，它就会通过读取完整的 <code>SKILL.md</code> 把技能加载进上下文。</p>
+<figure>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4416fa3c.jpg" alt="SKILL.md 文件的结构示意，包括名称、描述和与技能应执行动作相关的上下文。">
+  <figcaption>SKILL.md 文件必须以 YAML 前言开始，其中包含文件名和描述，这些内容会在启动时被加载进系统提示。</figcaption>
+</figure>
+
+<p>随着技能日益复杂，它们所包含的上下文可能太多，无法放进单个 <code>SKILL.md</code> 中，或者只有在特定场景才相关。在这种情况下，技能可以在目录中打包额外文件，并在 <code>SKILL.md</code> 中按名称引用它们。这些额外的关联文件就是<strong>第三层</strong>（及更高层次）的细节，Claude 只会在需要时选择阅读。</p>
+<p>在下图的 PDF 技能中，<code>SKILL.md</code> 引用了另外两个文件（<code>reference.md</code> 和 <code>forms.md</code>），技能作者选择将它们与核心的 <code>SKILL.md</code> 一同打包。通过把表单填写指引移动到单独的 <code>forms.md</code>，技能作者得以保持技能核心精简，并相信 Claude 只会在填写表单时读取 <code>forms.md</code>。</p>
+<figure>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-3d348fe9.jpg" alt="如何在 SKILL.md 文件中打包额外内容。">
+  <figcaption>你可以把更多上下文（通过附加文件）纳入技能，让 Claude 根据系统提示在需要时触发它们。</figcaption>
+</figure>
+
+<p>渐进披露是让 Agent Skills 既灵活又可扩展的核心设计原则。就像一本组织良好的手册，先是目录，再是具体章节，最后是详尽的附录，技能让 Claude 只在需要时加载信息：</p>
+<figure>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-8bb158c1.jpg" alt="该图展示了 Skills 中上下文渐进披露的方式。">
+</figure>
+
+<p>拥有文件系统和代码执行工具的智能体，在处理某个任务时无需把整个技能内容都读进上下文窗口。这意味着可以被打包进技能的上下文量实际上不受限制。</p>
+<h3>技能与上下文窗口</h3>
+<p>下图展示了当用户消息触发技能时，上下文窗口如何发生变化。</p>
+<figure>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-af783536.jpg" alt="该图展示了技能如何在上下文窗口中被触发。">
+  <figcaption>技能通过系统提示在上下文窗口中被触发。</figcaption>
+</figure>
+
+<p>操作顺序如下：</p>
+<ol>
+<li>起初，上下文窗口包含核心系统提示、每个已安装技能的元数据以及用户的初始消息；</li>
+<li>Claude 通过调用 Bash 工具读取 <code>pdf/SKILL.md</code>，从而触发 PDF 技能；</li>
+<li>Claude 选择读取与技能一起打包的 <code>forms.md</code> 文件；</li>
+<li>最后，Claude 在加载了 PDF 技能的相关指引后继续执行用户任务。</li>
+</ol>
+<h3>技能与代码执行</h3>
+<p>技能也可以包含代码，供 Claude 按需作为工具执行。</p>
+<p>大型语言模型擅长许多任务，但某些操作更适合传统的代码执行。例如，通过逐 token 生成来排序列表远比直接运行排序算法昂贵。除了效率考量，许多应用场景还需要只有代码才能提供的确定性可靠性。</p>
+<p>在我们的示例中，PDF 技能包含一个预编写的 Python 脚本，它可以读取 PDF 并提取所有表单字段。Claude 无需把脚本或 PDF 加载进上下文就能运行该脚本。而且因为代码具有确定性，这个流程始终一致且可重复。</p>
+<figure>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-41e210d9.jpg" alt="该图展示了如何通过 Skills 执行代码。">
+  <figcaption>技能还能包含代码，Claude 会根据任务性质自行决定是否执行。</figcaption>
+</figure>
+
+<h2>开发与评估技能</h2>
+<p>以下是一些帮助你开始撰写和测试技能的实用指南：</p>
+<ul>
+<li><strong>从评估开始：</strong> 在代表性任务上运行你的智能体，找出它在哪些地方能力不足或需要额外上下文。然后逐步构建技能来弥补这些短板。</li>
+<li><strong>为规模而设计：</strong> 当 <code>SKILL.md</code> 文件变得难以驾驭时，将内容拆分成独立文件并引用它们。如果某些上下文互相独立或很少同时使用，保持路径分离能减少 token 消耗。最后，代码既可以作为可执行工具，也能充当文档。务必让 Claude 明白脚本应该直接运行还是作为参考读入上下文。</li>
+<li><strong>站在 Claude 的角度思考：</strong> 观察 Claude 在真实场景下如何使用你的技能，并据此迭代：留意意外的使用路径或对某些上下文的过度依赖。特别关注技能的 <code>name</code> 和 <code>description</code>。Claude 会根据它们来判断是否在当前任务中触发技能。</li>
+<li><strong>与 Claude 一起迭代：</strong> 当你和 Claude 协同处理任务时，让 Claude 把成功的方法和常见的失误提炼进技能中的可复用上下文与代码。如果它在使用技能时偏离轨道，要求它反思问题出在哪儿。这个过程能帮助你发现 Claude 实际需要的上下文，而不是事先凭空猜测。</li>
+</ul>
+<h3>使用 Skills 时的安全注意事项</h3>
+<p>技能通过指令和代码为 Claude 提供新能力。这让它们很强大，但也意味着恶意技能可能在使用环境中引入漏洞，或指使 Claude 外泄数据、执行意料之外的操作。</p>
+<p>我们建议仅从可信来源安装技能。如果要安装来自不那么可信来源的技能，请在使用前彻底审计。先阅读技能中打包的文件内容，了解它的具体行为，尤其要关注代码依赖和附带的资源（如图像或脚本）。同样地，还要留意技能内的指令或代码是否要求 Claude 连接到可能不可信的外部网络资源。</p>
+<h2>Skills 的未来</h2>
+<p>Agent Skills 目前已经在 <a href="http://claude.ai/redirect/website.v1.51f73c97-b077-44e7-85ba-8b27a025dfdf">Claude.ai</a>、Claude Code、Claude Agent SDK 和 Claude Developer Platform 上<a href="https://www.anthropic.com/news/skills">获得支持</a>。</p>
+<p>在接下来的数周里，我们会持续推出新功能，支持 Skills 在创建、编辑、发现、分享和使用上的全生命周期。我们尤其期待 Skills 能帮助组织和个人将自身的上下文和工作流分享给 Claude。我们还将探索 Skills 如何与 <a href="https://modelcontextprotocol.io/">Model Context Protocol</a>（MCP）服务器互补，教会智能体使用涉及外部工具和软件的复杂工作流。</p>
+<p>展望未来，我们希望让智能体能够自主创建、编辑和评估 Skills，使它们能够把自身的行为模式固化成可复用的能力。</p>
+<p>Skills 的概念简单，格式也同样简洁。这种简单性让组织、开发者和终端用户更容易构建定制化智能体，并赋予它们新的能力。</p>
+<p>我们期待看到大家用 Skills 构建出的成果。现在就前往我们的 Skills <a href="https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview">文档</a>和<a href="https://github.com/anthropics/claude-cookbooks/tree/main/skills">示例集</a>开始探索吧。</p>
+<h2>致谢</h2>
+<p>Barry Zhang、Keith Lazuka 和 Mahesh Murag 撰写了本文，他们都特别喜欢文件夹。特别感谢 Anthropic 各个团队中倡导、支持并创建 Skills 的众多同事。</p>
+<h2>订阅开发者通讯</h2>
+<p>产品更新、操作指南、社区亮点等更多内容，每月发送到你的收件箱。</p>
+<p>如果你希望收到我们的月度开发者通讯，请留下电子邮箱地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "用 Agent Skills 让智能体适应真实世界",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-10-16T00:00:00.000Z",
+  "dateModified": "2025-10-16T00:00:00.000Z",
+  "description": "Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | 联系方式: <a href="mailto:nblintao+digest@gmail.com">nblintao+digest@gmail.com</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
