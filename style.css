@@ -835,13 +835,14 @@ footer .container {
 footer p {
   margin: 0;
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 footer a {
   color: var(--accent-color);
   text-decoration: none;
   transition: opacity 0.3s;
+  font-size: inherit;
 }
 
 footer a:hover {
