@@ -17,5 +17,5 @@
   ],
   "theme_color": "#fafbfc",
   "background_color": "#fafbfc",
-  "display": "standalone"
+  "display": "browser"
 }
