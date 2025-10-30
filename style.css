@@ -67,7 +67,7 @@ body {
 header {
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   box-shadow: var(--shadow-sm);
   position: sticky;
   top: 0;
@@ -87,7 +87,7 @@ header {
 }
 
 .site-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-secondary);
   text-decoration: none;
@@ -98,10 +98,32 @@ header {
   opacity: 0.8;
 }
 
+/* 汉堡菜单按钮 */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.menu-toggle:hover {
+  color: var(--accent-color);
+}
+
+nav {
+  position: relative;
+}
+
 nav ul {
   display: flex;
   list-style: none;
   gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
@@ -109,6 +131,7 @@ nav a {
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
+  font-size: 0.95rem;
 }
 
 nav a:hover {
@@ -582,6 +605,56 @@ footer a:hover {
     padding: 0 1rem;
   }
 
+  header {
+    padding: 0.75rem 0;
+    position: static;
+  }
+
+  .site-title {
+    font-size: 1.25rem;
+  }
+
+  /* 显示汉堡菜单按钮 */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* 隐藏导航，改为下拉菜单 */
+  nav ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    padding: 0.5rem 0;
+    min-width: 200px;
+    margin-top: 0.5rem;
+    flex-direction: column;
+    gap: 0;
+    z-index: 1000;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  nav li {
+    margin: 0;
+  }
+
+  nav a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  nav a:hover {
+    background: var(--accent-light);
+  }
+
   .page-title {
     font-size: 2rem;
   }
@@ -610,15 +683,6 @@ footer a:hover {
 
   .article-original-title {
     font-size: 1rem;
-  }
-
-  nav ul {
-    gap: 1rem;
-  }
-
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
   }
 }
 

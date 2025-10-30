@@ -41,7 +41,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761789599817">
+  <link rel="stylesheet" href="/style.css?v=1761790056518">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -51,6 +51,7 @@
       <div class="header-content">
         <a href="/" class="site-title">人工智能文摘</a>
         <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
           <ul>
             <li><a href="/author/paulgraham.html">Paul Graham</a></li>
             <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
@@ -346,5 +347,34 @@ Thinking Machines Lab: Connectionism, Sep 2025.
       <p>版权归原文作者所有，仅供学习交流 | 联系方式: <a href="mailto:nblintao+digest@gmail.com">nblintao+digest@gmail.com</a></p>
     </div>
   </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
