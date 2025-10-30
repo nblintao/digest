@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页 - 人工智能文摘</title>
+  <link rel="stylesheet" href="/style.css?v=1761783314003">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">人工智能文摘</h1>
+      <p class="page-subtitle">精选 AI 领域顶尖思想者的优质文章</p>
+    </div>
+    <div class="posts-grid">
+      
+    <a href="/post/thinkingmachines/2025-10-27-on-policy-distillation.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Thinking Machines Lab</span>
+        <span class="post-date">2025年10月27日</span>
+      </div>
+      <h3 class="post-title">同策略蒸馏</h3>
+      <p class="post-excerpt">LLM 在聚焦领域可以达到专家级表现，这源于多种能力的层层叠加：对输入的感知、知识检索、方案选择以及可靠执行。要实现这些，需要一套分层的训练方法，我们可以粗分为三个阶段： 预训练（Pre-training）：教授语言使用、广泛推理...</p>
+    </a>
+    <a href="/post/karpathy/2025-10-01-animals-vs-ghosts.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Andrej Karpathy</span>
+        <span class="post-date">2025年10月1日</span>
+      </div>
+      <h3 class="post-title">动物 vs 幽灵</h3>
+      <p class="post-excerpt">终于有机会把这期 Sutton 做客 Dwarkesh 的节目 听完了，挺有意思也挺好玩。 作为背景，Sutton 的“The Bitter Lesson（苦涩教训）”在前沿 LLM 圈子里几乎成了“圣经”。研究者常常讨论、追问某个方法或想法是否“足够吃到苦涩教...</p>
+    </a>
+    <a href="/post/thinkingmachines/2025-10-01-announcing-tinker.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Thinking Machines Lab</span>
+        <span class="post-date">2025年10月1日</span>
+      </div>
+      <h3 class="post-title">宣布推出 Tinker</h3>
+      <p class="post-excerpt">TinkerToy 计算机 由 Daniel Hillis 和 Brian Silverman 发明 今天，我们发布了 Tinker，这是一套用于微调语言模型的灵活 API。它通过让研究者和黑客掌控算法与数据，赋能他们开展模型实验，而我们来处理分布式训练的复杂...</p>
+    </a>
+    <a href="/post/thinkingmachines/2025-09-29-lora.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Thinking Machines Lab</span>
+        <span class="post-date">2025年9月29日</span>
+      </div>
+      <h3 class="post-title">无悔的 LoRA</h3>
+      <p class="post-excerpt">当今最先进的语言模型包含多达数万亿个参数，使用数十万亿个标记进行预训练。基础模型的性能随着规模持续提升，因为这些万亿级参数对于学习和表征人类书面知识中的各种模式是必要的。 相比之下，后训练通常使用更小的数据...</p>
+    </a>
+    <a href="/post/thinkingmachines/2025-09-26-modular-manifolds.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Thinking Machines Lab</span>
+        <span class="post-date">2025年9月26日</span>
+      </div>
+      <h3 class="post-title">模块化流形</h3>
+      <p class="post-excerpt">当我们训练大型神经网络时，需要让它们保持“健康”。我们不希望网络中的张量——无论是权重、激活还是梯度——变得过大或过小。过小和过大的张量会带来各种问题，并不只限于数值下溢与上溢。例如，训练过程中权重矩阵的尺度变化会...</p>
+    </a>
+    <a href="/post/thinkingmachines/2025-09-10-defeating-nondeterminism-in-llm-inference.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Thinking Machines Lab</span>
+        <span class="post-date">2025年9月10日</span>
+      </div>
+      <h3 class="post-title">击败 LLM 推理中的非确定性</h3>
+      <p class="post-excerpt">可复现性是科学进步的基石。然而，要让大语言模型（LLM）给出可复现的结果却出奇地困难。 例如，你可能会发现多次向 ChatGPT 提同一个问题会得到不同的答案。这本身并不奇怪，因为从语言模型获取结果涉及“采样”：把模型输出转...</p>
+    </a>
+    <a href="/post/paulgraham/2025-06-01-field.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Paul Graham</span>
+        <span class="post-date">2025年6月1日</span>
+      </div>
+      <h3 class="post-title">随笔领域的形状</h3>
+      <p class="post-excerpt">2025年6月 一篇随笔必须告诉人们他们原本不知道的东西。但人们之所以不知道某件事，原因有三种，而这三种原因会对应三种截然不同的随笔。 一种可能是：这件事本身并不重要。这并不意味着文章就会很差。比如，你可以写一篇关于...</p>
+    </a>
+    <a href="/post/karpathy/2025-04-27-vibe-coding-menugen.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Andrej Karpathy</span>
+        <span class="post-date">2025年4月27日</span>
+      </div>
+      <h3 class="post-title">vibe 编码：MenuGen</h3>
+      <p class="post-excerpt">我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_"Confit tubers folded with matured curd and fi...</p>
+    </a>
+    <a href="/post/karpathy/2025-04-07-power-to-the-people.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Andrej Karpathy</span>
+        <span class="post-date">2025年4月7日</span>
+      </div>
+      <h3 class="post-title">把权力还给人民：LLM 如何改写技术扩散的剧本</h3>
+      <p class="post-excerpt">!a-beautifully-illustrated-watercolor-ima_TcCW0iyURQi-raDmaFRZLw_GIGBjDOWQ6CN6Qf_yUU4tA 变革性技术通常遵循一种自上而下的扩散路径：起源于政府或军方语境，经由公司企业，最终抵达个人——想想电力、密码学、计算机、...</p>
+    </a>
+    <a href="/post/karpathy/2025-03-24-finding-the-best-sleep-tracker.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Andrej Karpathy</span>
+        <span class="post-date">2025年3月24日</span>
+      </div>
+      <h3 class="post-title">寻找最佳睡眠追踪器</h3>
+      <p class="post-excerpt">大约两个月前，我偶然看到 Bryan Johnson 的这支视频：How I FIXED My Terrible Sleep - 10 Habits。那天我决定听 Bryan 的，尝试改善我的睡眠。但在改善之前，首先——我们该如何衡量？Bryan Johnson 似乎在用 Whoop，而当时我...</p>
+    </a>
+    <a href="/post/karpathy/2025-03-19-the-append-and-review-note.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Andrej Karpathy</span>
+        <span class="post-date">2025年3月19日</span>
+      </div>
+      <h3 class="post-title">“追加与回顾”笔记</h3>
+      <p class="post-excerpt">我偶然摸索出一种记笔记的方法，已经很好地为我服务了很多年，简单说几句。我把它称作_“追加与回顾笔记”_。我觉得这种方法在“极其简单易用”和“覆盖日常大多数记笔记场景”之间取得了很好的平衡。 !Screenshot 2025-03-19 a...</p>
+    </a>
+    <a href="/post/karpathy/2025-03-17-digital-hygiene.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Andrej Karpathy</span>
+        <span class="post-date">2025年3月17日</span>
+      </div>
+      <h3 class="post-title">数字卫生</h3>
+      <p class="post-excerpt">隔三差五我都会再次意识到互联网上庞大的欺诈机器，这会重新激发我在日常计算中的隐私/安全方面保持基本“数字卫生”的决心。问题的源头从那些大型科技公司开始：它们被激励去为你建立全面的画像，要么直接用来投放广告实现...</p>
+    </a>
+    <a href="/post/karpathy/2024-09-08-i-love-calculator.html" class="post-card">
+      <div class="post-meta">
+        <span class="post-author">Andrej Karpathy</span>
+        <span class="post-date">2024年9月8日</span>
+      </div>
+      <h3 class="post-title">我爱计算器</h3>
+      <p class="post-excerpt">前几天我在一家书店随意浏览，偶然翻到《总和帝国：口袋计算器的兴起与统治》。当我翻阅它的页面时，一个强烈的念头突然浮现：我……爱……计算器。我并不是指你今天会想要购买并使用的某个实体设备。我指的是它作为一种技术产物，...</p>
+    </a>
+    </div>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章</p>
+    </div>
+  </footer>
+</body>
+</html>

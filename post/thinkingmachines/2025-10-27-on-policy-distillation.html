@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>同策略蒸馏 - 人工智能文摘</title>
+  <link rel="stylesheet" href="/style.css?v=1761783314004">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <a href="/" class="back-link">← 返回首页</a>
+
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">同策略蒸馏</h1>
+        
+        <div class="article-original-title" title="原文标题">On-Policy Distillation</div>
+        
+        <div class="article-meta">
+          <span class="post-author">Thinking Machines Lab</span>
+          <span>•</span>
+          <span>2025年10月27日</span>
+          <span>•</span><span>thinkingmachines.ai</span>
+        </div>
+
+        <p>LLM 在聚焦领域可以达到专家级表现，这源于多种能力的层层叠加：对输入的感知、知识检索、方案选择以及可靠执行。要实现这些，需要一套分层的训练方法，我们可以粗分为三个阶段：</p>
+<ul>
+<li>预训练（Pre-training）：教授语言使用、广泛推理与世界知识等通用能力。</li>
+<li>中期训练（Mid-training）：灌输领域知识，例如代码、医学数据库或公司内部文档。</li>
+<li>后训练（Post-training）：引出定向行为，例如遵循指令、数学题推理或聊天。</li>
+</ul>
+<p>在特定领域内，小模型如果经过更强的训练，往往能胜过更大、更通用的模型。使用小模型有很多好处：可因隐私或安全在本地部署；可持续训练、便于更新；还能节省推理成本。要充分利用这些优势，就需要为训练的后期阶段选对方法。</p>
+<p>将“学生”模型的后训练方法大体可分为两类：</p>
+<ul>
+<li>同策略训练（On-policy）：从学生模型自身采样 rollout，并为它们分配奖励。</li>
+<li>离策略训练（Off-policy）：依赖外部来源给出的目标输出，学生去模仿学习。</li>
+</ul>
+<p>例如，我们可能希望训练一个小模型来解如下数学题：</p>
+<p><img src="/blog/on-policy-distillation/svgs/prompt.svg" alt=""></p>
+<p>我们可以通过强化学习进行同策略训练：根据每次学生 rollout 是否解出问题来打分。这个打分可以由人完成，也可以由一个能稳定得到正确答案的“教师”模型完成。</p>
+<p><img src="/blog/on-policy-distillation/svgs/reinforcement-learning.svg" alt="">   </p>
+<p>同策略训练的优势在于：通过在自身分布上训练，学生更直接地学会避免错误。但强化学习的主要劣势是反馈稀疏——无论使用了多少 token，它每个训练回合只提供<a href="https://thinkingmachines.ai/blog/lora/#how-much-capacity-is-needed-by-supervised-and-reinforcement-learning">固定数量的比特</a>。在上面的例子中，学生知道“21”是错答案，并更新以远离它曾尝试的 rollout；但它并不知道错在何处——是运算顺序混乱还是算术本身出错。这种稀疏反馈让 RL 在许多应用中效率低下。</p>
+<p>离策略训练通常通过监督微调（SFT）完成：在一组精心整理、任务特定的标注样本上训练。这些标注的来源可以是一个在当前任务上表现经验证优异的教师模型。</p>
+<p>我们可以使用一种称为“蒸馏（distillation）”的机制：训练学生去匹配教师模型的输出分布。我们在教师的“轨迹（trajectory）”上训练：即包含中间思维步骤在内的完整生成 token 序列。可以使用教师在每一步的完整下一 token 分布（通常称为“logit 蒸馏”），也可以仅对给定序列进行采样。在实践中，按序列采样可以对教师分布进行无偏估计，并得到相同的目标。学生会根据“自己生成该 token 的不可能性”对序列中的每个 token 进行更新，越不可能的 token（下图颜色越深）更新越大：</p>
+<p><img src="/blog/on-policy-distillation/svgs/off-policy-distillation.svg" alt="">   </p>
+<p>来自大模型教师的蒸馏已被证明在训练小模型方面行之有效，例如：<a href="https://crfm.stanford.edu/2023/03/13/alpaca.html">遵循指令</a>（<a href="https://crfm.stanford.edu/2023/03/13/alpaca.html">Alpaca: A Strong, Replicable Instruction-Following Model</a>，Taori 等，2021）、<a href="https://arxiv.org/abs/2506.04178">数学与科学推理</a>（<a href="https://arxiv.org/abs/2506.04178">OpenThoughts: Data Recipes for Reasoning Models</a>，Guha 等，2025）、从病历<a href="https://arxiv.org/html/2501.00031v1">抽取临床信息</a>（<a href="https://arxiv.org/abs/2501.00031">Distilling Large Language Models for Efficient Clinical Information Extraction</a>，Vedula 等，2025），以及<a href="https://arxiv.org/abs/2305.14233">多轮聊天</a>（<a href="https://arxiv.org/abs/2305.14233">Enhancing Chat Language Models by Scaling High-quality Instructional Conversations</a>，Ding 等，2023）。这些及其他应用所用的蒸馏数据集通常会被开源发布。</p>
+<p>离策略训练的缺点在于：学生是在教师常见的上下文中学习，而非学生自身在推理时会落入的上下文。这会导致误差累积：如果学生在早期犯了教师从不犯的错，它会越走越偏，远离训练时见过的状态。当我们关心学生在长序列上的表现时，这个问题尤其突出。要避免这种发散，学生必须学会从自己的错误中恢复。</p>
+<p>离策略蒸馏的另一个问题是：学生可能学会模仿教师的风格与自信，但<a href="https://arxiv.org/abs/2305.15717">不一定学会其事实准确性</a>（<a href="https://arxiv.org/abs/2305.15717">The False Promise of Imitating Proprietary LLMs</a>，Gudibande 等，2023）。</p>
+<p>如果你在学下棋，同策略 RL 就好比只打实战、不请教练。赢或输的反馈来自你的实际对局，和你的棋力高度相关，但每盘只给一次反馈，也不告诉你哪些着法贡献最大。离策略蒸馏就像“旁观特级大师下棋”——你看到的是极强的着法，但这些着法往往出现在新手很难遇到的局面里。</p>
+<p>我们希望结合 RL 的同策略相关性与蒸馏的稠密奖励信号。对下棋而言，就是让老师对“你自己的每一步”从“败着”到“妙手”打分。对 LLM 后训练而言，这就是同策略蒸馏。</p>
+<p><img src="images/chess.png" alt=""> 截图来自 <a href="https://www.chess.com/">chess.com</a>。每一步都由分析引擎进行颜色分级：败着（红）、错误（橙）、不精确（黄）和妙手（蓝）。</p>
+<h2>同策略蒸馏——两者之长</h2>
+<p>同策略蒸馏的核心思想是：从“学生”模型采样其轨迹，并用一个高性能教师为“每个轨迹的每个 token”打分。回到前面的数学示例，同策略蒸馏会对解题过程中的每一步打分：惩罚导致学生得出错误答案的错误步骤，同时强化完成正确的步骤。</p>
+<p><img src="/blog/on-policy-distillation/svgs/on-policy-distillation.svg" alt="">   </p>
+<p>本文我们探索同策略蒸馏在多个任务中的应用：将数学推理能力注入模型，以及训练一个结合“领域知识 + 遵循指令”的助理模型。我们把同策略蒸馏用于已经通过预训练和中期训练具备一定基础能力的模型上。我们发现它是一种廉价而强大的后训练方法，兼具同策略训练与稠密奖励的优势。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>采样</th>
+<th>奖励信号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>监督微调（SFT）</td>
+<td>离策略</td>
+<td>重点：稠密</td>
+</tr>
+<tr>
+<td>强化学习（RL）</td>
+<td>重点：同策略</td>
+<td>稀疏</td>
+</tr>
+<tr>
+<td>同策略蒸馏</td>
+<td>重点：同策略</td>
+<td>重点：稠密</td>
+</tr>
+</tbody></table>
+<p>我们的同策略蒸馏工作受到 <a href="https://arxiv.org/abs/1011.0686">DAGGER</a>（<a href="https://arxiv.org/abs/1011.0686">A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning</a>，Ross 等，2010）的启发，这是一种在学生访问到的状态上纳入教师评价的迭代式 SFT 算法。它也与<a href="https://arxiv.org/abs/2305.20050">过程奖励建模（PRM）</a>（<a href="https://arxiv.org/abs/2305.20050">Let’s Verify Step by Step</a>，Lightman 等，2023）相似，PRM 是一种对学生思维链每一步打分的 RL 方法。我们在 <a href="https://arxiv.org/abs/2306.13649">Agarwal 等</a>（<a href="https://arxiv.org/abs/2306.13649">On-Policy Distillation of Language Models: Learning from Self-Generated Mistakes</a>，2023）、<a href="https://arxiv.org/abs/2306.08543">Gu 等</a>（<a href="https://arxiv.org/abs/2306.08543">MiniLLM: Knowledge Distillation of Large Language Models</a>，2023）以及 <a href="https://arxiv.org/abs/2505.09388">Qwen3 团队</a>（<a href="https://arxiv.org/abs/2505.09388">Qwen3 Technical Report</a>，2025）的同策略蒸馏工作基础上进行了拓展。借助 <a href="https://thinkingmachines.ai/tinker/">Tinker 训练 API</a>，我们复现了 Qwen3 的一个关键结果：以极小的 RL 成本，在推理基准上达到相当的性能。</p>
+<h2>实现</h2>
+<p>你可以在 <a href="https://github.com/thinking-machines-lab/tinker-cookbook/tree/main/tinker_cookbook/recipes/distillation">Tinker Cookbook</a> 中按步骤跟进实现细节。</p>
+<h3>损失函数：反向 KL</h3>
+<p>同策略蒸馏可以使用多种损失来给学生轨迹打分（关于不同损失的分析可参考 Agarwal 等）。为简洁起见，我们选用逐 token 的反向 KL：在同一先验轨迹条件下，学生分布（$\pi_\theta$）相对于教师分布（$\pi_\text{teacher}$）的散度：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.8em;vertical-align:-0.65em;"></span><span class="mord text"><span class="mord">KL</span></span><span class="mopen"><span class="delimsizing size2">(</span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">∣</span><span class="mclose">∣</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">teacher</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose"><span class="delimsizing size2">)</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.8em;vertical-align:-0.65em;"></span><span class="mord"><span class="mord mathbb">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mrel mtight">∼</span><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.0359em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2559em;"><span></span></span></span></span></span></span><span class="mopen"><span class="delimsizing size2">[</span></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1..</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.8em;vertical-align:-0.65em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">teacher</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1..</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose"><span class="delimsizing size2">]</span></span></span></span></span></span></p>
+<p>我们的奖励函数最小化反向 KL，推动学生在“自己所处的每个状态”上逼近教师行为。当学生与教师行为完全一致时，反向 KL 为 0。为简明起见，我们使用 0 的折扣因子：在任意时刻，学生只优化“下一 token”的预测，不考虑更远的将来（我们未观察到 &gt;0 的折扣因子在实践上带来收益）。</p>
+<p>反向 KL 与 RL 自然协同：RL 通常优化一个由奖励模型诱导的序列级反向 KL。然而与多数实际奖励模型不同的是，反向 KL 不会被“投机取巧”：低 KL 总对应于在教师视角下“更高概率的期望行为”。反向 KL 的另外两个特性也很有用：它是“寻模（mode seeking）”的——它会学习“一个特定的”行为（教师的），而不是把概率摊到多个次优选项上；并且它能减轻<a href="https://arxiv.org/abs/1506.03099">暴露偏差（exposure bias）</a>（<a href="https://arxiv.org/abs/1506.03099">Scheduled Sampling for Sequence Prediction with RNNs</a>，Bengio 等，2015；另见 Gu 等讨论）。</p>
+<p>这种做法还能显著节省算力。由于计算奖励不需要等完整 rollout 结束，我们可以用更短或部分的 rollout 来训练。查询教师对数概率只需要一次大模型的前向，而生成轨迹的是更小、更便宜的学生。</p>
+<p>我们也不需要单独的奖励或标注模型。当然，把基于蒸馏的逐 token 奖励与序列级环境奖励结合，可能会有优势——这是一个值得继续探索的方向。</p>
+<h3>例示</h3>
+<p>下图展示了一个由教师打分的“错误学生轨迹”的真实例子。例子来自 <a href="https://simple-bench.com/">SimpleBench</a>，关键在于识别题目前提的重要性：正确答案是“B. 0”，因为冰块放在平底锅里会融化。学生模型 <a href="https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507">Qwen3-4B-Instruct-2507</a> 错将其当成纯数学题，未考虑物理语境。</p>
+<p>2025-10-24T22:10:41.375034 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> 示例轨迹由教师模型评分。颜色越深红的 token 反向 KL 越高，惩罚越大。</p>
+<p>颜色越深代表被教师模型 <a href="https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507">Qwen3-235B-A22B-Instruct-2507</a> 更重地惩罚。它会重点惩罚那些把学生带偏的起始 token，直观上对应引导推理的关键<a href="https://arxiv.org/abs/2506.01939">“分叉 token”</a>（<a href="https://arxiv.org/abs/2506.01939">Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning</a>，Wang 等，2025）。最终答案虽然错误，但在给定整个前序的条件下是“可预测”的，因此并不会被额外惩罚。</p>
+<h3>伪代码</h3>
+<p>我们在 <a href="https://github.com/thinking-machines-lab/tinker-cookbook/blob/main/tinker_cookbook/rl/train.py">Tinker 的 RL 训练脚本</a> 之上实现同策略蒸馏。该脚本已实现采样、奖励计算与基于策略梯度的训练。实际上，如果你的 RL 实现里已有 KL 正则化，我们只需要把“正则项用到的模型”换成教师，就几乎是一行改动。</p>
+<ol>
+<li>初始化教师客户端。Tinker API 便于为不同模型创建不同的客户端，无需操心推理引擎的利用。我们使用采样客户端，因为不需要在教师上反传梯度、只要 logprob。</li>
+<li>采样轨迹。与 RL 相同，我们从学生模型采样 rollout。采样时，RL 已经会计算学生的对数概率 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>，用于<a href="https://tinker-docs.thinkingmachines.ai/losses#policy-gradient-importance_sampling">重要性采样</a>损失。</li>
+<li>计算奖励。用教师客户端对采样到的轨迹调用 <code>compute_logprobs</code>，得到教师对这些 token 的对数概率 $\log \pi_\text{teacher}(x)$（本文未考虑 top-k/logit 蒸馏，后者可进一步提升算效）。由此计算反向 KL。</li>
+<li>用 RL 训练。将逐 token 的优势（advantage）设为“负的反向 KL”，调用 RL 的重要性采样损失，对学生进行更新。</li>
+</ol>
+<pre><code># 初始化教师客户端（main）
+teacher_client = service_client.create_sampling_client(
+    base_model=teacher_config.base_model,
+    model_path=teacher_config.load_checkpoint_path,
+)
+
+# 采样轨迹（main）
+trajectories = do_group_rollout(student_client, env_group_builder)
+sampled_logprobs = trajectories.loss_fn_inputs[&quot;logprobs&quot;]
+
+# 计算奖励（compute_teacher_reverse_kl）
+teacher_logprobs = teacher_client.compute_logprobs(trajectories)
+reverse_kl = sampled_logprobs - teacher_logprobs
+trajectories[&quot;advantages&quot;] = -reverse_kl
+
+# 以 RL 训练（train_step）
+training_client.forward_backward(trajectories, loss_fn=&quot;importance_sampling&quot;)
+</code></pre>
+<p>在下文实验中，我们通常把同策略蒸馏应用于“已在特定领域知识上做过中期训练”的模型。这会提高学生在教师分布内采样到相关 token 的概率，但通常还不足以复现教师性能。（SFT 使用正向 KL，为新 token“添加支持集”；反向 KL 方法可在初始化的“支持集”内进行寻模。很多时候，如我们后文的个性化示例，学生因为缺乏领域知识，起步时生成相关 token 的概率几乎是 0。）</p>
+<p>我们将同策略蒸馏用于后训练，并与其他后训练方法对比。</p>
+<h2>面向推理的蒸馏</h2>
+<p>我们用蒸馏把数学推理能力训练到 <a href="https://huggingface.co/Qwen/Qwen3-8B-Base">Qwen3-8B-Base</a> 上，教师模型为 <a href="https://huggingface.co/Qwen/Qwen3-32B">Qwen3-32B</a>。两者目前都在 Tinker 上<a href="https://tinker-docs.thinkingmachines.ai/model-lineup">受支持</a>，可以用 Cookbook 复现。</p>
+<h3>离策略蒸馏</h3>
+<p>如上所述，我们所有实验都从离策略蒸馏形式的中期训练开始——在一份教师生成的样本数据集上做 SFT。用于数学推理的数据集是 <a href="https://huggingface.co/datasets/open-thoughts/OpenThoughts3-1.2M">OpenThoughts-3</a>，它收集了由 <a href="https://huggingface.co/Qwen/QwQ-32B">QwQ-32B</a>（与 Qwen3-32B 类似的推理模型）生成的推理提示与回答。</p>
+<p>对学生（Qwen3-8B-Base）进行 40 万条样本的全参数微调，在 AIME&#39;24 数学基准上得到 60%。我们也可以用 LoRA（<a href="https://arxiv.org/abs/2106.09685">LoRA: Low-Rank Adaptation of Large Language Models</a>，Hu 等，2021），但在大规模数据上，LoRA 往往落后于全参微调。总体上，我们看到性能呈对数线性提升——早期的提升便宜，后期的提升昂贵。</p>
+<p>2025-10-26T05:38:33.849913 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> AIME&#39;24 分数随离策略蒸馏（SFT）进展的变化。在最初 5–10 万条提示之后，性能遵循可预测的对数线性曲线。正如<a href="https://thinkingmachines.ai/blog/lora/">《LoRA Without Regret》</a>的预测，在大批量的大规模 SFT 中，我们观察到 LoRA 表现更差。</p>
+<p>我们把在 40 万条样本上微调得到的模型视作一个检查点，然后尝试各种后训练方法以进一步提升性能。我们对比把 AIME’24 从 60% 提到 70% 所需的成本。</p>
+<p>默认的做法是继续更多提示上的微调，即继续离策略蒸馏。按对数线性趋势外推，模型在大约 200 万条提示处可以达到约 70% 的 AIME’24。这个外推假设缩放律不会停滞，这并不简单。不过，也有离策略大规模蒸馏让 8B 模型超过 70% 的例子，如 <a href="https://huggingface.co/datasets/open-thoughts/OpenThoughts3-1.2M">OpenThoughts-3</a> 与 <a href="https://huggingface.co/deepseek-ai/DeepSeek-R1-0528-Qwen3-8B">DeepSeek-R1-0528-Qwen3-8B</a>（后者报 86%，未给出训练样本量）。更早的模型（Qwen2.5-7B、Qwen2.5-14B）在 DeepSeek-R1 80 万条蒸馏样本上<a href="https://arxiv.org/abs/2501.12948">分别达到 55.5% 与 69.7%</a>。我们把该外推作为离策略蒸馏“成本-效果比”的乐观估计。</p>
+<h3>强化学习</h3>
+<p><a href="https://arxiv.org/pdf/2505.09388">Qwen3 技术报告</a>在类似的 SFT 初始化上，通过 17,920 GPU 小时的 RL 达到 67.6%。这很难直接与蒸馏的成本相比，但基于对 SFT 训练堆栈的合理假设，这与 200 万条离策略蒸馏提示的成本相近。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>AIME’24</th>
+<th>GPQA-Diamond</th>
+<th>GPU 小时</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>离策略蒸馏</td>
+<td>55.0%</td>
+<td>55.6%</td>
+<td>未报告</td>
+</tr>
+<tr>
+<td>加 RL</td>
+<td>67.6%</td>
+<td>61.3%</td>
+<td>17,920</td>
+</tr>
+<tr>
+<td>加 同策略蒸馏</td>
+<td>重点：74.4%</td>
+<td>重点：63.3%</td>
+<td>重点：1,800</td>
+</tr>
+</tbody></table>
+<p>数据来自 <a href="https://arxiv.org/abs/2505.09388">Qwen3 Technical Report</a>，表 21。</p>
+<p>Qwen 团队还报告，通过同策略蒸馏，以 RL 十分之一的成本在 AIME’24 上达到更高的 74.4 分，这也启发了我们的工作。我们在基础配置下尝试复现。</p>
+<h3>同策略蒸馏</h3>
+<p>作为离策略蒸馏或 RL 的替代，我们按上文的方法进行同策略蒸馏。我们实际上用 Qwen3-8B 作教师（它略胜一筹）。但为了便于比较算力开销，我们仍以 32B 的 FLOPs 量级来衡量。以 40 万条 SFT 检查点为起点，同策略蒸馏在约 150 步达到 AIME’24 = 70%（150 步对应约 7.7 万条提示；每个提示采 4 个样本）。</p>
+<p>2025-10-26T06:25:04.994156 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> 同策略蒸馏训练过程中的 AIME&#39;24。我们用训练 FLOPs（见下）衡量新增算力。同策略蒸馏比 SFT 算效高得多，尤其对 LoRA：在 rank=32 时，LoRA 在 SFT 后落后全参 13%，但在同策略蒸馏后只落后 6%。</p>
+<p>不同方法的算力成本比较并不直接，因为“训练 vs 采样 vs 计算 logprob”的比例强依赖实现。下表用 FLOPs 来算，它会惩罚那些可在 GPU 上有效并行的方法（也因此会高估计算 logprob 的实际成本）。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>AIME’24</th>
+<th>教师 FLOPs</th>
+<th>学生 FLOPs</th>
+<th>相对 SFT-2M 的 CE</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始化：SFT-400K</td>
+<td>60%</td>
+<td>8.5 × 1020</td>
+<td>3.8 × 1020</td>
+<td>–</td>
+</tr>
+<tr>
+<td>SFT-2M（外推）</td>
+<td>约 70%（外推）</td>
+<td>3.4 × 1021</td>
+<td>1.5 × 1021</td>
+<td>1×</td>
+</tr>
+<tr>
+<td>强化学习</td>
+<td>68%</td>
+<td>-</td>
+<td>-</td>
+<td>≈1×</td>
+</tr>
+<tr>
+<td>同策略蒸馏</td>
+<td>70%</td>
+<td>8.4 × 1019</td>
+<td>8.2 × 1019</td>
+<td>重点：9-30×</td>
+</tr>
+</tbody></table>
+<p>当 SFT 数据集已给定（如本例使用 OpenThoughts-3），或其成本可以在多次训练中摊销时，我们观察到基础性的 9× 成本降低。（CE = (Student + Teacher) / (Student)）在此情形下，离策略训练不计教师 FLOPs，而同策略要计（因为必须跑教师来算学生轨迹的 logprob）。由于该计算可低成本地在 GPU 上并行，按 GPU 小时算的降幅更接近 18×。</p>
+<p>不过，很多时候我们要把小模型训练到“新任务”，而此时并没有离策略的蒸馏数据集。若计入离策略蒸馏中“教师模型的完整成本”（包括从教师采样的额外成本），总体成本降低约为 30×。（CE = (Student + Teacher) / (Student + Teacher)）</p>
+<h2>面向个性化的蒸馏</h2>
+<p>除了把小模型训练到在通用任务上有高性能外，蒸馏的另一个关键用途是“个性化”。例如，在对话中遵循特定语气与输出格式，或实现工具使用、成本预算等能力。我们常希望把这些行为与“新领域知识”的注入结合起来训练。</p>
+<p>同时训练两者通常很难，轻量微调往往不够（<a href="https://arxiv.org/abs/2403.05612">Unfamiliar Finetuning Examples Control How LMs Hallucinate</a>，Kang 等，2024），需要更大的中期训练。在新知识之上叠加后训练行为，需要复杂的后训练堆栈，通常包括私有数据与奖励模型。前沿实验室能承担这种做法，但对其他从业者来说很难或成本过高。</p>
+<p>本节我们展示：同策略蒸馏也可有效用于训练“专门化行为”。该方法同样适用于“持续学习 / 测试时训练”：在部署中更新模型而不回退基础性能。我们用一个在公司内部文档上做过中期训练的模型作为示例。</p>
+<h3>训练一个内部助理</h3>
+<p>自定义模型的常见目标是充当“助理”：既要在某领域具备专家知识，又要有可靠的助理式行为。两者可能需要分别训练，尤其当该领域知识无法仅靠预训练获得，或学习它会干扰行为时。</p>
+<p>我们的例子是一个公司内部助理，它有两点诉求：</p>
+<ol>
+<li>模型要“懂行”（公司文档）。预训练模型没见过公司的任何内部文档，因此无论规模多大都只能“猜”。我们用内部知识召回评测（internal QA）来衡量这一点。</li>
+<li>模型要有强的“后训练行为”，即遵循指令。我们用常见的 <a href="https://arxiv.org/abs/2311.07911">IF-eval</a>（<a href="https://arxiv.org/abs/2311.07911">Instruction-Following Evaluation for LLMs</a>，Zhou 等，2023）来衡量。</li>
+</ol>
+<h3>在新知识上训练会“遗忘”学到的行为</h3>
+<p>我们从 Qwen3-8B（而非 base 模型）开始。Qwen3-8B 已通过 RL 在助理相关能力（遵循指令、推理等）上做过后训练。已有研究表明，这类 RL 往往只更新原模型中的“小子网络”（<a href="https://arxiv.org/abs/2505.11711">Reinforcement Learning Finetunes Small Subnetworks in LLMs</a>，Mukherjee 等，2025），因此当再在大量数据上训练时容易变得脆弱。我们研究这种现象的程度，以及如何恢复期望行为。</p>
+<p>为减轻灾难性遗忘，中期训练的常见做法是混入来自“预训练分布”的“背景数据”（<a href="https://arxiv.org/abs/2510.14865">Midtraining Bridges Pretraining and Posttraining Distributions</a>，Liu 等，2025）。本例中我们拿不到 Qwen3 的预训练分布。因此我们考虑一个更强但更贵的基线：取 <a href="https://huggingface.co/datasets/allenai/tulu-3-sft-mixture">Tulu3</a>（<a href="https://arxiv.org/abs/2411.15124">Tulu 3: Pushing Frontiers in Open LM Post-Training</a>，Ivison 等，2024）的提示——一个广泛的聊天与指令数据集——并用 Qwen3-8B 重新采样作为“聊天背景数据”。</p>
+<p>由 Qwen3-8B 采出的这份“同策略背景数据”在中期训练中起到“正向 KL 正则”的作用，强化模型的原始行为。我们发现，就“保持聊天能力”而言，采样自 Qwen3-8B 优于采样自 Qwen3-32B，凸显“数据来源”的敏感性；Chen 等也有类似结论（<a href="https://arxiv.org/abs/2510.18874">Retaining by Doing: The Role of On-Policy Data in Mitigating Forgetting</a>，2025）。我们猜测，这种做法甚至可能比“直接获得原始预训练分布”更有效，但代价是要采很大规模的数据集。</p>
+<p>随后我们在“内部文档 vs 聊天数据”的不同配比上对 Qwen3-8B 做 SFT。增大文档占比会直接提升“知识”水平。然而，尽管至少混入 30% 的聊天数据可以保住大部分“遵循指令”的能力，但没有任何一种配比能保持 IF-eval 的原始水平（即使 100% 都是聊天数据也不行）。</p>
+<p>2025-10-26T06:57:03.021695 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> 在中期训练中对“内部文档：聊天数据”的配比进行 sweep。混入少量聊天数据可以避免彻底崩盘，但没有任何配比能维持 IF-eval 的原始表现。</p>
+<p>对任意给定配比，我们观察到 IF-eval 在微调过程中会下降。这限制了我们用更长的训练让模型更专门化的能力。直觉上，我们或许希望“过参数化”的模型在某数据集上的训练只会“在该上下文中”改变其行为，而不影响其他上下文下的行为。但在实践中我们并未观察到这一点：在原始文档数据上训练，即使是在 QA 场景下，也会回退表现。</p>
+<p>2025-10-26T07:30:12.322163 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> IF-eval 在中期训练的所有配比下都会下降。使用线性学习率（如图）时，下降最终会趋缓并随学习率衰减略有恢复，但从未完全恢复。</p>
+<p>另一种常见替代是用 LoRA 约束参数更新，从而减小灾难性遗忘的可能。然而这仍不足以保住 IF-eval，且 LoRA 学到的“知识”也更少（<a href="https://arxiv.org/abs/2405.09673">LoRA Learns Less and Forgets Less</a>，Biderman 等，2024）。</p>
+<p>2025-10-26T07:44:43.009994 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> 在我们的个性化中期训练设置中（基于后训练过的 Qwen3-8B），LoRA 学得更少（知识），同时仍然遗忘其后训练过的行为。</p>
+<h3>同策略蒸馏可恢复后训练行为</h3>
+<p>接下来，我们希望在“内部文档”微调之后恢复“遵循指令”的行为。该行为最初由 RL 训练得到——代价高且如上所述较脆弱。我们改用同策略蒸馏：以较早版本的模型 Qwen3-8B 为教师，在 <a href="https://huggingface.co/datasets/allenai/tulu-3-sft-mixture">Tulu3</a> 的提示上进行蒸馏。注意，这一阶段与“内部文档数据”无关，唯一目的是恢复“遵循指令”。</p>
+<p>使用较早版本的模型作为教师来“召回”微调中丢失的能力，使同策略蒸馏在持续学习中很有前景。我们可以在“新数据上的中期微调”与“蒸馏以恢复行为”之间交替迭代，让模型持续学习并保持与时俱进。这种分阶段的思路也曾被 Cobbe 等探索（<a href="https://arxiv.org/abs/2009.04416">Phasic Policy Gradient</a>，2020）。</p>
+<p>在“文档：聊天 = 70%：30%”的混合数据上微调后，同策略蒸馏几乎完全恢复了 IF-eval 的表现，同时并未丢失知识；我们还观察到聊天能力与内部 QA（知识）之间存在一定的正迁移。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>内部 QA（知识）</th>
+<th>IF-eval（聊天）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen3-8B</td>
+<td>18%</td>
+<td>重点：85%</td>
+</tr>
+<tr>
+<td>加中期训练（100% 文档）</td>
+<td>重点：43%</td>
+<td>45%</td>
+</tr>
+<tr>
+<td>加中期训练（70% 文档）</td>
+<td>36%</td>
+<td>79%</td>
+</tr>
+<tr>
+<td>加中期训练（70% 文档）+ 蒸馏</td>
+<td>重点：41%</td>
+<td>重点：83%</td>
+</tr>
+</tbody></table>
+<p>中期训练后的“领域知识（内部 QA）”与“聊天（IF-eval）”表现。尽管中期训练会遗忘 Qwen3-8B 的后训练行为，但这些行为可以通过同策略蒸馏以很低成本恢复，同时保留中期训练带来的新增知识。</p>
+<p>本质上，我们把“语言模型本身”当作了奖励模型：高概率的行为即被奖励（<a href="https://arxiv.org/abs/2305.18290">Direct Preference Optimization: Your LM is Secretly a Reward Model</a>，Rafailov 等，2023）。这与逆强化学习有关：高概率行为对应于“某个偏好模型下的优势奖励”（<a href="https://ai.stanford.edu/~ang/papers/icml00-irl.pdf">Algorithms for Inverse Reinforcement Learning</a>，Ng 与 Russell，2000）。任何“已做过指令微调的开源权重模型”都可以在这个意义上用作奖励模型；我们只需要 <code>compute_logprobs</code> 的能力。</p>
+<p>同样把蒸馏作为“整合行为与知识”的工具，也被用于混合推理模型（<a href="https://arxiv.org/abs/2505.09388">Qwen3</a>）与“专家蒸馏”（<a href="https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/DeepSeek_V3_2.pdf">DeepSeek-V3.2-Exp</a>，DeepSeek-AI 团队，2025）。结合我们的结果与 <a href="https://arxiv.org/abs/2510.18874">Chen 等</a>的结果，同策略学习很可能是增强这类基于蒸馏的“模型合并”方案的关键工具。</p>
+<h2>讨论</h2>
+<h3>稠密监督显著提升算效</h3>
+<p>强化学习与同策略蒸馏都在用“反向 KL”来修剪“基座策略中的动作空间”。不同之处在“奖励密度”。在<a href="https://thinkingmachines.ai/blog/lora/">《LoRA Without Regret》</a>中，我们从信息论角度指出：RL 每个回合只教 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 个比特；相对地，蒸馏每个回合教的是 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span> 个比特，$N$ 为 token 数。我们能量化“稠密奖励”带来的训练效率增益吗？</p>
+<p>我们做了一个直接对比实验：</p>
+<ol>
+<li>从 Qwen3-8B-Base 起步（无额外 SFT）。</li>
+<li>按<a href="https://thinkingmachines.ai/blog/lora/">《LoRA Without Regret》</a>的流程，在 DeepMath 上做 RL；LoRA rank 取 128。得到的模型作为蒸馏的教师。</li>
+<li>把（2）中 RL 训练得到的策略，用同策略蒸馏回到（1）的 base 模型中。</li>
+</ol>
+<p>2025-10-26T08:48:38.017170 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> 从相同初始化出发，同策略蒸馏在约 7–10× 更少的梯度步内学到 RL 的策略，对应 50–100× 的算效提升。</p>
+<p>我们看到：在匹配的模型结构（LoRA rank 128）下，蒸馏大约以 7–10× 更少的训练步数达到教师水平；反向 KL 迅速降至近 0，AIME 分数在不到 10 个梯度步内恢复；而 RL 需要 70 步才能到达。</p>
+<p>总体上，所需算力的降低在 50–100× 量级：</p>
+<ul>
+<li>RL 需要在“接近评测上下文长度”训练（否则策略学不会上下文上限，并会因格式惩罚降低奖励）；蒸馏在更短上下文也能有效学习，因为“是否采样完成”不会导致奖励的尖锐断点。</li>
+<li>当 SFT 初始化够强（即教师策略在学生策略的支持集内；当不满足，如“面向推理的蒸馏”，我们需要更大的 batch），同策略蒸馏可以用更小的 batch 工作良好，因为它“每回合提供的比特更多”，从而降低梯度噪声。</li>
+</ul>
+<p>尽管在实践中“带过程监督的 RL”往往难训，这些结果表明：作为一个广义方向，“过程监督 + 稠密奖励”有望带来数量级的学习效率提升，这与 Lightman 等在 RL 研究中的早期结果一致。</p>
+<h3>蒸馏可以有效复用训练数据，提高数据效率</h3>
+<p>对从业者来说，收集大规模训练提示集既困难又耗时。因此，我们希望在训练中能多次复用同一批提示。在 RL 中，对同一条提示训练多轮往往会让大模型“记住最终答案”（尽管也有某些设置下的正面结果，见<a href="https://arxiv.org/abs/2504.20571">“Reinforcement Learning for Reasoning in LLMs with One Training Example”</a>，Wang 等，2025）。而同策略蒸馏通过最小化反向 KL 来逼近“教师的完整分布”，而不是记住单个答案，这使得我们可以在同一提示上训练大量样本。</p>
+<p>我们重复“在数学上训练 Qwen3-8B-Base”的实验，但这次只用数据集中随机挑的一条提示（“计算极限：$\lim_{x \to \infty} \sqrt{x} ( \sqrt[3]{x+1} - \sqrt[3]{x-1} )$”）。</p>
+<p>我们用这条提示连续训练 20 步，每步 batch 为 256 个 rollout，总计 5120 个带分数的序列。我们以“顺序方式”在同一提示上训练多步，这通常会过拟合。尽管算力利用上自然不够经济，我们仍大致匹配了教师模型的性能，尽管只训练了一条提示。</p>
+<p>2025-10-26T08:48:38.488241 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> 在这个例子中，围绕“一个训练样本”的多 epoch 训练，足以蒸馏出教师在 AIME&#39;24 的性能。我们的默认配置（个性化实验亦用）是每个 batch 64 条提示、每条提示 4 个样本。图中各方法均以每步 256 个样本训练。右图显示的是“训练 KL”，因此“1 条提示总量”自然会优于“每批 1 条提示”。</p>
+<h3>RL 在“语义策略空间”中搜索</h3>
+<p>我们已经看到：同策略蒸馏可以在远更少的训练步内复刻 RL 带来的学习。对此的一个解读是：与预训练不同，RL 的计算开销并不主要花在梯度步本身；我们更应该把 RL 理解成主要把算力花在“搜索”——rollout 策略并分配信用——而不是在“更新”上（参见 Rich Sutton 的<a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">The Bitter Lesson</a>：突破通常来自“可扩展的计算”，其核心是“搜索 + 学习”）。</p>
+<p>预训练通过随机梯度下降在“高维参数空间”中探索。预训练需要海量信息输入，且很难蒸馏，部分原因是参数空间对每个网络都“几乎是唯一的”。预训练所需的梯度步极其昂贵且耗时（例如<a href="https://arxiv.org/abs/1803.03635">Lottery Ticket Hypothesis</a>，Frankle 与 Carbin，2018）。</p>
+<p>相反，我们可以把 RL 理解为在“语义策略空间”中探索（注意“策略的探索”与“结果的探索”有细微不同；RL 需要基座模型起步时就有非零成功率，因此“结果已找到了”，但策略会在 RL 过程中被渐进优化，使成功更可能）。在每一步中，RL 会尝试对过去某个策略做小改动。它不是在参数空间里探索，而是“靠运气”在已有权重中“蹒跚”到新策略。</p>
+<p>一旦找到好的策略，蒸馏就是学习它的捷径：同策略蒸馏无需去建模 RL 课程中出现的中间策略，而只需学习“最终策略”。如果我们只关心最终策略（生产场景中很常见），就没必要花算力去建模所有中间策略。</p>
+<p>打个比方：科学研究要花很多时间与资源去寻找答案、探索新想法；而一旦得到结果，把它用“自然语言”教给别人就简单多了。与此相对的是“直觉性的身体技能”（比如体育），它很难教给别人，因为相关知识存在于一种只有我们自己容易理解的“先天语言”（例如肌肉记忆）中；体育只能通过反复练习学会。</p>
+<h3>同策略学习是持续学习的有力工具</h3>
+<p>在“个性化蒸馏”一节中，我们展示了同策略蒸馏可以把专门训练过的行为重新注入模型。这推广到更广义的“持续学习”任务：在不降低既有能力的前提下获取新知识。</p>
+<p>既有工作发现，同策略学习（RL）比离策略学习更不易遗忘（<a href="https://arxiv.org/abs/2509.04259">RL’s Razor: Why Online RL Forgets Less</a>，Shenfeld 等，2025）。然而，RL 只塑造“行为”——它并不擅长教授“新知识”，因此单靠 RL 不足以胜任持续学习。</p>
+<p>在上文我们看到，SFT（包括离策略蒸馏）无法为持续学习“搭脚手架”，因为它会破坏行为。我们更深入地研究这一点并给出直接示例。与上文类似，我们以 Tulu3 的提示为基础，在 <code>temperature = 1.0</code> 下从 Qwen3-32B 采样得到数据集；因此该数据集相对 Qwen3-32B 的 KL 为 0（“真正同策略”的 KL=0 数据在我们之前的文章<a href="https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/">《Defeating Nondeterminism in LLM Inference》</a>中也有探讨）。</p>
+<p>当我们把 SFT 直接跑在“模型自己的样本”上，会发生什么？我们观察到：只要学习率大于 0，在 IF-eval 上的表现就会退化！</p>
+<p>2025-10-26T08:56:17.792340 image/svg+xml Matplotlib v3.10.1, <a href="https://matplotlib.org/">https://matplotlib.org/</a> 在 Qwen3-32B 自采样的数据上做 SFT 会损害表现。这里学习率与个性化一节一致，是出于实用考虑扫出来的。线性学习率可以阻止“正向 KL / IF-eval”无限回退，但也无法在 LR 衰减归零之前恢复性能。</p>
+<p>一种可能的解释是：尽管 KL 散度“期望上是 0”，但每个“有限 batch”在实践中都会呈现“略有不同的分布”。在这些有限批上训练会带来“非零梯度更新”，从而让更新后的模型策略偏离原始策略。这个过程会把“在自身样本上训练”逐步变成“离策略训练”，随后就像离策略训练那样，在长序列上出现同样的误差累积与发散。</p>
+<p>同策略蒸馏始终保持同策略；且由于教师固定，学生会收敛到教师的期望行为上；在“自蒸馏”的设置下，不会像 SFT 那样回退。这使同策略蒸馏成为持续学习的有力工具。</p>
+<h2>结论</h2>
+<p>我们探索了同策略蒸馏在几类应用中的作用，例如把数学推理教给小模型，或构建一个可持续学习的助理。我们将同策略蒸馏与两类常见后训练方法对比：离策略蒸馏与同策略 RL。我们的结论是：同策略蒸馏兼具两者之长——既有同策略训练的可靠性能，又有稠密监督带来的高算效。</p>
+<p>后训练是通向前沿模型能力的关键环节。通过结合“来自学生的同策略采样”与“来自教师的稠密监督”，同策略蒸馏可以用远低于高算力 RL 的成本达成目标能力。</p>
+<p>我们的实现见 <a href="https://github.com/thinking-machines-lab/tinker-cookbook/tree/main/tinker_cookbook/recipes/distillation">Tinker Cookbook</a>。本文有意选择了简单直接的方案来清晰展示其优势。我们希望继续在“蒸馏的新应用”“改进教师监督的方法”“提升数据效率与持续学习”等方向开展研究。</p>
+<p>在 Thinking Machines，我们的使命是以“前沿性能 + 适应性 + 个性化”的模型赋能人们。同策略蒸馏是实现该目标的一件利器。</p>
+<h2>引用</h2>
+<p>请按如下格式引用：</p>
+<pre><code>Lu, Kevin and Thinking Machines Lab, &quot;On-Policy Distillation&quot;,
+Thinking Machines Lab: Connectionism, Oct 2025.
+</code></pre>
+<p>或使用 BibTeX：</p>
+<pre><code>@article{lu2025onpolicydistillation,
+  author = {Kevin Lu and Thinking Machines Lab},
+  title = {On-Policy Distillation},
+  journal = {Thinking Machines Lab: Connectionism},
+  year = {2025},
+  note = {https://thinkingmachines.ai/blog/on-policy-distillation},
+  doi = {10.64434/tml.20251026},
+}
+</code></pre>
+
+        
+        <div class="original-link">
+          <a href="https://thinkingmachines.ai/blog/on-policy-distillation/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章</p>
+    </div>
+  </footer>
+</body>
+</html>

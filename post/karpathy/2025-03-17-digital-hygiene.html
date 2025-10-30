@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数字卫生 - 人工智能文摘</title>
+  <link rel="stylesheet" href="/style.css?v=1761783314007">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <a href="/" class="back-link">← 返回首页</a>
+
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">数字卫生</h1>
+        
+        <div class="article-original-title" title="原文标题">Digital hygiene</div>
+        
+        <div class="article-meta">
+          <span class="post-author">Andrej Karpathy</span>
+          <span>•</span>
+          <span>2025年3月17日</span>
+          <span>•</span><span>karpathy.bearblog.dev</span>
+        </div>
+
+        <p>隔三差五我都会再次意识到互联网上庞大的欺诈机器，这会重新激发我在日常计算中的隐私/安全方面保持基本“数字卫生”的决心。问题的源头从那些大型科技公司开始：它们被激励去为你建立全面的画像，要么直接用来投放广告实现变现，要么把数据卖给专业的数据经纪商，后者进一步丰富、去匿名化、交叉关联并转售。不可避免且屡见不鲜的数据泄露最终会把你的信息汇入暗网档案，进而滋养一整套地下的垃圾邮件/诈骗产业：黑客入侵、网络钓鱼、勒索软件、信用卡欺诈、身份盗用等。本文收集了一些最基础的数字卫生建议，从最基础的做起，逐步到稍微小众一些的做法。</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/19am.webp" alt="Screenshot 2025-03-18 at 10"></p>
+<p><strong>密码管理器</strong>。密码是你的“第一因素”（something you know）。别当菜鸟；为你注册的每一个网站或服务生成全新、唯一、强壮的密码。配合浏览器扩展可以极速创建并自动填充。例如我使用并喜欢 <a href="https://1password.com/">1Password</a>。这可以防止你的密码：1）被轻易猜到或暴力破解；2）某处一旦泄露后，变相打开通往许多其他服务的大门。相应地，我们把你所有的第一因素（密码）集中到了一个地方，因此必须把它严密保护好，这就引出……</p>
+<p><strong>硬件安全密钥</strong>。你生活中最关键的服务（如 Google 或 1Password）必须再增加一个_“第二因素”_（something you have）。攻击者必须同时掌握两种因素才能获得访问。许多服务最常见的第二因素是手机号——思路是除了密码，你会收到一条带 PIN 的短信。显然，这总比完全没有第二因素要好，但手机号作为第二因素已知极其不安全，因为有<a href="https://en.wikipedia.org/wiki/SIM_swap_scam">“SIM 交换攻击”</a>。简单说，攻击者很容易就能打给你的运营商，冒充你本人，把你的手机号转移到他们控制的新手机上。我知道这听起来很疯狂，但确实如此，我有不少朋友都是这个攻击的受害者。因此，购买并设置硬件安全密钥——工业级的防护标准。具体来说，我喜欢并使用 <a href="https://www.yubico.com/">YubiKey</a>。这些设备会在安全元件内生成并保存私钥，私钥不会出现在像你的笔记本电脑这种可疑的通用计算设备上。一旦设置完成，攻击者不仅需要知道你的密码，还必须_实际持有_你的安全密钥才能登录服务。你被攻破的风险大约会降低 1000 倍。建议准备并设置 2–3 把密钥，分散存放在不同的物理地点，以防丢失导致无法登录。安全密钥支持多种认证方式：在服务的第二因素设置里，优先选择 <a href="https://en.wikipedia.org/wiki/Universal_2nd_Factor">“U2F”</a> 作为最强保护（例如 Google 和 1Password 支持）。如果必须，退而求其次使用 “TOTP”。注意你的 YubiKey 也可以存储 TOTP 私钥，因此可以用 YubiKey Authenticator 应用，通过把密钥贴近手机的 NFC 来便捷获取登录时需要的 PIN。这比把 TOTP 私钥放在其他（软件）验证码应用里安全得多，因为再次强调，你不应信任通用计算设备。详细内容超出本文范围，但我强烈建议使用 2–3 把 YubiKey 来显著增强你的数字安全。</p>
+<p><strong>生物识别</strong>。生物识别是第三种常见认证因素（something you are）。例如在 iOS 上，我建议几乎处处开启 FaceID，比如进入 1Password 应用等。</p>
+<p><strong>安全问题</strong>。一些“恐龙企业”迷恋类似_“你母亲的娘家姓是什么？”_之类的安全问题，不时还强制你设置。显然，这类问题属于“你知道的东西”，本质上就是密码，而且对诈骗者而言，它们很容易在公开互联网被查到——你应该拒绝参与这种荒谬的“安全”练习。相反，把安全问题当作密码对待：为随机问题生成随机答案，并与密码一起存进你的 1Password。</p>
+<p><strong>磁盘加密</strong>。务必确保你的电脑开启磁盘加密。比如在 Mac 上，这个毫无脑的必备功能就叫做 “File Vault”。这样一来，即使你的电脑被盗，攻击者也无法把硬盘拆出来肆意获取你的数据。</p>
+<p><strong>物联网（IoT）</strong>。更像是 <a href="https://twitter.com/internetofshit">@internetofshit</a>。尽量避免所谓“智能”设备——本质上就是极不安全的、联网的计算机，收集大量数据、频繁被攻破，而人们还主动把它们放进自家。它们常常有麦克风，并且经常会<a href="https://arstechnica.com/gadgets/2025/03/everything-you-say-to-your-echo-will-be-sent-to-amazon-starting-on-march-28/">把数据回传</a>到“老家”，用于分析和“提升客户体验”（笑）。举个例子，年轻且天真的我曾买过一台来自中国的 CO2 检测器，它在告诉我屋里 CO2 含量之前，非得知道我的所有信息和我的精确地理位置。这些设备对你的隐私和安全构成巨大且常见的攻击面，应该尽量避免。</p>
+<p><strong>通讯</strong>。我推荐使用 <a href="https://signal.org/">Signal</a> 而不是短信，因为它对所有通信进行端到端加密。此外，它不像许多其他应用（如 iMessage、WhatsApp）那样存储元数据。开启消息自动消失（比如默认 90 天就挺好）。在我看来，长期保留消息是信息安全隐患，几乎没有什么实际好处。</p>
+<p><strong>浏览器</strong>。我推荐 <a href="https://brave.com/">Brave 浏览器</a>，一款以隐私为先、基于 Chromium 的浏览器。这意味着几乎所有 Chrome 扩展都可直接使用，而且浏览体验也像 Chrome，但不会让 Google 坐在你整个数字生活的第一排。</p>
+<p><strong>搜索引擎</strong>。我推荐 <a href="https://search.brave.com/">Brave Search</a>，可以在浏览器设置里把它设为默认。Brave Search 是一款以隐私为先、拥有自有索引的搜索引擎，不像例如 Duck Duck Go 基本上就是给 Bing 套了个好看的皮，并被迫与微软达成一些<a href="https://www.bleepingcomputer.com/news/security/duckduckgo-browser-allows-microsoft-trackers-due-to-search-agreement/">奇怪的合作</a>，从而损害用户隐私。和本清单里的所有服务一样，我为 Brave Premium 支付每月 3 美元，因为我希望在数字生活里自己是“客户”，而不是“产品”。就经验而言，我大约 95% 的搜索请求都非常简单——本质上是在找网站，搜索引擎就像一个小号 DNS。如果一时找不到你要的内容，只需在搜索词前加上“!g”即可回退到 Google。</p>
+<p><strong>信用卡</strong>。为每个商家创建全新、唯一的信用卡。没有理由在多个服务上使用同一张卡——这既让它们可以把你的不同消费“串起来”，也让你更容易遭遇信用卡欺诈，因为商家可能泄露你的卡号。我喜欢并使用 <a href="https://www.privacy.com/">privacy.com</a> 为每笔交易或每个商家生成新卡。你会得到一个很好的消费面板，并在每次刷卡时收到通知。你还可以为每张卡设置限额（例如每月 50 美元等），这能大幅降低超额扣款的风险。此外，使用 privacy.com 卡，在填写账单信息时你可以输入完全随机的姓名和地址。这一点非常重要，因为对随机的网络商家来说，他们根本没有必要、也完全没资格得到你的实际住址。顺带引出……</p>
+<p><strong>地址</strong>。在互联网上，大多数随机服务和商家并不需要你的实际住址。使用虚拟邮寄服务。我目前在用 <a href="https://app.earthclassmail.com/login">Earth Class Mail</a>，但说实话我对它有点尴尬，正打算切到 <a href="https://www.virtualpostmail.com/">Virtual Post Mail</a>，因为它在隐私、安全、所有权结构和声誉方面的承诺更强。无论如何，你会获得一个可以对外提供的地址；他们代收你的信件，扫描并数字化；他们有 App 让你快速查看；你可以决定如何处理（例如粉碎、转寄等）。这不仅提升安全和隐私，也带来相当的便利。</p>
+<p><strong>电子邮件</strong>。我仍主要使用 Gmail，纯粹因为它太方便、覆盖太广了，但我也开始部分使用 <a href="https://proton.me/mail">Proton Mail</a>。既然说到邮件，再补充几点：永远不要点击任何邮件里的链接。电子邮件地址极易被伪造，你永远无法保证你收到的不是诈骗者发来的钓鱼邮件。相反，我会手动打开目标服务的网站并从那里登录。此外，在邮箱设置里默认关闭图片加载。如果某封邮件确实需要看图，你随时可以点击“显示图片”，并不麻烦。这很重要，因为很多服务会用嵌入式图片来跟踪你——它们把信息藏在图片 URL 里，所以当你的邮件客户端加载图片时，他们就知道你打开了这封邮件。完全没有这个必要。另外，复杂的图片也是诈骗者规避邮件服务器反垃圾/反诈骗过滤的一种方式。</p>
+<p><strong>VPN</strong>。如果你想对服务隐藏你的 IP/地理位置，可以通过 VPN 中转实现。我推荐 <a href="https://mullvad.net/en">Mullvad VPN</a>。我默认关闭 VPN，但在面对我不太信任、希望获得更多保护的服务时会选择性开启。</p>
+<p><strong>基于 DNS 的屏蔽</strong>。你可以在 DNS 层面直接屏蔽整类域名，从而屏蔽广告。我喜欢并使用 <a href="https://nextdns.io/">NextDNS</a>，它能拦截各种广告和追踪器。对于喜欢折腾的高级用户，<a href="https://pi-hole.net/">pi-hole</a> 是物理部署的替代方案。</p>
+<p><strong>网络监控</strong>。我喜欢并使用 <a href="https://www.obdev.at/products/littlesnitch/index.html">Little Snitch</a>，装在我的 MacBook 上。它可以让你看到哪些应用在通信、何时通信以及数据量，从而帮助你追踪哪些应用会“回家”。任何通信频率异常的应用都很可疑，如果你不期望这些流量，应该考虑卸载。</p>
+<p><strong>公私分离</strong>。理想情况下，不要在工作电脑上登录或访问任何个人服务。多数工作设备都装有公司运营的“间谍软件”，以保护公司的知识产权。这本身合理，但你应该知道：你在这台电脑上的任何活动很可能都被广泛记录（网络、键盘记录、截屏等），并可能被安全部门主动监控。</p>
+<p>我只是想过上更安全的数字生活，并与那些只泄露必要信息的产品和服务建立和谐的关系。同时，我也希望为我使用的软件付费，以便激励相符，让我确实是“客户”。这并不容易，但只要有些决心和自律，是可以逐步实现的。</p>
+<p>最后，说说清单上没有的。我大体上仍使用 Gmail + Gsuite，因为它实在太方便且无处不在。我也用 𝕏，而不是更小众的选择（比如 Mastodon），在“主权”与“便利”之间作出了取舍。我没有使用一次性 VoIP 电话服务（例如 MySudo），但对此感兴趣。我也不怎么生成新的/唯一的邮箱地址（例如 SimpleLogin），但我想要。我仍在路上。如果你有其他应该加入此清单的技巧和做法，欢迎告诉我；例如可以在 𝕏 上私信我 <a href="https://x.com/karpathy">@karpathy</a>。</p>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/digital-hygiene/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章</p>
+    </div>
+  </footer>
+</body>
+</html>

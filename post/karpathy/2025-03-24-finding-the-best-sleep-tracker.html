@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>寻找最佳睡眠追踪器 - 人工智能文摘</title>
+  <link rel="stylesheet" href="/style.css?v=1761783314006">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <a href="/" class="back-link">← 返回首页</a>
+
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">寻找最佳睡眠追踪器</h1>
+        
+        <div class="article-original-title" title="原文标题">Finding the Best Sleep Tracker</div>
+        
+        <div class="article-meta">
+          <span class="post-author">Andrej Karpathy</span>
+          <span>•</span>
+          <span>2025年3月24日</span>
+          <span>•</span><span>karpathy.bearblog.dev</span>
+        </div>
+
+        <p>大约两个月前，我偶然看到 Bryan Johnson 的这支视频：<a href="https://www.youtube.com/watch?v=Wk9p3dhMYdk">How I FIXED My Terrible Sleep - 10 Habits</a>。那天我决定听 Bryan 的，尝试改善我的睡眠。但在改善之前，首先——我们该如何衡量？Bryan Johnson 似乎在用 <a href="https://www.whoop.com/us/en/">Whoop</a>，而当时我手头只有 Apple Watch（配合一款流行的睡眠 App——<a href="https://apps.apple.com/us/app/autosleep-track-sleep-on-watch/id1164801111">AutoSleep</a>）。很久以前我也用过并且很喜欢 <a href="https://ouraring.com/">Oura</a>。另外我还预订了新潮的 <a href="https://www.eightsleep.com/">8Sleep Pod 4 Ultra</a>，我知道它也提供一些睡眠追踪。于是我就有点犯难——我应该选哪一个来追踪我的睡眠？答案当然是……发起一个全面的对比项目，把这 4 个主流候选做个系统比较，找出最。佳。睡。眠。追。踪。器。于是我就这么干了。下图是我全副武装准备睡觉：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/sleep_edit.webp" alt="sleep_edit"></p>
+<p>现在我已经收集了大约 2 个月的数据。我把原始数据放在一个简单的表格里，记录一些基础指标：睡眠时长（浅睡、REM、深睡，以及清醒翻身）、心率指标（静息心率（RHR）、心率变异性（HRV）），以及每个应用给出的睡眠分数（Score）。我会在每天醒来立刻把这些记录下来，以便对照数字并联想到当时的主观感受。你可以在这个<a href="https://docs.google.com/spreadsheets/d/1mJeKtLuDE9hOuc2e_WjfaP1sds22k_sO2foIvSZLohw/edit?usp=sharing">电子表格里查看我的原始数据</a>，大概长这样：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/sleep_data.webp" alt="sleep_data"></p>
+<p><strong>定性评估</strong>。为免你悬念太久，经过两个月的收集与每天早上盯数据，我很容易就能看出来 Oura 和 Whoop 都是“第一梯队”——在睡眠追踪上相当接近且质量很高。它们给出的分数也彼此接近，并且在早上与我的主观感受_大多数时候_都一致。接下来是 8Sleep，还可以。最后让我难过的是，Apple Watch + AutoSleep（我过去曾用过好几个月）真的、真的很糟。它的分数基本接近随机，波动很大，与我醒来时的感受相比几乎没什么相关性。</p>
+<p>现在来看看一些数据。首先，看看 2 个月里 4 个信号的取值及其直方图：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/signals.webp" alt="signals"></p>
+<p>如图所示，AutoSleep 和 8Sleep 太容易“取悦”了，分数经常很高，贴着 100 的上限。Whoop 也稍微有点宽松，会给出 100 分。Oura 则最“难伺候”，分数分布更像高斯分布，动态范围也更大。我把这视为 Oura 的一个优点。实际上，两个月下来我在 Oura 上的最高分也才 92，而在 Whoop 上我相当规律地能拿到 100。这意味着我还能继续努力，把睡眠进一步优化——总有进步空间。</p>
+<p>接着，我对不同追踪器之间的相关性很感兴趣。我们把所有分数拿来画成两两相关性的散点图，看看哪些追踪器彼此“最为一致”。如下所示：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/corr.webp" alt="corr"></p>
+<p>下面是按相关性排序的结果：</p>
+<pre><code>Whoop vs Oura: 0.65
+Oura vs 8Sleep: 0.59
+Oura vs AutoSleep: 0.47
+8Sleep vs AutoSleep: 0.42
+Whoop vs 8Sleep: 0.38
+Whoop vs AutoSleep: 0.14
+</code></pre>
+<p>Whoop 和 Oura 的相关性最高（约 0.65），而其他的就比较散。尤其是 Whoop 和 AutoSleep 几乎不相关（0.14！）。如果我们认为 Whoop 是不错的（我也这么认为），那 AutoSleep 看起来几乎就是一个噪声发生器。</p>
+<p><strong>心率相关</strong>。接下来我想看看静息心率（RHR）与心率变异性（HRV）。首先，除了 8Sleep 之外，所有追踪器在夜间心率上的一致性都很高，包括 Apple Watch。8Sleep 最差，因为……它是个床垫，无法直接测量心率。它能有这么高的相关性，其实已经让我有点惊讶了：</p>
+<pre><code>           AutoSleep    8Sleep      Oura     Whoop
+AutoSleep   1.000000  0.947151  0.908987  0.942587
+8Sleep      0.947151  1.000000  0.947977  0.878552
+Oura        0.908987  0.947977  1.000000  0.904023
+Whoop       0.942587  0.878552  0.904023  1.000000
+</code></pre>
+<p>既然确定了 3 台设备（Oura、Whoop、AutoSleep）在夜间给出了良好且一致的静息心率测量，我就好奇它与睡眠分数是否有关联——Bryan 在他的视频里也提过这个点。换句话说，更低的 RHR 是否对应更高的睡眠分数？请记住这只是相关性分析；实际上我也不知道这些 App 在计算睡眠分数时是否把 RHR 作为特征之一。就 Whoop 而言，似乎存在一丁点相关性，也就是 RHR 越低分数越高（约 0.13）。</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/whoopcorr.webp" alt="whoopcorr"></p>
+<p>但在 Oura 上几乎没有相关性：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/ouracorr.webp" alt="ouracorr"></p>
+<p>所以……我也不太确定该怎么解读。起初我以为更低的 RHR 会和更高的分数有明显相关，但看起来并非如此。</p>
+<p>最后，在这两个月的数据收集期间我也规律运动，基本每天做平均约 30 分钟的 Zone 2 有氧，每周两次再做一次 4x4x4 的 HIIT（4 分钟缓和、4 分钟冲刺、共 4 轮）。我也想看看这是否在数据里有所体现，结果确实如此，还挺酷的：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/improvement.webp" alt="improvement"></p>
+<p>用 Whoop 和 Oura 的平均测量值来看 RHR 和 HRV，我的静息心率在这 60 天里改善（下降）了不到 3 次/分钟（大约从 51 次/分降到 48 次/分），很棒。此外，我的 HRV 也有所提升（上升），（大约从 49 提高到 54）。我很喜欢在数据里看到运动带来的适应性变化。另一个不明原因的现象是，Whoop 的 HRV 数值看起来比 Oura 略高，差不多高了 5 左右。我不太确定为什么，可能它们的计算方式不同……但总之这点有些令人困惑。</p>
+<p>这两个月里我一直试图改善睡眠质量，但过程中掺杂了许多随机事件、聚会、受伤，还有我不时尝试的一些小实验。举个例子，上周我就被一个技术问题“上头”，导致睡得很糟。所以总体而言，目前我还没看到睡眠质量有戏剧性提升。不过我把这件事看作一个长期项目，希望在今年的更长时间里把这些分数整体拉上去。也许要是眯起眼睛看，似乎略有提升（？），但说实话这大概只是自我安慰哈哈：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/sleepovertime.webp" alt="sleepovertime"></p>
+<p><strong>的确，睡眠很重要</strong>。总的来说，我可以非常肯定地说，Bryan 基本是对的：我的睡眠分数和我当天能够完成的工作质量高度相关。分数低的时候，我缺乏行动力、缺乏勇气、缺乏创造力，就是累。分数高的时候，我可以无所不能。在最好的那些天里，我能坐下来工作 14 个小时，几乎感觉不到时间流逝。这不是微妙的差异。并且，这种影响通常不是由某一晚的睡眠决定的，而是由过去几天累积的睡眠负债决定的。换句话说，单独某一晚睡差点通常没关系，但连续几晚就很糟，反之亦然。听 Bryan 的。</p>
+<p><strong>购买建议</strong>。最后，我想给希望开展睡眠追踪并改善睡眠的人一些建议：</p>
+<ul>
+<li><p>Oura 属于第一梯队 / 非常可靠的追踪器。App 很优秀，我喜欢它那一屏“总览面板”，一觉的所有关键信息一屏尽览（Whoop 则需要在 App 里多点几次）。我喜欢 Oura 的分数不容易饱和、分布更像高斯，而且动态范围更大。不过指环这种形态对我来说有点不便，因为它略厚，而手指在日常中用得很多（比如洗手、做饭等）。去健身房时我经常会把戒指摘下来，因为它会影响握力，也容易被刮花。戒指必须合适尺码，而手指的尺寸会变化；有时候有点紧，有时候又有点松。为了得到最佳测量，戒指还得保持正确的旋转方向（小缺口要朝下），你会时不时发现它转偏了又去调整。我也不太喜欢为了充电而反复摘戴。</p>
+</li>
+<li><p>Whoop 同样是一款第一梯队 / 非常可靠的追踪器。App 也很优秀。刚上手可能有点信息量大、需要多处点来点去，但功能非常全面、可定制程度也更高，超过 Oura。它还有一个挺酷且实用的 LLM 集成。我也很喜欢它的社区（Community）功能，不过现在明显还不够成熟、设计不足，感觉像“被遗忘的角落”。我认为在“一晚睡眠的密集总结页”上，Oura 的“总览”做得更好。我不喜欢 Whoop 的分数较容易达到 100 的“饱和”现象。就形态而言，我觉得 Whoop 要好不少——把追踪器戴在手腕上在日常生活里显著更方便、更不打扰。此外，你几乎从不用把它摘下来，因为充电头是“扣上就行，充完取下”的设计！</p>
+</li>
+<li><p>我觉得 8Sleep 的睡眠追踪并不够可靠。醒来时它给的分数常常让人摸不着头脑，而且如前面所示，它和 Whoop、Oura 的相关性并不强。</p>
+</li>
+<li><p>AutoSleep 基本就是一个随机数发生器。也许 Apple Watch 上有更好的睡眠追踪 App，但我还没找到。不要用它。</p>
+</li>
+</ul>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/apps.webp" alt="apps"></p>
+<p>上图：4 款 App。从左到右：<strong>Oura</strong> —— 我很喜欢这张“总览”页面，信息密度高，正好就是你关心的内容，而且左右滑动就能切换日期。<strong>Whoop</strong> —— 信息密度更低，你需要在 App 里“寻宝”式地到处点来点去。<strong>8Sleep</strong> —— 还不错。<strong>AutoSleep</strong> —— 看起来很酷，但数字全错，所以 <code>¯\(ツ)/¯</code>。</p>
+<p>把以上都总结成一句建议：如果你想要 9.5/10 的可靠、方便、配套 App 优秀的睡眠追踪，选 Whoop（上手后会越来越顺手）。如果你能接受戒指这种形态，想要 10/10 的追踪质量，选 Oura。</p>
+<p>我是不是漏掉了你最爱的、显而易见的“最佳睡眠追踪器”？到 X 上告诉我吧 <a href="https://x.com/karpathy">@karpathy</a>。</p>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/finding-the-best-sleep-tracker/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章</p>
+    </div>
+  </footer>
+</body>
+</html>

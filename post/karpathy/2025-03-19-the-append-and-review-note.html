@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>“追加与回顾”笔记 - 人工智能文摘</title>
+  <link rel="stylesheet" href="/style.css?v=1761783314006">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <a href="/" class="back-link">← 返回首页</a>
+
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">“追加与回顾”笔记</h1>
+        
+        <div class="article-original-title" title="原文标题">The append-and-review note</div>
+        
+        <div class="article-meta">
+          <span class="post-author">Andrej Karpathy</span>
+          <span>•</span>
+          <span>2025年3月19日</span>
+          <span>•</span><span>karpathy.bearblog.dev</span>
+        </div>
+
+        <p>我偶然摸索出一种记笔记的方法，已经很好地为我服务了很多年，简单说几句。我把它称作_“追加与回顾笔记”_。我觉得这种方法在“极其简单易用”和“覆盖日常大多数记笔记场景”之间取得了很好的平衡。</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/26am.webp" alt="Screenshot 2025-03-19 at 10"></p>
+<p><strong>数据结构。</strong> 我在 Apple 备忘录里只维护一条纯文本笔记，名字就叫“notes”。维护多条笔记并把它们整理进文件夹和递归的子结构，会带来过多的认知负担。只有一条笔记意味着用 Ctrl+F 搜索既简单又直接。Apple 在可选离线编辑、跨设备同步和备份方面做得不错。</p>
+<p><strong>追加。</strong> 任何时候，只要冒出一个想法、一条待办或其他任何东西，我就把它以纯文本的形式追加到笔记的顶部。要么是在我工作的电脑上，要么是在外出时用 iPhone。我不觉得用其他结构化元数据（日期、链接、概念、标签）为这些笔记打标签有多大用处，因此默认不这么做。唯一的例外是我会用诸如“watch:”“listen:”或“read:”这样的标签，这样当我深夜想找点东西看、跑步/散步时想听点什么、或在飞行途中想读点什么时，就能很容易通过 Ctrl+F 找到。</p>
+<p><strong>回顾。</strong> 随着内容不断追加到顶部，其他一切就像受重力作用一样往下沉。隔三岔五，我会向下翻动笔记并快速浏览。如果发现有任何不该离开我注意力的内容，我就把它简单地复制粘贴到更靠上的位置“救上来”。有时当它们看起来相关时，我会合并、处理、分组或修改笔记。我很少删除笔记。那些反复不值得关注的内容会自然地继续下沉。它们从未丢失，只是没有资格待在脑海最前沿。</p>
+<p>使用示例：</p>
+<ul>
+<li>完全随机的想法突然冒出来，但我在路上没法细想，于是把它加进笔记，之后再回头处理。</li>
+<li>在派对上有人提到一部我该看的电影。</li>
+<li>在 X 上无脑刷屏时看到一本书的超高评价。</li>
+<li>早上坐下写一份当天想完成的小型待办清单。</li>
+<li>我只是需要一个写下当下思考内容的临时“写作面”。</li>
+<li>我本来想发一条推文，但觉得还需要再琢磨一下。先复制到笔记里，稍后再想。</li>
+<li>我发现一句有趣的引语，想时不时被提醒到。</li>
+<li>我希望未来的自己能多想想这件事。</li>
+<li>我在读一篇论文，想记下一些有意思的数字。</li>
+<li>我在做些零散的事情，需要一个临时场地来四处 Ctrl+C/Ctrl+V。</li>
+<li>我总是忘记那个递归列出所有 Python 文件的 shell 命令，于是把它放在笔记里。</li>
+<li>我在对神经网络做超参数搜索，记录我运行过的命令和实验最终结果。</li>
+<li>我感到脑子里事情太多、怕会遗漏，于是坐下来把它们迅速倾倒成一个项目符号列表。</li>
+<li>在我重新整理一些笔记时，我意识到其实我从不同角度反复想过同一件事。于是进一步处理，把一些笔记合并为一条，并获得了更多洞见。</li>
+</ul>
+<p>当我把某件事记下来，我会觉得可以立刻继续前进，清空工作记忆，并在当下把注意力完全放到别的事情上。我相信之后在回顾时能再把那个想法拿出来，在有更多时间时好好处理。</p>
+<p>过去几年，这条笔记已经长得相当庞大。偶尔翻到很久以前让我着迷的事/念头，感觉很美好。有时某些想法经不起反复审视，就会继续沉到更下面。有时我会惊讶于自己竟然对某件事思考了这么久。而有时，过去的一个想法会在新的光线下突然变得相关。</p>
+<p>一条文本笔记就够了。</p>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/the-append-and-review-note/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章</p>
+    </div>
+  </footer>
+</body>
+</html>

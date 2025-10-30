@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宣布推出 Tinker - 人工智能文摘</title>
+  <link rel="stylesheet" href="/style.css?v=1761783314004">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <a href="/" class="back-link">← 返回首页</a>
+
+    <article>
+      <div class="article-content">
+        <h1 class="article-title">宣布推出 Tinker</h1>
+        
+        <div class="article-original-title" title="原文标题">Announcing Tinker</div>
+        
+        <div class="article-meta">
+          <span class="post-author">Thinking Machines Lab</span>
+          <span>•</span>
+          <span>2025年10月1日</span>
+          <span>•</span><span>thinkingmachines.ai</span>
+        </div>
+
+        <p><a href="https://www.computerhistory.org/collections/catalog/X39.81/">TinkerToy 计算机</a> 由 <a href="https://en.wikipedia.org/wiki/Danny_Hillis">Daniel Hillis</a> 和 <a href="https://en.wikipedia.org/wiki/Brian_Silverman">Brian Silverman</a> 发明</p>
+<p>今天，我们发布了 <a href="https://thinkingmachines.ai/tinker">Tinker</a>，这是一套用于微调语言模型的灵活 API。它通过让研究者和黑客掌控算法与数据，赋能他们开展模型实验，而我们来处理分布式训练的复杂性。Tinker 推进了我们的使命：让更多人能够在前沿模型上开展研究，并按需对其进行定制。</p>
+<p>Tinker 支持微调大小各异的开放权重模型，包括 Qwen-235B-A22B 这类大规模专家混合（MoE）模型。从小模型切换到大模型，就像修改你 Python 代码中的一个字符串一样简单。</p>
+<p>Tinker 是一项运行在我们内部集群和训练基础设施之上的托管服务。我们负责调度、资源分配与故障恢复。这样你就能立即启动小规模或大规模的训练运行，而无需操心基础设施运维。我们使用 LoRA，使多个训练作业可以共享同一算力池，从而降低成本。</p>
+<p>Tinker 的 API 提供了 <code>forward_backward</code>、<code>sample</code> 等低层原语，可用于表达大多数常见的后训练方法。即便如此，取得良好效果仍需要把许多细节处理到位。因此，我们同时发布了一个开源库 <a href="http://github.com/thinking-machines-lab/tinker-cookbook">Tinker Cookbook</a>，其中在 Tinker API 之上实现了现代化的各类后训练方法。</p>
+<p>普林斯顿、斯坦福、伯克利和 Redwood Research 的团队已经在使用 Tinker：</p>
+<ul>
+<li><a href="https://blog.goedel-prover.com/">Princeton Goedel Team</a> 训练了数学定理证明器</li>
+<li>斯坦福的 <a href="https://statmech.stanford.edu/">Rotskoff Chemistry 小组</a> 对模型进行微调，以完成化学推理任务</li>
+<li><a href="https://sky.cs.berkeley.edu/project/skyrl/">伯克利 SkyRL 小组</a> 在自定义的异步离策略强化学习训练环路上进行实验，涉及多智能体与多轮工具使用</li>
+<li><a href="https://www.redwoodresearch.org/">Redwood Research</a> 使用 Tinker 对 Qwen3-32B 进行了强化学习，用于解决困难的 AI 控制任务</li>
+</ul>
+<p>Tinker 现已面向研究者和开发者开启内测。你可以在<a href="https://thinkingmachines.ai/tinker">此处</a>加入等待名单。我们将从今天开始为用户开通平台访问。</p>
+<p>如果你的组织有兴趣使用 Tinker，请通过<a href="/cdn-cgi/l/email-protection#a9ddc0c7c2ccdbe9ddc1c0c7c2c0c7cec4c8cac1c0c7ccda87c8c0">这里</a>与我们联系。</p>
+<p>Tinker 在起步阶段可免费使用。我们将在接下来的几周内推出按用量计费。</p>
+<p>我们期待看到你用 Tinker 发现与创造的一切！</p>
+
+        
+        <div class="original-link">
+          <a href="https://thinkingmachines.ai/blog/announcing-tinker/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章</p>
+    </div>
+  </footer>
+</body>
+</html>
