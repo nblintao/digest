@@ -15,9 +15,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- 基本 SEO -->
-  <title>Vibe 编程：MenuGen - 人工智能文摘</title>
-  <meta name="description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_"Confit tubers folded with matured curd and fi...">
-  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,Vibe 编程：MenuGen,中文翻译">
+  <title>Vibe 编程打造 MenuGen - 人工智能文摘</title>
+  <meta name="description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很美味（我超级爱甜食）。有时候真的会过头。"将油封块茎与熟成凝乳折拌，最后以榛果黄油浸汁...">
+  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,Vibe 编程打造 MenuGen,中文翻译">
   <meta name="author" content="Andrej Karpathy">
 
   <!-- 规范链接 -->
@@ -34,8 +34,8 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://digest.qcngt.com/post/karpathy/2025-04-27-vibe-coding-menugen.html">
-  <meta property="og:title" content="Vibe 编程：MenuGen - 人工智能文摘">
-  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_"Confit tubers folded with matured curd and fi...">
+  <meta property="og:title" content="Vibe 编程打造 MenuGen - 人工智能文摘">
+  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很美味（我超级爱甜食）。有时候真的会过头。"将油封块茎与熟成凝乳折拌，最后以榛果黄油浸汁...">
   <meta property="og:image" content="https://digest.qcngt.com/logo.png">
   <meta property="og:site_name" content="人工智能文摘">
   <meta property="og:locale" content="zh_CN">
@@ -46,12 +46,12 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://digest.qcngt.com/post/karpathy/2025-04-27-vibe-coding-menugen.html">
-  <meta name="twitter:title" content="Vibe 编程：MenuGen - 人工智能文摘">
-  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_"Confit tubers folded with matured curd and fi...">
+  <meta name="twitter:title" content="Vibe 编程打造 MenuGen - 人工智能文摘">
+  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很美味（我超级爱甜食）。有时候真的会过头。"将油封块茎与熟成凝乳折拌，最后以榛果黄油浸汁...">
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761871553881">
+  <link rel="stylesheet" href="/style.css?v=1761874404988">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -79,7 +79,7 @@
     <article class="author-0">
       <div class="article-content">
         <div class="article-header">
-          <h1 class="article-title">Vibe 编程：MenuGen</h1>
+          <h1 class="article-title">Vibe 编程打造 MenuGen</h1>
           <div class="article-meta">
             
             <span class="article-original-title" title="原文标题">Vibe coding MenuGen</span>
@@ -91,27 +91,27 @@
           </div>
         </div>
 
-        <p>我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。<em>&quot;Confit tubers folded with matured curd and finished with a beurre noisette infusion.&quot;</em> 好的，所以……这到底是什么？我这辈子花了太多时间在谷歌上搜各种食物的图片，所以当我去参加一次“Vibe 编程”（vibe coding）黑客松时，我就知道这是个绝佳机会，终于把我一直想要、但一直找不到的那个应用做出来。于是它现在有了实体，我叫它……🥁🥁🥁 … <strong>MenuGen</strong>：</p>
-<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/02pm.webp" alt="Screenshot 2025-04-26 at 1"></p>
-<p>MenuGen 非常简单。你拍一张菜单的照片，它就会为菜单上的每一道菜生成图片，把菜单可视化。显然，它不一定与那家餐厅端上来的菜肴_完全_一致，但能给你一个基本概念：有些是沙拉、这是鱼、这是汤，等等。我自己用起来觉得非常有帮助，于是在黑客松之后（当时我把第一个版本在本地跑起来了）又继续按照 Vibe 编程的方式折腾了一阵，把它部署起来，加上认证、支付之类的功能，让它更像个真正的产品。现在它已经上线了，下次外出吃饭时试试看： <a href="https://www.menugen.app/">menugen.app</a>！</p>
-<p>MenuGen 是我第一个端到端用 Vibe 编程做出来的应用。对我这个平时喜欢鼓捣、但几乎没有真正 Web 开发经验的人来说，这次从零一路做到一个人们可以注册、付费、获得价值、而我也能挣点合理 10% 加价的小产品，挺酷的。除了应用本身的实用性之外，MenuGen 对我来说也是一次关于“Vibe 编程应用”及其当下可行性的探索。因此，我没有直接写任何代码；100% 的代码都是 Cursor+Claude 写的，从我习惯的传统意义上讲，我基本并不知道 MenuGen 是怎么“工作的”。既然项目已经“完成”（也就是第一个版本看起来能用），我就想写篇短文，谈谈一个非 Web 开发者今天用 Vibe 编程的方法做一个 Web 应用是什么体验。</p>
-<p><strong>先说本地版</strong>。在 Vibe 编程的流程里这算是比较常见的体验：应用在我本机上跑起来的第一个原型几乎没花什么时间。我用的是 Cursor + Claude 3.7，给它描述了应用，它很快就把所有 React 前端组件写好了，铺开了一个漂亮的网页：顺滑的多彩字体、一些小小的 CSS 动画、响应式设计等等——除了实际的后端功能之外。看到一个新网站这么快“长”出来，吸引力很强。我当时觉得已经做了 80%，但（埋个伏笔……）其实更接近 20%。</p>
-<p><strong>OpenAI API</strong>。从这里开始麻烦陆续出现了。我要用 OpenAI 的 API 从图片里 OCR 出菜单项，于是得去拿 OpenAI 的 API key，还得穿过一些有点曲折的界面，问我“项目”和各种细粒度权限。Claude 一直在幻觉用到已经弃用的 API、模型名称、输入/输出约定（最近都变了），搞得人有点晕，不过我来回拷文档喂它一阵之后基本都解决了。等到单个 API 调通后，我又立刻撞上了比较严的限流——大概每 10 分钟才能发出几次请求。</p>
-<p><strong>Replicate API</strong>。接下来，我需要根据描述生成图片。我去申请了新的 Replicate API key，很快又碰到类似的问题。我的请求不工作，是因为 LLM 的知识已过期；更糟的是，这回连官方文档都有点落后——API 最近改了，现在不直接返回 JSON，而是返回一种 Streaming 对象，我和 Claude 都没弄明白。随后又遇到 API 限流，导致调试很困难。后来有人告诉我，这些服务这样做是出于防止欺诈的保护措施，但也让新开的、正当的账号更难起步。据说 Replicate 正在转向预购额度的方式，可能会对之后的使用有所帮助。</p>
-<p><strong>Vercel 部署</strong>。此时应用至少在本地已经能跑了，我挺开心。到该把第一个基础版本部署出去的时候了。注册 Vercel、添加项目、配置、指向我的 GitHub 仓库、推到 master、看着新的 Deployment 构建，然后……ERROR。日志里显示一些 Lint 错误，比如未使用的变量之类的基础问题，但因为本地一切正常、只有在 Vercel 构建才出错，所以很难理解或调试。我只好往 master 推一些假的“调试提交”，强制重复部署来查问题。把这些修完后，站点还是不工作。我问了 Claude、问了 ChatGPT、翻了文档、Google 到处搜。1 小时后我终于意识到自己的低级错误——我的 <code>.env.local</code> 文件里放着 OpenAI 和 Replicate 的 API key，但这个文件（合理地！）在 <code>.gitignore</code> 里，不会被推到 git，所以你得手动去 Vercel 的项目设置，找到合适的位置，把环境变量一个个填进去。这个问题我还算比较快就搞明白了，但我能想象很多刚入门的 Vibe 编程开发者 会在这件事上卡一阵。部署终于成功后，Vercel 很开心地给了一个 URL。这又让我吃了一惊，因为我的项目是个私有仓库，而且还没准备好公开。我没意识到 Vercel 会把你这个_！私有！_的未完成仓库直接自动部署到一个完全公开、而且很容易猜到的 URL 上，哈哈。</p>
-<p><strong>Clerk 身份认证</strong>。Claude 建议我们用 Clerk 做登录，我就顺势用了。注册 Clerk、配置项目、拿到 API key。接下来 Claude 幻觉出大概上千行看起来是 Clerk 过时 API 的代码；我不得不来回复制很多文档，才逐步把坑填上。然后，目前 Clerk 还只是跑在“Development”环境。要切到“Production”环境，又有一堆环节。Clerk 要求你把应用挂在你自己拥有的自定义域名上，<code>menugen.vercel.com</code> 不行。于是我去买了域名 <a href="https://karpathy.bearblog.dev/feed/">menugen.app</a>。然后把域名接到我的 Vercel 项目上，再改 DNS 记录。接下来得选一个 OAuth 提供商，比如我选了 Google。但这又是一场<a href="https://clerk.com/docs/authentication/social-connections/google">配置冒险</a>。我得启用一个“SSO connection”，还要去 Google Cloud Console 新建项目、创建一个 OAuth 凭据。期间还有一段需要审核的等待。之后又在 Vercel、Clerk、Google 的层层设置之间来回切换，才把线路理顺。这个阶段我一度想放弃，但第二天醒来心情稍微好了些。</p>
-<p><strong>Stripe 支付</strong>。接着我想加支付，让用户可以买积分。这意味着又一个网站、又一个账号、更多文档、更多密钥。我在后台选择“Next.js”作为后端，把“入门”文档里的第一段代码片段复制进应用，然后……ERROR。后来我才意识到，Stripe 在你选择 Next.js 时给的是 JavaScript 代码，但我的应用是用 TypeScript 写的，所以我每次贴进去都会让 Cursor 因为 linter 报错而不开心；不过我让 Claude 多次“修一下错误”，再威胁要换用 ChatGPT 之后，它也算把坑都填上了。接着在 Stripe 仪表盘里我们创建一个 Product、创建一个 Price，找到 price key（不是 product key！），把所有的 key 来回复制。差不多在这里，我发现 Claude 用了一个特别糟糕的思路去把 Stripe 支付的成功与用户积分对应起来——它试图匹配邮箱地址，但用户在 Stripe Checkout 里填的邮箱，可能并不是他用来登录 Google 的邮箱，于是就会出现买了积分却收不到的情况。我指出这一点后，Claude 立刻道歉，并把实现改对了：在请求元数据里传递唯一的用户 ID。它还感谢我指出问题，并表示以后会做对，我知道这就是 gaslighting。我们做了个快速测试，OK。再点几下把部署从 Development 升到 Production，然后重新建一次 Product、重新建一次 Price、再重新复制所有 key 和 id，不论本地还是在 Vercel 设置里……然后它终于能用了 :)</p>
-<p><strong>数据库？工作队列？</strong> 到目前为止，所有处理都是“当场”的——就是请求和结果立刻往返，没有缓存、没有保存。所以结果是易失的；如果响应太慢（比如菜单太长、条目太多，或者 API 延迟很大），请求就会超时、崩掉。刷新页面也会什么都没了。正确的做法是搞一个数据库，登记并跟踪工作项，客户端只展示随着准备就绪而更新的最新状态。我意识到必须从 Marketplace 里接一个数据库，比如 Supabase PostgreSQL（尽管 Claude 给我推销 Vercel KV，但我知道它其实已经弃用）。然后我们还需要一些队列服务，比如 Upstash 之类，用来跑实际的处理。这意味着更多服务、更多登录、更多 API key、更多配置、更多文档、更多折磨。太能“熊”了，留作以后再做。</p>
-<p><strong>TLDR</strong>。作为本地 demo，用 Vibe 编程做出来的 MenuGen 令人兴奋、有趣；但作为一个真正上线的应用，它更像是一段有点痛苦的跋涉。搭一个现代应用有点像在组装 IKEA 家具：一堆服务、文档、API key、配置、开发/生产两套部署、团队与安全功能、限流、价格档位……与此同时，LLM 对一切的知识总有点滞后，仔细看时会在关键设计上犯一些微妙但致命的错误，有时还会在解法上幻觉或对你“煤气灯”。但对我来说最有意思的是：我其实并没有在代码编辑器里花多少时间。大多数时间我都在浏览器里，在各个标签页与设置之间切换，配置并粘合一头怪兽。所有这些工作与状态甚至都不是 LLM 能访问或操作的——按这种方式，我们要如何在 2027 年之前把社会自动化呢？</p>
-<p><strong>展望</strong>。作为一次在几乎没有 Web 开发背景下用 Vibe 编程做一个应用的体验，我既感到惊叹（它确实可行，而且比以往容易/更快！），也带着对“本可更好”的些许挫败。当然，部分痛点来自这样一个事实：这些基础设施本就不是为这种方式而设计的。它们的目标用户是生活在前 LLM 时代的专业 Web 开发团队，而不是一个人用 Vibe 编程做原型的独立开发者。一些可能让像 MenuGen 这样超简单的应用更容易实现的想法：</p>
+        <p>我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很美味（我超级爱甜食）。有时候真的会过头。<em>&quot;将油封块茎与熟成凝乳折拌，最后以榛果黄油浸汁收尾。&quot;</em> 好吧，所以……这到底是什么？我这辈子花了太多时间在谷歌上搜各种食物的图片，于是在最近参加一次 vibe 编程黑客松时，我就知道这正是个绝佳机会，终于把我一直想要但哪儿都找不到的那个应用做出来。于是它现在有了“实体”，我叫它……🥁🥁🥁 … <strong>MenuGen</strong>：</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/02pm.webp" alt="截图 2025-04-26 1点"></p>
+<p>MenuGen 非常简单。你拍一张菜单的照片，它就会为菜单上的每一个条目生成图片，把菜单可视化。当然，它并不会和那家餐厅端上来的菜肴_完全_一致，但能给你一个基本概念：有些是沙拉、这是鱼、这是汤，等等。我自己用起来觉得非常有帮助，于是在黑客松之后（当时我把第一个版本在本地跑起来了）我又继续按 vibe 编程的方式折腾了一阵，把它部署起来，加上认证、支付等功能，让它真正“成型”。所以现在它来了——下次你外出就餐时不妨试试： <a href="https://www.menugen.app/">menugen.app</a>！</p>
+<p>MenuGen 是我第一个端到端用 vibe 编程做出来的应用。对我这样一个喜欢鼓捣、但几乎没有真正 Web 开发经验的人来说，我从零一路做到一个人们可以注册、付费、获得价值、而我也能挣到诚实的 10% 加价的小产品，挺酷的。不过，除了应用本身的实用性之外，MenuGen 对我来说还是一次关于“vibe 编程应用”以及当下可行性的探索。因此，我没有直接写任何代码；100% 的代码都是 Cursor+Claude 写的，从我习惯的传统意义上讲，我基本并不知道 MenuGen 是如何“工作的”。既然项目已经“完成”（也就是第一个版本看起来能用），我就想写篇短文，记录一下我的体验——今天，一个非 Web 开发者要用 vibe 编程来做一个 Web 应用，大概是怎样的感受。</p>
+<p><strong>先说本地版本</strong>。在 vibe 编程里这算是比较常见的体验：应用在我本机上跑起来的第一个原型几乎没花什么时间。我用的是 Cursor + Claude 3.7，给它描述了应用，它很快就把所有 React 前端组件写好了，铺开了一个漂亮的网页：顺滑的多彩字体、一些小小的 CSS 动画、响应式设计等等——除了实际的后端功能之外。看到一个新网站这么快“长出来”，吸引力很强。我当时觉得已经做了 80%，但（埋个伏笔……）其实更接近 20%。</p>
+<p><strong>OpenAI API</strong>。从这里开始，麻烦出现了。我需要调用 OpenAI 的 API 来从图片里 OCR 出菜单项。我得去拿 OpenAI 的 API key。我要穿过一些略显曲折的菜单，问我关于“项目”和各种细粒度权限。Claude 一直在幻觉用到已经弃用的 API、模型名称、输入/输出约定（这些最近都变了），让人有点犯晕，但我来回拷文档喂它一阵之后，它也逐步把问题解开了。等到单个 API 调通后，我立刻又撞上了比较严的限流——大概每 10 分钟才能发出几次请求。</p>
+<p><strong>Replicate API</strong>。接下来，我需要根据描述生成图片。我去申请了新的 Replicate API key，很快又碰到类似的问题。我的请求不工作，因为 LLM 的知识已过期；更糟的是，这回连官方文档都有点落后——API 最近改了，现在不直接返回 JSON，而是返回一种 Streaming 对象，我和 Claude 都没弄明白。随后又遇到 API 限流，导致调试很困难。后来有人告诉我，这些服务这样做是为了缓解欺诈的常见防护措施，但也让新开的、正当的账号更难起步。据说 Replicate 正在转向预购额度的方式，可能会对之后的使用有所帮助。</p>
+<p><strong>Vercel 部署</strong>。此时应用至少在本地已经能跑了，我挺开心。到了把第一个基础版本部署出去的时候了。注册 Vercel、添加项目、配置、指向我的 GitHub 仓库、推到 master、看着新的 Deployment 构建，然后……ERROR。日志里显示一些 Lint 错误，比如未使用的变量之类的基础问题，但因为本地一切正常、只有在 Vercel 构建才出错，所以很难理解或调试。我只好往 master 推一些假的“调试提交”，强制重复部署来查问题。把这些修完后，站点还是不工作。我问了 Claude，也问了 ChatGPT，翻了文档，到处 Google。1 小时后我终于意识到自己的低级错误——我的 <code>.env.local</code> 文件里存着 OpenAI 和 Replicate 的 API key，但这个文件（理所当然地）被写进了 <code>.gitignore</code>，不会被推到 git，所以你得手动进入 Vercel 项目设置，找到正确的位置，把你的环境变量手动加进去。我其实很快就明白了问题所在，但我可以想象一个初学的 vibe 程序员可能会在这里卡很久。部署终于成功后，Vercel 开心地给了我一个 URL。这再次让我吃惊，因为我的项目是一个尚未准备好见光的私有仓库。我没意识到 Vercel 会把你那个还没做完、放在私有仓库里的项目，直接自动部署到一个完全公开、而且很容易猜到的 URL 上，哈哈。</p>
+<p><strong>Clerk 认证</strong>。Claude 建议我们用 Clerk 做认证，所以我就跟着做了。注册 Clerk、配置项目、拿到 API key。此时 Claude 幻觉出了大约 1000 行看起来是 Clerk 已弃用 API 的代码。我不得不来回复制粘贴很多文档，才逐步把事情解开。接下来，Clerk 目前跑在“Development”部署。要迁到“Production”，还得再跳几道圈。Clerk 要求你把应用托管在你自己拥有的自定义域名上，<code>menugen.vercel.com</code> 不行。所以我去购买了域名 <a href="https://karpathy.bearblog.dev/feed/">menugen.app</a>。然后我把这个域名接到我的 Vercel 项目上。接着我得改 DNS 记录。然后我得选一个 OAuth 提供商，我选了 Google。但要做到这点本身就是一场<a href="https://clerk.com/docs/authentication/social-connections/google">配置冒险</a>。我得启用一个“SSO connection”。还得去 Google Cloud Console 新建项目，并添加一个新的 OAuth 凭据。期间我还得等一会儿审批流程。然后我在 Vercel、Clerk 和 Google 的层层嵌套设置里来回折腾，才把它们接好。到这儿的时候我有点想放弃这个项目，但第二天醒来我感觉好多了。</p>
+<p><strong>Stripe 支付</strong>。接着我想加上支付，让人们能购买额度。这意味着又一个网站、又一个账号、更多文档、更多密钥。我选择“Next.js”作为后端，从“入门”文档里复制粘贴第一段代码到我的应用里，然后……ERROR。我后来才意识到，Stripe 在你选择 Next.js 时给的是 JavaScript 代码，但我的应用是用 TypeScript 写的，所以每次我粘贴代码片段都会让 Cursor 因为 linter 报错而不开心，不过 Claude 在我几次让它“修复错误”、并威胁要换到 ChatGPT 之后，倒也逐步把事情补好了。然后回到 Stripe 仪表板，我们创建一个 Product，创建一个 Price，找到 price key（不是 product key！），把所有 key 到处复制粘贴。期间我发现 Claude 在把成功的 Stripe 支付对应到用户额度上时用了一个非常糟糕的思路（它试图用邮箱地址去匹配，但用户在 Stripe 结账时填的邮箱可能和他们登录用的 Google 账号邮箱不同，于是用户可能拿不到自己买的额度）。我指出这个问题，Claude 立刻道歉，并改为正确做法：在请求 metadata 里传递唯一的用户 ID。它感谢我指出问题，并说以后会做对——我知道这基本就是 gaslighting。但既然我们的快速测试能跑，只需再点几下把部署从 Development 升到 Production，然后重新建一个 Product、重新建一个 Price、再一次在本地和 Vercel 设置里复制粘贴好所有 key 和 id……然后它就真的跑起来了 :)</p>
+<p><strong>数据库？工作队列？</strong> 到目前为止，所有处理都是“当场完成”的——就是眼下发请求、眼下拿结果，没有缓存、没有保存。因此结果是易失的，如果响应太久（例如菜单太长、项目太多，或 API 延迟太高），请求就可能超时并失败。刷新页面，所有东西也都没了。正确做法应该是接一个数据库，登记并跟踪工作项，客户端只是在结果就绪时显示最新状态。我意识到我得从 Marketplace 里接一个数据库，比如 Supabase PostgreSQL（尽管 Claude 向我推销的是 Vercel KV，我知道它其实已经弃用了）。然后我们还需要一个队列服务，比如 Upstash，来跑实际的处理。这意味着更多的服务、更多的登录、更多的 API key、更多的配置、更多的文档、更多的痛苦。实在是“熊”太多了。留给未来再做吧。</p>
+<p><strong>TLDR</strong>。把 menugen 作为一个本地 demo 来 vibe 编程，既令人振奋又很有趣；但把它做成部署上线的真实应用，则是一段略显痛苦的跋涉。构建现代应用有点像在组装来自未来的宜家家具。到处是各类服务、文档、API key、配置、开发/生产部署、团队与安全特性、限流、定价层级……与此同时，LLM 对很多事情的了解都有点过时；当你盯紧它们时，它们会做出一些微妙但关键的设计错误；有时候它们还会幻觉，或者对你煤气灯。但对我来说最有意思的是，我甚至并没有在代码编辑器里花多少时间。大部分时间都花在浏览器里，在各个标签与设置之间来回切换，配置并把一个怪兽粘起来。所有这些工作与状态甚至都不是 LLM 能访问或操作的——我们要如何在 2027 年之前就把社会自动化到位呢？</p>
+<p><strong>往前看</strong>。作为一次探索：如果你几乎没有 Web 背景，今天要用 vibe 编程去做一个应用，会是什么样，我的感受是同等的惊叹与挫败——惊叹在于这真的可行，而且比以前容易/快速多了；挫败在于它本可以更好。痛苦的一部分当然在于，这些基础设施并不是为了这样的用法而设计的。它们的目标受众是生活在前 LLM 时代的专业 Web 开发团队，而不是用 vibe 编程原型化应用的独立开发者。下面是一些想法，或许能让像 MenuGen 这样超简单的应用更容易做出来：</p>
 <ul>
-<li>某个应用开发平台可以“电池全含”。做成 Vercel Marketplace 的反面：更有主见、具体、并预配置所有大家都想要的基础设施：域名、托管、身份认证、支付、数据库、服务器函数。如果有服务能把这些变得开箱即用，那会很棒。</li>
-<li>这些服务都可以变得更友好于 LLM。你告诉用户的一切，基本上都会被立刻复制给一个 LLM，所以不如直接对 LLM 说话。你的服务可以有一个 CLI 工具；后端可以用 curl 命令来配置；文档可以是 Markdown。这些界面和抽象对 LLM 更友好。不要跟开发者“说话”；不要让开发者“去看、去点”；请直接指挥并赋能他们的 LLM。</li>
-<li>下一个应用我考虑用最基础的 HTML/CSS/JS + Python 后端（比如 FastAPI + Fly.io 之类？），比起“现代 Web 开发”的无服务器多宇宙，要简单得多。像 MenuGen 这样的简单应用（及其同类）在那种范式下很可能会容易很多。</li>
-<li>最后，很可能 MenuGen 根本不该是一个“功能完备的应用”。所谓“应用”，其实就是调用一次 GPT 去 OCR 菜单，然后对结果做一个 for 循环，为每个条目生成图像并把它漂亮地展示给用户。听起来几乎像一个简单的“自定义 GPT”（用 OpenAI 早期 GPT “应用商店”的术语）。MenuGen 能不能就是一个提示词？LLM 能不能返回的不是文本，而是一个用于呈现结果的简单网页，就像 Artifacts 那样？还有很多其他应用能否也长成这个样子？我能否把它发布到某个商店里，以同样的方式赚取加价？</li>
+<li>某种应用开发平台可以“电池全包”。某个看起来完全反向于 Vercel Marketplace 的东西：有主见、具体、预配置好大家都想要的基础能力——域名、托管、认证、支付、数据库、服务端函数。如果有服务能把这些变得简单并“开箱即用”，会很棒。</li>
+<li>所有这些服务都应该更友好于 LLM。你告诉用户的一切基本都会被立刻复制给一个 LLM，所以不如直接对 LLM 说。你的服务可以有 CLI 工具；后端可以用 curl 命令配置；文档可以是 Markdown。这些界面与抽象在“人体工学”上对 LLM 都更友好。别和开发者说话，别让开发者去“访问/查看/点击”。指挥并赋能他们的 LLM。</li>
+<li>下一个应用我在考虑用最基本的 HTML/CSS/JS + Python 后端（类似 FastAPI + Fly.io 这种），比起“现代 Web 开发”的无服务器多元宇宙要简单得多。像 MenuGen 这样简单的应用（或类似应用）在这个范式下很可能会容易不少。</li>
+<li>最后，MenuGen 很可能根本不该是一个“全功能”的应用。这个“应用”其实就是一次 GPT 调用：先 OCR 菜单，再对结果做一个 for 循环，为每个条目生成图片并漂亮地展示给用户。这几乎听起来就像一个自定义的 GPT（用 OpenAI 最初“GPT 应用商店”的术语）。MenuGen 能否只是一个提示词？LLM 能否不返回文本、而是返回一个简单网页来展示结果（类似 Artifacts 的路线）？很多其他应用是否也可以是这样？我能否把它作为一个应用上架，在商店里以同样的方式赚取加价？</li>
 </ul>
-<p>就目前而言，我挺开心能把我第一个高度定制的小应用用 Vibe 编程一路做到终点，做出一个真实存在、解决了我长期以来的一个需求、还能和朋友分享的东西。感谢上面提到的所有服务，帮我把它搭起来。从原则上说，如果其他人也喜欢它，它也可能以完全被动的方式挣点钱——<a href="https://x.com/levelsio">@levelsio</a> 的梦想。归根结底，今天用 Vibe 编程做一个完整的 Web 应用还是挺乱的，不太适合做任何真正重要的事情。但也已经能看到一些伟大的迹象；我认为行业只需要一点时间来适应 LLM 的新世界。我个人非常期待应用开发的门槛降到 ~0，任何人都能像做一个 TikTok 一样轻松地构建并发布一个应用。这类“超定制”的自动化，可能会成为人类创造力的一块崭新画布。</p>
-<p>配套推文（兼“评论区”）在我的 X：<a href="https://x.com/karpathy/status/1917961248031080455"><strong>@karpathy</strong></a>。</p>
+<p>眼下，我对自己用 vibe 编程把第一个超定制的应用一路做成“真实、能解决我长期以来一个痛点、还能分享给朋友”的这件事挺满意。感谢上面提到的所有服务，让我把它构建出来。原则上，如果其他人也喜欢，它也可以以一种完全被动的方式赚点钱——<a href="https://x.com/levelsio">@levelsio</a> 的梦想。归根结底，如今用 vibe 编程去写完整的 Web 应用还是挺混乱的，并不适合任何真正重要的东西。但已经有了明显的伟大迹象，我觉得行业只是还需要一些时间去适应 LLM 的新世界。我个人很期待把“写应用”的门槛降到近乎为零，任何人都能像发一个 TikTok 一样轻松地构建并发布应用。这类高度定制的自动化可能会成为人类创造力的一块美丽新画布。</p>
+<p>配套推文（以及“评论区”）在我的 X 上：<a href="https://x.com/karpathy/status/1917961248031080455">@karpathy</a>。</p>
 
         
         <div class="original-link">
@@ -127,14 +127,14 @@
     {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Vibe 编程：MenuGen",
+  "headline": "Vibe 编程打造 MenuGen",
   "author": {
     "@type": "Person",
     "name": "Andrej Karpathy"
   },
   "datePublished": "2025-04-27T00:00:00.000Z",
   "dateModified": "2025-04-27T00:00:00.000Z",
-  "description": "我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很甜（我超爱甜食）。有时候真的会失控。_\"Confit tubers folded with matured curd and fi...",
+  "description": "我经常坐在餐厅里翻着菜单，感觉……有点卡住。Pâté 到底是什么来着？Tagine 是什么？Cavatappi……那是种意面吧？Sweetbread 听起来好像很美味（我超级爱甜食）。有时候真的会过头。\"将油封块茎与熟成凝乳折拌，最后以榛果黄油浸汁...",
   "publisher": {
     "@type": "Organization",
     "name": "人工智能文摘",

@@ -15,9 +15,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- 基本 SEO -->
-  <title>用 Agent Skills 让智能体适应真实世界 - 人工智能文摘</title>
-  <meta name="description" content="【Anthropic 文章中文翻译】Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...">
-  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,用 Agent Skills 让智能体适应真实世界,中文翻译">
+  <title>用 Agent Skills 为智能体装备真实世界能力 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】Claude 很强大，但要完成真实工作，需要流程性知识和组织上下文。我们推出 Agent Skills——一种用文件与文件夹构建专业化智能体的新方式。 随着模型能力提升，我们现在可以构建能与完整计算环境交互的通用智能体。例如，Clau...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,用 Agent Skills 为智能体装备真实世界能力,中文翻译">
   <meta name="author" content="Anthropic">
 
   <!-- 规范链接 -->
@@ -34,8 +34,8 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills.html">
-  <meta property="og:title" content="用 Agent Skills 让智能体适应真实世界 - 人工智能文摘">
-  <meta property="og:description" content="【Anthropic 文章中文翻译】Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...">
+  <meta property="og:title" content="用 Agent Skills 为智能体装备真实世界能力 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】Claude 很强大，但要完成真实工作，需要流程性知识和组织上下文。我们推出 Agent Skills——一种用文件与文件夹构建专业化智能体的新方式。 随着模型能力提升，我们现在可以构建能与完整计算环境交互的通用智能体。例如，Clau...">
   <meta property="og:image" content="https://digest.qcngt.com/logo.png">
   <meta property="og:site_name" content="人工智能文摘">
   <meta property="og:locale" content="zh_CN">
@@ -46,12 +46,12 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills.html">
-  <meta name="twitter:title" content="用 Agent Skills 让智能体适应真实世界 - 人工智能文摘">
-  <meta name="twitter:description" content="【Anthropic 文章中文翻译】Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...">
+  <meta name="twitter:title" content="用 Agent Skills 为智能体装备真实世界能力 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】Claude 很强大，但要完成真实工作，需要流程性知识和组织上下文。我们推出 Agent Skills——一种用文件与文件夹构建专业化智能体的新方式。 随着模型能力提升，我们现在可以构建能与完整计算环境交互的通用智能体。例如，Clau...">
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761871553878">
+  <link rel="stylesheet" href="/style.css?v=1761874404986">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -79,7 +79,7 @@
     <article class="author-1">
       <div class="article-content">
         <div class="article-header">
-          <h1 class="article-title">用 Agent Skills 让智能体适应真实世界</h1>
+          <h1 class="article-title">用 Agent Skills 为智能体装备真实世界能力</h1>
           <div class="article-meta">
             
             <span class="article-original-title" title="原文标题">Equipping agents for the real world with Agent Skills</span>
@@ -91,82 +91,82 @@
           </div>
         </div>
 
-        <p>Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。</p>
-<p>随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 <a href="https://claude.com/product/claude-code">Claude Code</a> 可以通过本地代码执行和文件系统，在多个领域完成复杂任务。但随着这些智能体变得更强，我们需要更具组合性、可扩展性和可移植性的方式，为它们注入领域专长。</p>
-<p>因此，我们打造了 <a href="https://www.anthropic.com/news/skills"><strong>Agent Skills</strong></a>：这是由指令、脚本和资源组成的有序文件夹，智能体可以动态地发现并加载它们，从而在特定任务上表现更好。**** Skills 通过把你的专业知识封装成 Claude 可组合使用的资源，扩展了 Claude 的能力，将通用智能体转化为符合你需求的专用智能体。</p>
-<p>为智能体构建一个技能，就像为新员工整理一份入职指南。与其为每个用例搭建割裂的定制智能体，现在任何人都能通过捕获和共享自己的流程知识，让智能体凭借可组合的能力实现专精。在本文中，我们解释什么是 Skills、它们如何运作，并分享打造自定义技能的最佳实践。</p>
+        <p>Claude 很强大，但要完成真实工作，需要流程性知识和组织上下文。我们推出 Agent Skills——一种用文件与文件夹构建专业化智能体的新方式。</p>
+<p>随着模型能力提升，我们现在可以构建能与完整计算环境交互的通用智能体。例如，<a href="https://claude.com/product/claude-code">Claude Code</a> 能够借助本地代码执行与文件系统跨领域完成复杂任务。但随着这些智能体变得更强，我们需要更可组合、可扩展、可移植的方式，为它们注入领域专长。</p>
+<p>因此我们创建了<a href="https://www.anthropic.com/news/skills"><strong>Agent Skills</strong></a>：由指令、脚本和资源组成的有组织文件夹，智能体可以按需发现并动态加载，以更好地完成特定任务。Skills 通过将你的专业知识打包为 Claude 可组合的资源来扩展 Claude 的能力，把通用智能体转化为符合你需求的专业化智能体。</p>
+<p>为智能体构建一个 skill，就像为新员工整理一本入职指南。与其为每个用例定制零散的专用智能体，不如通过沉淀并共享流程性知识，用可组合的能力来让你的智能体专业化。本文将解释什么是 Skills、它们如何工作，并分享构建你自己的 Skills 的最佳实践。</p>
 <figure>
-  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4caa1848.jpg" alt="要启用技能，你只需编写一个包含自定义指引的 SKILL.md 文件。">
-  <figcaption>一个技能是包含 SKILL.md 文件的目录，其中组织了指令、脚本和资源，为智能体提供额外能力。</figcaption>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4caa1848.jpg" alt="要启用技能，你只需编写一份为智能体提供定制指南的 SKILL.md 文件。">
+  <figcaption>Skill 是一个目录，包含 SKILL.md 文件以及有组织的指令、脚本和资源，为智能体提供额外能力。</figcaption>
 </figure>
 
-<h2>技能的组成</h2>
-<p>为了看看 Skills 如何发挥作用，我们来走查一个真实案例：它是支撑 <a href="https://www.anthropic.com/news/create-files">Claude 新上线的文档编辑能力</a> 的技能之一。Claude 已经非常擅长理解 PDF，但在直接操作它们（例如填写表单）方面仍受限。这个 <a href="https://github.com/anthropics/skills/tree/main/document-skills/pdf">PDF 技能</a> 让我们能够赋予 Claude 这些新能力。</p>
-<p>在最简单的情况下，一个技能就是一个包含 <code>SKILL.md file</code> 的目录。该文件必须以 YAML 前言开头，其中包含一些必需的元数据：<code>name</code> 和 <code>description</code>。在启动时，智能体会将每个已安装技能的 <code>name</code> 和 <code>description</code> 预加载到其系统提示中。</p>
-<p>这些元数据是<strong>渐进披露</strong>的<strong>第一层</strong>：它们为 Claude 提供恰到好处的信息，让它知道何时应该使用某个技能，而无需把全部内容加载进上下文。该文件的正文是<strong>第二层</strong>细节。如果 Claude 认为这个技能与当前任务相关，它就会通过读取完整的 <code>SKILL.md</code> 把技能加载进上下文。</p>
+<h2>一个 Skill 的构成</h2>
+<p>为了看看 Skills 如何发挥作用，让我们通过一个真实示例：它支撑了<a href="https://www.anthropic.com/news/create-files">Claude 新近推出的文档编辑能力</a>之一。Claude 对理解 PDF 已经很在行，但要直接操作它们（例如填写表单）仍然受限。这个 <a href="https://github.com/anthropics/skills/tree/main/document-skills/pdf">PDF skill</a> 让我们为 Claude 赋予这些新能力。</p>
+<p>最简单地说，skill 是一个包含 <code>SKILL.md file</code> 的目录。该文件必须以 YAML frontmatter 开头，包含一些必需的元数据：<code>name</code> 和 <code>description</code>。启动时，智能体会将每个已安装 skill 的 <code>name</code> 与 <code>description</code> 预加载到其系统提示中。</p>
+<p>这些元数据构成了“渐进式披露”的第一级：它提供恰到好处的信息，使 Claude 能在不把全部内容放入上下文的情况下判断何时使用某个 skill。该文件的正文是第二级细节。如果 Claude 认为该 skill 与当前任务相关，它会通过读取完整的 <code>SKILL.md</code> 来加载该 skill。</p>
 <figure>
-  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4416fa3c.jpg" alt="SKILL.md 文件的结构示意，包括名称、描述和与技能应执行动作相关的上下文。">
-  <figcaption>SKILL.md 文件必须以 YAML 前言开始，其中包含文件名和描述，这些内容会在启动时被加载进系统提示。</figcaption>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4416fa3c.jpg" alt="SKILL.md 文件结构示意，包含相关元数据：name、description，以及与具体操作相关的上下文。">
+  <figcaption>SKILL.md 文件必须以 YAML frontmatter 开头，包含名称和描述；这些会在启动时加载到系统提示中。</figcaption>
 </figure>
 
-<p>随着技能日益复杂，它们所包含的上下文可能太多，无法放进单个 <code>SKILL.md</code> 中，或者只有在特定场景才相关。在这种情况下，技能可以在目录中打包额外文件，并在 <code>SKILL.md</code> 中按名称引用它们。这些额外的关联文件就是<strong>第三层</strong>（及更高层次）的细节，Claude 只会在需要时选择阅读。</p>
-<p>在下图的 PDF 技能中，<code>SKILL.md</code> 引用了另外两个文件（<code>reference.md</code> 和 <code>forms.md</code>），技能作者选择将它们与核心的 <code>SKILL.md</code> 一同打包。通过把表单填写指引移动到单独的 <code>forms.md</code>，技能作者得以保持技能核心精简，并相信 Claude 只会在填写表单时读取 <code>forms.md</code>。</p>
+<p>随着 skills 复杂度的提升，其上下文可能过多而无法全部放入单个 <code>SKILL.md</code>，或仅在特定情境下才相关。在这种情况下，可以在 skill 目录中捆绑更多文件，并从 <code>SKILL.md</code> 按名称引用它们。这些额外的链接文件构成第三（及更高）级细节，Claude 只会在需要时选择性地导航与发现。</p>
+<p>在下图所示的 PDF skill 中，<code>SKILL.md</code> 引用了两个额外文件（<code>reference.md</code> 与 <code>forms.md</code>），作者将它们与核心 <code>SKILL.md</code> 一并打包。通过把表单填写指引移到单独的 <code>forms.md</code>，作者得以保持 skill 核心简洁，并相信 Claude 只会在填写表单时读取 <code>forms.md</code>。</p>
 <figure>
-  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-3d348fe9.jpg" alt="如何在 SKILL.md 文件中打包额外内容。">
-  <figcaption>你可以把更多上下文（通过附加文件）纳入技能，让 Claude 根据系统提示在需要时触发它们。</figcaption>
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-3d348fe9.jpg" alt="如何在 SKILL.md 中打包附加内容。">
+  <figcaption>你可以将更多上下文（通过附加文件）纳入 skill，Claude 会根据系统提示在需要时触发它们。</figcaption>
 </figure>
 
-<p>渐进披露是让 Agent Skills 既灵活又可扩展的核心设计原则。就像一本组织良好的手册，先是目录，再是具体章节，最后是详尽的附录，技能让 Claude 只在需要时加载信息：</p>
+<p>渐进式披露是让 Agent Skills 既灵活又可扩展的核心设计原则。就像一本结构良好的手册——先是目录，再是各章，最后是详尽的附录——skills 让 Claude 仅在需要时加载信息：</p>
 <figure>
-  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-8bb158c1.jpg" alt="该图展示了 Skills 中上下文渐进披露的方式。">
+  <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-8bb158c1.jpg" alt="该图展示了 Skills 中上下文的渐进式披露方式。">
 </figure>
 
-<p>拥有文件系统和代码执行工具的智能体，在处理某个任务时无需把整个技能内容都读进上下文窗口。这意味着可以被打包进技能的上下文量实际上不受限制。</p>
-<h3>技能与上下文窗口</h3>
-<p>下图展示了当用户消息触发技能时，上下文窗口如何发生变化。</p>
+<p>具备文件系统与代码执行工具的智能体，在处理特定任务时无需把整个 skill 全部读入上下文窗口。这意味着可以打包进一个 skill 的上下文量实际上不设上限。</p>
+<h3>Skills 与上下文窗口</h3>
+<p>下图展示了当用户消息触发某个 skill 时，上下文窗口如何变化。</p>
 <figure>
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-af783536.jpg" alt="该图展示了技能如何在上下文窗口中被触发。">
-  <figcaption>技能通过系统提示在上下文窗口中被触发。</figcaption>
+  <figcaption>Skills 会通过系统提示在上下文窗口中被触发。</figcaption>
 </figure>
 
-<p>操作顺序如下：</p>
+<p>如下所示的操作序列：</p>
 <ol>
-<li>起初，上下文窗口包含核心系统提示、每个已安装技能的元数据以及用户的初始消息；</li>
-<li>Claude 通过调用 Bash 工具读取 <code>pdf/SKILL.md</code>，从而触发 PDF 技能；</li>
-<li>Claude 选择读取与技能一起打包的 <code>forms.md</code> 文件；</li>
-<li>最后，Claude 在加载了 PDF 技能的相关指引后继续执行用户任务。</li>
+<li>起始时，上下文窗口包含核心系统提示、每个已安装 skill 的元数据，以及用户的初始消息；</li>
+<li>Claude 通过调用 Bash 工具读取 <code>pdf/SKILL.md</code> 的内容，从而触发 PDF skill；</li>
+<li>Claude 选择读取与该 skill 一同打包的 <code>forms.md</code> 文件；</li>
+<li>最后，Claude 在加载了来自 PDF skill 的相关指引之后，继续执行用户的任务。</li>
 </ol>
-<h3>技能与代码执行</h3>
-<p>技能也可以包含代码，供 Claude 按需作为工具执行。</p>
-<p>大型语言模型擅长许多任务，但某些操作更适合传统的代码执行。例如，通过逐 token 生成来排序列表远比直接运行排序算法昂贵。除了效率考量，许多应用场景还需要只有代码才能提供的确定性可靠性。</p>
-<p>在我们的示例中，PDF 技能包含一个预编写的 Python 脚本，它可以读取 PDF 并提取所有表单字段。Claude 无需把脚本或 PDF 加载进上下文就能运行该脚本。而且因为代码具有确定性，这个流程始终一致且可重复。</p>
+<h3>Skills 与代码执行</h3>
+<p>Skills 也可以包含供 Claude 作为工具执行的代码，由它根据任务性质自行决定是否调用。</p>
+<p>大型语言模型擅长许多任务，但某些操作更适合用传统代码来完成。比如，用令牌生成去排序一个列表要比直接运行排序算法昂贵得多。除此之外，许多应用需要只有代码才能提供的确定性可靠性。</p>
+<p>在我们的示例中，PDF skill 包含了一个预先编写的 Python 脚本，用于读取 PDF 并提取所有表单字段。Claude 可以在不把脚本或 PDF 读入上下文的情况下运行该脚本。而且由于代码具有确定性，该流程具有一致且可重复的特性。</p>
 <figure>
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-41e210d9.jpg" alt="该图展示了如何通过 Skills 执行代码。">
-  <figcaption>技能还能包含代码，Claude 会根据任务性质自行决定是否执行。</figcaption>
+  <figcaption>根据任务性质，Skills 也可以包含供 Claude 自主选择执行的工具型代码。</figcaption>
 </figure>
 
-<h2>开发与评估技能</h2>
-<p>以下是一些帮助你开始撰写和测试技能的实用指南：</p>
+<h2>设计与评估 Skills</h2>
+<p>以下是一些有助于入门的撰写与测试建议：</p>
 <ul>
-<li><strong>从评估开始：</strong> 在代表性任务上运行你的智能体，找出它在哪些地方能力不足或需要额外上下文。然后逐步构建技能来弥补这些短板。</li>
-<li><strong>为规模而设计：</strong> 当 <code>SKILL.md</code> 文件变得难以驾驭时，将内容拆分成独立文件并引用它们。如果某些上下文互相独立或很少同时使用，保持路径分离能减少 token 消耗。最后，代码既可以作为可执行工具，也能充当文档。务必让 Claude 明白脚本应该直接运行还是作为参考读入上下文。</li>
-<li><strong>站在 Claude 的角度思考：</strong> 观察 Claude 在真实场景下如何使用你的技能，并据此迭代：留意意外的使用路径或对某些上下文的过度依赖。特别关注技能的 <code>name</code> 和 <code>description</code>。Claude 会根据它们来判断是否在当前任务中触发技能。</li>
-<li><strong>与 Claude 一起迭代：</strong> 当你和 Claude 协同处理任务时，让 Claude 把成功的方法和常见的失误提炼进技能中的可复用上下文与代码。如果它在使用技能时偏离轨道，要求它反思问题出在哪儿。这个过程能帮助你发现 Claude 实际需要的上下文，而不是事先凭空猜测。</li>
+<li><strong>从评估开始：</strong> 通过在具有代表性的任务上运行你的智能体，找出其能力的具体短板，观察它在哪些地方遇到困难或需要更多上下文。然后按增量方式构建 skills 来弥补这些不足。</li>
+<li><strong>面向规模进行结构化：</strong> 当 <code>SKILL.md</code> 变得臃肿时，将内容拆分到独立文件并进行引用。如果某些上下文互斥或很少共同使用，将它们分开可以减少 token 使用。最后，代码既可以作为可执行的工具，也可以作为文档。应该明确让 Claude 直接运行脚本，还是把脚本作为参考读入上下文。</li>
+<li><strong>站在 Claude 的视角思考：</strong> 观察 Claude 在真实场景中如何使用你的 skill，并基于观察结果迭代：留意意外的执行轨迹或对某些上下文的过度依赖。特别关注 skill 的 <code>name</code> 与 <code>description</code>，Claude 会用它们来决定是否在当前任务中触发该 skill。</li>
+<li><strong>与 Claude 协同迭代：</strong> 在你与 Claude 协作完成任务的过程中，让 Claude 把成功方法与常见错误沉淀为可复用的上下文与代码，并纳入一个 skill。如果它在使用某个 skill 执行任务时跑偏，让它自我反思问题所在。这个过程能帮助你发现 Claude 实际需要的上下文，而不是事先揣测。</li>
 </ul>
-<h3>使用 Skills 时的安全注意事项</h3>
-<p>技能通过指令和代码为 Claude 提供新能力。这让它们很强大，但也意味着恶意技能可能在使用环境中引入漏洞，或指使 Claude 外泄数据、执行意料之外的操作。</p>
-<p>我们建议仅从可信来源安装技能。如果要安装来自不那么可信来源的技能，请在使用前彻底审计。先阅读技能中打包的文件内容，了解它的具体行为，尤其要关注代码依赖和附带的资源（如图像或脚本）。同样地，还要留意技能内的指令或代码是否要求 Claude 连接到可能不可信的外部网络资源。</p>
+<h3>使用 Skills 的安全注意事项</h3>
+<p>Skills 通过指令与代码为 Claude 提供新能力。这让它们很强大，但也意味着恶意的 skills 可能在使用环境中引入漏洞，或指使 Claude 外传数据并采取非预期行为。</p>
+<p>我们建议只从可信来源安装 skills。如果从可信度较低的来源安装，在使用前要进行彻底审计。先阅读该 skill 打包的文件内容以理解其行为，特别留意代码依赖和打包的资源（如图像或脚本）。同样也要留意其中可能指示 Claude 连接到不受信任外部网络源的指令或代码。</p>
 <h2>Skills 的未来</h2>
-<p>Agent Skills 目前已经在 <a href="http://claude.ai/redirect/website.v1.51f73c97-b077-44e7-85ba-8b27a025dfdf">Claude.ai</a>、Claude Code、Claude Agent SDK 和 Claude Developer Platform 上<a href="https://www.anthropic.com/news/skills">获得支持</a>。</p>
-<p>在接下来的数周里，我们会持续推出新功能，支持 Skills 在创建、编辑、发现、分享和使用上的全生命周期。我们尤其期待 Skills 能帮助组织和个人将自身的上下文和工作流分享给 Claude。我们还将探索 Skills 如何与 <a href="https://modelcontextprotocol.io/">Model Context Protocol</a>（MCP）服务器互补，教会智能体使用涉及外部工具和软件的复杂工作流。</p>
-<p>展望未来，我们希望让智能体能够自主创建、编辑和评估 Skills，使它们能够把自身的行为模式固化成可复用的能力。</p>
-<p>Skills 的概念简单，格式也同样简洁。这种简单性让组织、开发者和终端用户更容易构建定制化智能体，并赋予它们新的能力。</p>
-<p>我们期待看到大家用 Skills 构建出的成果。现在就前往我们的 Skills <a href="https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview">文档</a>和<a href="https://github.com/anthropics/claude-cookbooks/tree/main/skills">示例集</a>开始探索吧。</p>
+<p>Agent Skills 目前已<a href="https://www.anthropic.com/news/skills">得到支持</a>，覆盖 <a href="http://claude.ai/redirect/website.v1.51f73c97-b077-44e7-85ba-8b27a025dfdf">Claude.ai</a>、Claude Code、Claude Agent SDK，以及 Claude 开发者平台。</p>
+<p>在接下来的数周里，我们将持续添加功能，覆盖创建、编辑、发现、分享与使用 Skills 的完整生命周期。我们尤其期待 Skills 帮助组织与个人把自己的上下文与工作流共享给 Claude。我们也将探索 Skills 如何与 <a href="https://modelcontextprotocol.io/">Model Context Protocol</a>（MCP）服务器互补，教会智能体使用外部工具与软件完成更复杂的工作流。</p>
+<p>展望更远，我们希望让智能体能够自行创建、编辑与评估 Skills，将其自身的行为模式编码为可复用的能力。</p>
+<p>Skills 是一个简单的概念，具有相应的简单格式。正因其简单，组织、开发者与终端用户都更容易构建定制化智能体，并赋予它们新能力。</p>
+<p>我们很期待大家用 Skills 构建什么。立即查看我们的 Skills <a href="https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview">文档</a>与<a href="https://github.com/anthropics/claude-cookbooks/tree/main/skills">示例手册</a>开始上手吧。</p>
 <h2>致谢</h2>
-<p>Barry Zhang、Keith Lazuka 和 Mahesh Murag 撰写了本文，他们都特别喜欢文件夹。特别感谢 Anthropic 各个团队中倡导、支持并创建 Skills 的众多同事。</p>
+<p>作者：Barry Zhang、Keith Lazuka、Mahesh Murag——他们都非常喜欢文件夹。特别感谢整个 Anthropic 团队中为 Skills 鼓与呼、提供支持并亲手打造它的人们。</p>
 <h2>订阅开发者通讯</h2>
-<p>产品更新、操作指南、社区亮点等更多内容，每月发送到你的收件箱。</p>
-<p>如果你希望收到我们的月度开发者通讯，请留下电子邮箱地址。你可以随时取消订阅。</p>
+<p>产品更新、操作指南、社区焦点等，每月发送至你的收件箱。</p>
+<p>如果你希望接收我们的月度开发者通讯，请留下你的邮箱地址。你可以随时退订。</p>
 
         
         <div class="original-link">
@@ -182,14 +182,14 @@
     {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "用 Agent Skills 让智能体适应真实世界",
+  "headline": "用 Agent Skills 为智能体装备真实世界能力",
   "author": {
     "@type": "Person",
     "name": "Anthropic"
   },
   "datePublished": "2025-10-16T00:00:00.000Z",
   "dateModified": "2025-10-16T00:00:00.000Z",
-  "description": "Claude 功能强大，但真实的工作需要流程化知识和组织语境。我们推出 Agent Skills，这是一种利用文件和文件夹打造专用智能体的新方式。 随着模型能力不断提升，我们如今可以构建能够与完整计算环境交互的通用智能体。例如 ...",
+  "description": "Claude 很强大，但要完成真实工作，需要流程性知识和组织上下文。我们推出 Agent Skills——一种用文件与文件夹构建专业化智能体的新方式。 随着模型能力提升，我们现在可以构建能与完整计算环境交互的通用智能体。例如，Clau...",
   "publisher": {
     "@type": "Organization",
     "name": "人工智能文摘",
