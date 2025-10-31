@@ -51,7 +51,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761884608578">
+  <link rel="stylesheet" href="/style.css?v=1761888383243">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -107,7 +107,7 @@
 <h3>Appendix</h3>
 <ul>
 <li>我同意 Sutton 的观点：动物不做监督学习。我知道这是个细微之处，容易让很多人困惑。动物确实会观察示范，但它们并不会像监督学习那样被“直接用行动监督”——动物在训练中从来不是被“遥操作”的。我能想到最接近的例子，是你比方说帮孩子用勺子吃饭，几乎是握着他的手给他演示动作。即便如此，他们的大脑是否“字面上”在用这个进行训练也不清楚；这可能仍然更准确地属于“观察”的范畴。但无论如何，这类情况总体非常稀少，而在 LLM 里，这却是预训练和 SFT 的默认学习模式。也许换一种说法更贴切：对应到 LLM 世界，人类做的可能更像是：给定这道数学题与一份人类示例解在上下文中，请解题；若正确则奖励 1。这不是 SFT，而是 RL。</li>
-<li>Dwarkesh 曾简要提到，LLM 在测试时也有自己的持续学习，只不过不是基于权重更新。我觉得 Sutton 没有充分接这个话题。上下文学习是一种测试时适应的形式，例如为什么少样本提示有效。最近也有很多工作对“记忆”很感兴趣（想想 CLAUDE.md 文件），把文本/上下文而非权重当作测试时学习的载体。</li>
+<li>Dwarkesh 曾简要提到，LLM 在测试时也有自己的持续学习，只不过不是基于权重更新。我觉得 Sutton 没有充分接这个话题。上下文学习是一种测试时适应的形式，例如为什么少样本提示有效。最近也有很多工作对“记忆”很感兴趣（想想 <a href="http://CLAUDE.md">CLAUDE.md</a> 文件），把文本/上下文而非权重当作测试时学习的载体。</li>
 <li>Dwarkesh 提出过一个极长时程、稀疏奖励的例子（比如打造一个成功的创业公司），以及这可能如何实现。Sutton 给出的解释是时序差分学习，本质上是对未来奖励进行折扣，我对此并不特别信服。之前我写过一点，我觉得这里发生的是别的东西，在我看来它并不是强化学习。</li>
 <li>关于“梯度下降不会让你泛化得很好”的讨论和相关话题有很多，我没有完全跟上。</li>
 <li>有人指出，幽灵挺吓人的。不一定啊，看看<a href="https://en.wikipedia.org/wiki/Casper_the_Friendly_Ghost">卡斯柏</a>，我童年的最爱。</li>

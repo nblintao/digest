@@ -133,6 +133,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/paulgraham/2025-03-01-do.html</loc>
+    <lastmod>2025-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digest.qcngt.com/post/paulgraham/2025-01-01-woke.html</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/karpathy/2024-09-08-i-love-calculator.html</loc>
     <lastmod>2024-09-08</lastmod>
     <changefreq>monthly</changefreq>

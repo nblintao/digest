@@ -51,7 +51,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761884608578">
+  <link rel="stylesheet" href="/style.css?v=1761888383243">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -115,7 +115,6 @@
   <img src="/images/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk-8aea1517.jpg" alt="智能体反馈循环">
   <figcaption>智能体通常在固定的反馈循环中运作：收集上下文 -> 采取行动 -> 验证结果 -> 重复迭代。</figcaption>
 </figure>
-
 <p>这个框架同样适用于其他类型的智能体，并帮助我们思考它们应当具备的能力。为此，我们将以在 Claude Agent SDK 中构建一名邮件智能体为例展开说明。</p>
 <h2>Gather context</h2>
 <p>在开发智能体时，你需要提供的不仅仅是一段提示词：它必须能够自行获取并更新上下文。以下是 SDK 中的功能如何提供帮助。</p>
@@ -126,7 +125,6 @@
 <figure>
   <img src="/images/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk-544655a3.jpg" alt="">
 </figure>
-
 <h3><strong>Semantic search</strong></h3>
 <p><a href="https://www.anthropic.com/news/contextual-retrieval">语义搜索</a>通常比自主搜索更快，但准确度较低、维护复杂度更高、透明度也更差。它需要对相关上下文进行“分块”，将这些片段嵌入为向量，然后通过查询向量来查找概念。鉴于这些限制，我们建议先从自主搜索入手，只有在需要更快的结果或更多变体时再补充语义搜索。</p>
 <h3><strong>Subagents</strong></h3>
@@ -146,7 +144,6 @@
 <figure>
   <img src="/images/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk-780c3dff.jpg" alt="">
 </figure>
-
 <h3><strong>Code generation</strong></h3>
 <p>Claude Agent SDK 在代码生成方面表现卓越，这并非偶然。代码具有精确、可组合、可无限复用等特性，使其成为需要可靠执行复杂操作的智能体的理想产出形式。</p>
 <p>在构建智能体时，可以思考哪些任务适合以代码形式表达？这个答案往往能带来显著的能力提升。</p>
@@ -155,7 +152,6 @@
 <figure>
   <img src="/images/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk-99ef86a6.jpg" alt="">
 </figure>
-
 <h3><strong>MCPs</strong></h3>
 <p><a href="https://modelcontextprotocol.io/">模型上下文协议</a>（Model Context Protocol，简称 MCP）为外部服务提供了标准化集成，自动处理身份验证和 API 调用。这意味着你无需编写自定义集成代码或亲自管理 OAuth 流程，就能将 Slack、GitHub、Google Drive 或 Asana 等工具接入智能体。</p>
 <p>对于我们的邮件智能体，我们可以让它调用 <code>search Slack messages</code> 来理解团队上下文，或使用 <code>check Asana tasks</code> 查看是否已有任务被指派负责客户请求。借助 MCP 服务器，这些集成能力即可开箱即用——你的智能体只需调用诸如 search_slack_messages 或 get_asana_tasks 的工具，MCP 会处理剩下的工作。</p>
@@ -181,7 +177,6 @@
   <img src="/images/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk-084d4b3c.jpg" alt="Claude 为智能体生成的邮件正文提供视觉反馈。">
   <figcaption>来自大语言模型（LLM）的视觉反馈能够为你的智能体提供有益指导。</figcaption>
 </figure>
-
 <h3><strong>LLM as a judge</strong></h3>
 <p>你也可以让另一个语言模型根据模糊规则来“评判”智能体的输出。这种方法总体上不够稳健，而且可能带来明显的时延开销，但对于那些追求任何性能提升的应用来说，它仍然有价值。</p>
 <p>我们的邮件智能体可以使用一个独立的子智能体来评估草稿邮件的语气，看看它是否与用户先前的消息相契合。</p>

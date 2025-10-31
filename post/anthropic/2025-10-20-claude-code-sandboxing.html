@@ -51,7 +51,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761884608578">
+  <link rel="stylesheet" href="/style.css?v=1761888383242">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -120,7 +120,6 @@
   <img src="/images/anthropic/2025-10-20-claude-code-sandboxing-2e29a9b4.jpg" alt="这张图片展示了 Claude Code 中沙盒的工作方式。">
   <figcaption>Claude Code 的沙盒架构通过文件系统和网络控制隔离代码执行，自动放行安全操作、阻止恶意行为，并仅在必要时请求许可。</figcaption>
 </figure>
-
 <p>沙盒确保即便提示注入成功也会被完全隔离，无法影响整体用户安全。这样一来，被攻陷的 Claude Code 既无法窃取你的 SSH 密钥，也无法向攻击者的服务器回传信息。</p>
 <p>要开始使用该功能，只需在 Claude Code 中运行 /sandbox，并查看我们关于安全模型的<a href="https://docs.claude.com/en/docs/claude-code/sandboxing">技术细节</a>。</p>
 <p>为了帮助更多团队打造更安全的代理，我们已经将这一功能<a href="https://github.com/anthropic-experimental/sandbox-runtime">开源</a>。我们认为，其他团队也应考虑采用这项技术，以提升自家代理的安全防护能力。</p>
@@ -131,7 +130,6 @@
   <img src="/images/anthropic/2025-10-20-claude-code-sandboxing-fd6d21d5.jpg" alt="该图展示了 Claude Code Web 版如何通过自定义代理处理全部 git 交互。">
   <figcaption>Claude Code 的 Git 集成会将命令经由安全代理转发，该代理会验证身份令牌、分支名称和仓库目标，使版本控制流程更安全，同时阻止未经授权的推送。</figcaption>
 </figure>
-
 <h2>入门指南</h2>
 <p>全新的沙盒化 bash 工具和 Claude Code Web 版为使用 Claude 开展工程工作的开发者带来了安全性和生产力的双重提升。</p>
 <p>想要开始使用这些工具：</p>

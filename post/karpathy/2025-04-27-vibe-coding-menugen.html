@@ -51,7 +51,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761884608580">
+  <link rel="stylesheet" href="/style.css?v=1761888383247">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -107,7 +107,7 @@
 <ul>
 <li>某种应用开发平台可以“电池全包”。某个看起来完全反向于 Vercel Marketplace 的东西：有主见、具体、预配置好大家都想要的基础能力——域名、托管、认证、支付、数据库、服务端函数。如果有服务能把这些变得简单并“开箱即用”，会很棒。</li>
 <li>所有这些服务都应该更友好于 LLM。你告诉用户的一切基本都会被立刻复制给一个 LLM，所以不如直接对 LLM 说。你的服务可以有 CLI 工具；后端可以用 curl 命令配置；文档可以是 Markdown。这些界面与抽象在“人体工学”上对 LLM 都更友好。别和开发者说话，别让开发者去“访问/查看/点击”。指挥并赋能他们的 LLM。</li>
-<li>下一个应用我在考虑用最基本的 HTML/CSS/JS + Python 后端（类似 FastAPI + Fly.io 这种），比起“现代 Web 开发”的无服务器多元宇宙要简单得多。像 MenuGen 这样简单的应用（或类似应用）在这个范式下很可能会容易不少。</li>
+<li>下一个应用我在考虑用最基本的 HTML/CSS/JS + Python 后端（类似 FastAPI + <a href="http://Fly.io">Fly.io</a> 这种），比起“现代 Web 开发”的无服务器多元宇宙要简单得多。像 MenuGen 这样简单的应用（或类似应用）在这个范式下很可能会容易不少。</li>
 <li>最后，MenuGen 很可能根本不该是一个“全功能”的应用。这个“应用”其实就是一次 GPT 调用：先 OCR 菜单，再对结果做一个 for 循环，为每个条目生成图片并漂亮地展示给用户。这几乎听起来就像一个自定义的 GPT（用 OpenAI 最初“GPT 应用商店”的术语）。MenuGen 能否只是一个提示词？LLM 能否不返回文本、而是返回一个简单网页来展示结果（类似 Artifacts 的路线）？很多其他应用是否也可以是这样？我能否把它作为一个应用上架，在商店里以同样的方式赚取加价？</li>
 </ul>
 <p>眼下，我对自己用 vibe 编程把第一个超定制的应用一路做成“真实、能解决我长期以来一个痛点、还能分享给朋友”的这件事挺满意。感谢上面提到的所有服务，让我把它构建出来。原则上，如果其他人也喜欢，它也可以以一种完全被动的方式赚点钱——<a href="https://x.com/levelsio">@levelsio</a> 的梦想。归根结底，如今用 vibe 编程去写完整的 Web 应用还是挺混乱的，并不适合任何真正重要的东西。但已经有了明显的伟大迹象，我觉得行业只是还需要一些时间去适应 LLM 的新世界。我个人很期待把“写应用”的门槛降到近乎为零，任何人都能像发一个 TikTok 一样轻松地构建并发布应用。这类高度定制的自动化可能会成为人类创造力的一块美丽新画布。</p>

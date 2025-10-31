@@ -51,7 +51,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761884608579">
+  <link rel="stylesheet" href="/style.css?v=1761888383246">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -105,7 +105,6 @@
   <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-266be8e9.jpg" alt="Claude API 事件时间线示意图。黄色：发现问题；红色：劣化加剧；绿色：部署修复。">
   <figcaption>**Claude API** 上事件时间线的示意图。黄色：发现问题；红色：劣化加剧；绿色：部署修复。</figcaption>
 </figure>
-
 <p>这些缺陷相互交叠，使得诊断尤为困难。第一个缺陷在 8 月 5 日引入，影响了约 0.8% 针对 Sonnet 4 的请求。8 月 25 日与 26 日的部署又引入了两个问题。</p>
 <p>虽然初期影响有限，但 8 月 29 日的一次负载均衡调整开始增加受影响的流量。这让更多用户遇到问题，而其他人仍体验正常性能，从而造成混乱且相互矛盾的报告。</p>
 <h2>三个相互交叠的问题</h2>
@@ -132,7 +131,6 @@
   <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-89b61a05.jpg" alt="展示 2024 年 12 月补丁的代码片段，用于绕过 temperature = 0 时意外丢失 token 的缺陷。">
   <figcaption>展示 2024 年 12 月补丁的代码片段，用于绕过 temperature = 0 时意外丢失 token 的缺陷。</figcaption>
 </figure>
-
 <p>根本原因涉及混合精度运算。我们的模型以 <a href="https://github.com/tensorflow/tensorflow/blob/f41959ccb2d9d4c722fe8fc3351401d53bcf4900/tensorflow/core/framework/bfloat16.h">bf16</a>（16 位浮点）计算下一 token 的概率。然而，向量处理器是 <a href="https://dl.acm.org/doi/pdf/10.1145/3360307">fp32 原生</a> 的，因此 TPU 编译器（XLA）可以通过将部分操作转换为 fp32（32 位）来优化运行时间。这个优化流程受 <code>xla_allow_excess_precision</code> 标志控制，默认开启。</p>
 <p>这导致了不一致：原本应该得出相同最高概率 token 的操作，在不同精度下运行。精度不匹配意味着它们无法就最高概率 token 达成一致，导致该 token 有时完全被排除在外。</p>
 <p>8 月 26 日，我们部署了一个重写后的采样代码，修复精度问题并改善对达到 top-p 阈值的极限概率的处理。但在解决这些问题的同时，我们暴露了一个更棘手的缺陷。</p>
@@ -140,13 +138,11 @@
   <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-01dbbf8c.jpg" alt="展示 8 月 11 日变更中合并的最小化复现代码片段，该变更触发了 2024 年 12 月被当作“缺陷”处理的行为；实际上这是 xla_allow_excess_precision 标志的预期表现。">
   <figcaption>展示 8 月 11 日变更中合并的最小化复现代码片段，该变更触发了 2024 年 12 月被当作“缺陷”处理的行为；实际上这是 `xla_allow_excess_precision` 标志的预期表现。</figcaption>
 </figure>
-
 <p>我们的修复移除了 12 月的临时方案，因为我们认为已经解决了根因。这暴露了 <a href="https://docs.jax.dev/en/latest/_autosummary/jax.lax.approx_max_k.html">近似 top-k</a> 操作中更深层的缺陷——这是一种快速找到最高概率 token 的性能优化。[3] 该近似算法在某些批量大小和模型配置下会返回完全错误的结果。12 月的临时方案无意间掩盖了这个问题。</p>
 <figure>
   <img src="/images/anthropic/2025-09-17-a-postmortem-of-three-recent-issues-c65a85c4.jpg" alt="展示与 XLA:TPU 算法开发工程师分享的底层近似 top-k 缺陷复现代码的 Slack 消息。该代码在 CPU 上运行时会返回正确结果。">
   <figcaption>与 [开发该算法](https://arxiv.org/pdf/2206.14286) 的 XLA:TPU 工程师分享的底层近似 top-k 缺陷复现代码。该代码在 CPU 上运行时会返回正确结果。</figcaption>
 </figure>
-
 <p>这个缺陷的表现极不稳定。它会随着无关因素而改变，例如在它前后运行的操作、是否启用调试工具等。同一提示在一次请求中可能完全正常，而下一次则失败。</p>
 <p>在调查过程中，我们还发现精确 top-k 操作不再有过去那种难以接受的性能开销。我们改用精确 top-k，并将一些额外操作标准化为 fp32 精度。[4] 模型质量不容妥协，因此我们接受了这点轻微的效率影响。</p>
 <h2>为何难以及时检测</h2>

@@ -51,7 +51,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761884608578">
+  <link rel="stylesheet" href="/style.css?v=1761888383243">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -99,7 +99,6 @@
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4caa1848.jpg" alt="要启用技能，你只需编写一份为智能体提供定制指南的 SKILL.md 文件。">
   <figcaption>Skill 是一个目录，包含 SKILL.md 文件以及有组织的指令、脚本和资源，为智能体提供额外能力。</figcaption>
 </figure>
-
 <h2>一个 Skill 的构成</h2>
 <p>为了看看 Skills 如何发挥作用，让我们通过一个真实示例：它支撑了<a href="https://www.anthropic.com/news/create-files">Claude 新近推出的文档编辑能力</a>之一。Claude 对理解 PDF 已经很在行，但要直接操作它们（例如填写表单）仍然受限。这个 <a href="https://github.com/anthropics/skills/tree/main/document-skills/pdf">PDF skill</a> 让我们为 Claude 赋予这些新能力。</p>
 <p>最简单地说，skill 是一个包含 <code>SKILL.md file</code> 的目录。该文件必须以 YAML frontmatter 开头，包含一些必需的元数据：<code>name</code> 和 <code>description</code>。启动时，智能体会将每个已安装 skill 的 <code>name</code> 与 <code>description</code> 预加载到其系统提示中。</p>
@@ -108,19 +107,16 @@
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-4416fa3c.jpg" alt="SKILL.md 文件结构示意，包含相关元数据：name、description，以及与具体操作相关的上下文。">
   <figcaption>SKILL.md 文件必须以 YAML frontmatter 开头，包含名称和描述；这些会在启动时加载到系统提示中。</figcaption>
 </figure>
-
 <p>随着 skills 复杂度的提升，其上下文可能过多而无法全部放入单个 <code>SKILL.md</code>，或仅在特定情境下才相关。在这种情况下，可以在 skill 目录中捆绑更多文件，并从 <code>SKILL.md</code> 按名称引用它们。这些额外的链接文件构成第三（及更高）级细节，Claude 只会在需要时选择性地导航与发现。</p>
 <p>在下图所示的 PDF skill 中，<code>SKILL.md</code> 引用了两个额外文件（<code>reference.md</code> 与 <code>forms.md</code>），作者将它们与核心 <code>SKILL.md</code> 一并打包。通过把表单填写指引移到单独的 <code>forms.md</code>，作者得以保持 skill 核心简洁，并相信 Claude 只会在填写表单时读取 <code>forms.md</code>。</p>
 <figure>
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-3d348fe9.jpg" alt="如何在 SKILL.md 中打包附加内容。">
   <figcaption>你可以将更多上下文（通过附加文件）纳入 skill，Claude 会根据系统提示在需要时触发它们。</figcaption>
 </figure>
-
 <p>渐进式披露是让 Agent Skills 既灵活又可扩展的核心设计原则。就像一本结构良好的手册——先是目录，再是各章，最后是详尽的附录——skills 让 Claude 仅在需要时加载信息：</p>
 <figure>
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-8bb158c1.jpg" alt="该图展示了 Skills 中上下文的渐进式披露方式。">
 </figure>
-
 <p>具备文件系统与代码执行工具的智能体，在处理特定任务时无需把整个 skill 全部读入上下文窗口。这意味着可以打包进一个 skill 的上下文量实际上不设上限。</p>
 <h3>Skills 与上下文窗口</h3>
 <p>下图展示了当用户消息触发某个 skill 时，上下文窗口如何变化。</p>
@@ -128,7 +124,6 @@
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-af783536.jpg" alt="该图展示了技能如何在上下文窗口中被触发。">
   <figcaption>Skills 会通过系统提示在上下文窗口中被触发。</figcaption>
 </figure>
-
 <p>如下所示的操作序列：</p>
 <ol>
 <li>起始时，上下文窗口包含核心系统提示、每个已安装 skill 的元数据，以及用户的初始消息；</li>
@@ -144,7 +139,6 @@
   <img src="/images/anthropic/2025-10-16-equipping-agents-for-the-real-world-with-agent-skills-41e210d9.jpg" alt="该图展示了如何通过 Skills 执行代码。">
   <figcaption>根据任务性质，Skills 也可以包含供 Claude 自主选择执行的工具型代码。</figcaption>
 </figure>
-
 <h2>设计与评估 Skills</h2>
 <p>以下是一些有助于入门的撰写与测试建议：</p>
 <ul>

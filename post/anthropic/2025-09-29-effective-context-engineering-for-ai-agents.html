@@ -51,7 +51,7 @@
   <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
 
   <!-- 样式和脚本 -->
-  <link rel="stylesheet" href="/style.css?v=1761884608578">
+  <link rel="stylesheet" href="/style.css?v=1761888383243">
   <!-- KaTeX CSS for math rendering -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
 </head>
@@ -103,7 +103,6 @@
   <img src="/images/anthropic/2025-09-29-effective-context-engineering-for-ai-agents-3a86d922.jpg" alt="提示工程与上下文工程">
   <figcaption>*与编写提示这一离散任务不同，上下文工程是迭代式的，每次我们决定向模型传递什么时都会发生策划环节。*</figcaption>
 </figure>
-
 <h2>为什么上下文工程对打造高能力代理至关重要</h2>
 <p>尽管LLM速度快、能够处理越来越多的数据量，但我们观察到它们和人类一样，在某个节点后会失焦或陷入混乱。对needle-in-a-haystack样式基准测试的研究揭示了<a href="https://research.trychroma.com/context-rot">上下文腐烂</a>这一概念：随着上下文窗口中的标记数量增加，模型从该上下文准确回忆信息的能力会下降。</p>
 <p>虽然一些模型的性能退化更为平缓，但这一特性在所有模型中都会出现。因此，上下文必须被视为一种具有递减边际收益的有限资源。就像人类拥有<a href="https://journals.sagepub.com/doi/abs/10.1177/0963721409359277">有限的工作记忆容量</a>，LLM也有它们在解析大体量上下文时所倚重的“注意力预算”。每个新引入的标记都会不同程度地消耗这份预算，从而更加需要我们仔细策划可供LLM使用的标记。</p>
@@ -118,7 +117,6 @@
   <img src="/images/anthropic/2025-09-29-effective-context-engineering-for-ai-agents-f01bde49.jpg" alt="在上下文工程过程中校准系统提示。">
   <figcaption>*光谱的一端是脆弱的 if-else 硬编码提示，另一端是过于笼统或误以为存在共享上下文的提示。*</figcaption>
 </figure>
-
 <p>我们建议将提示组织成独立的区块（例如<code>&lt;background_information&gt;</code>、<code>&lt;instructions&gt;</code>、<code>## Tool guidance</code>、<code>## Output description</code>等），并使用XML标记或Markdown标题来划分这些区块，尽管随着模型能力增强，提示的具体格式可能变得不那么重要。</p>
 <p>无论你最终如何组织系统提示，都应力求使用最精简的信息全面描述预期行为。（需要注意的是，精简并不等于短小；你仍需要在一开始提供足够的信息，确保代理遵循所需行为。）最好先使用能力最强的模型，搭配一个精简提示，在你的任务上进行测试，之后根据初始测试暴露出的失败模式，逐步添加清晰的指令和示例来提升表现。</p>
 <p><strong>工具</strong>使代理能够与其环境互动，并在工作过程中引入新的额外上下文。由于工具定义了代理与其信息/行动空间之间的契约，因此工具必须促进效率，既要返回在标记上高效的信息，也要鼓励高效的代理行为。</p>
