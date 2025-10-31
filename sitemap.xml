@@ -97,6 +97,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/paulgraham/2025-05-01-goodwriting.html</loc>
+    <lastmod>2025-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/karpathy/2025-04-27-vibe-coding-menugen.html</loc>
     <lastmod>2025-04-27</lastmod>
     <changefreq>monthly</changefreq>
