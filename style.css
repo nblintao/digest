@@ -1010,3 +1010,20 @@ footer a:hover {
     padding: 0 0.5rem;
   }
 }
+
+/* 需要更新的文章标记 - 左上角小圆点 */
+.post-card.needs-update {
+  position: relative;
+}
+
+.post-card.needs-update::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--text-secondary);
+  opacity: 0.4;
+}
