@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>我们如何构建多代理研究系统 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】我们的 Research 功能使用多个 Claude 代理来更高效地探索复杂议题。本文分享我们在构建该系统过程中遇到的工程挑战与经验教训。 Claude 现在具备Research 能力，能够跨网络、Google Workspace 以及任意集成进行搜索，从而...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,我们如何构建多代理研究系统,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-06-13-multi-agent-research-system.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-06-13-multi-agent-research-system.html">
+  <meta property="og:title" content="我们如何构建多代理研究系统 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】我们的 Research 功能使用多个 Claude 代理来更高效地探索复杂议题。本文分享我们在构建该系统过程中遇到的工程挑战与经验教训。 Claude 现在具备Research 能力，能够跨网络、Google Workspace 以及任意集成进行搜索，从而...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-06-13T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-06-13T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-06-13-multi-agent-research-system.html">
+  <meta name="twitter:title" content="我们如何构建多代理研究系统 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】我们的 Research 功能使用多个 Claude 代理来更高效地探索复杂议题。本文分享我们在构建该系统过程中遇到的工程挑战与经验教训。 Claude 现在具备Research 能力，能够跨网络、Google Workspace 以及任意集成进行搜索，从而...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1762994836968">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">我们如何构建多代理研究系统</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">How we built our multi-agent research system</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-06-13</span>
+          </div>
+        </div>
+
+        <p>我们的 Research 功能使用多个 Claude 代理来更高效地探索复杂议题。本文分享我们在构建该系统过程中遇到的工程挑战与经验教训。</p>
+<p>Claude 现在具备<a href="https://www.anthropic.com/news/research">Research 能力</a>，能够跨网络、Google Workspace 以及任意集成进行搜索，从而完成复杂任务。</p>
+<p>这套多代理系统从原型到生产的历程，让我们在系统架构、工具设计与提示工程方面收获了关键洞见。多代理系统由多个代理（LLM 在循环中自主使用工具）协同工作而成。我们的 Research 功能包含一个根据用户查询制定研究流程的代理，然后通过工具并行创建多个子代理以同时搜索信息。多代理系统在代理协调、评估与可靠性方面引入了新的挑战。</p>
+<p>本文拆解了对我们有效的原则——希望在你构建自己的多代理系统时也能有所借鉴。</p>
+<h3>多代理系统的优势</h3>
+<p>研究工作往往是开放性的，很难预先预测所需步骤。你无法为探索复杂主题硬编码一条固定路径，因为过程本质上是动态且路径依赖的。人类进行研究时，通常会根据新发现持续调整方法，沿着调查过程中出现的线索推进。</p>
+<p>这种不可预测性使得 AI 代理特别适合研究任务。随着调查推进，研究需要具备转向或探索相关旁支的灵活性。模型必须在多轮对话中自主运行，并根据中间发现决定下一步方向。线性的“一次性”流水线无法处理这类任务。</p>
+<p>搜索的本质是压缩：从海量语料中提炼洞见。子代理通过各自的上下文窗口并行运行，探索问题的不同侧面，再为主研究代理压缩出最重要的 token，从而促进压缩过程。每个子代理还实现了关注点分离——使用不同的工具、提示与探索轨迹——这减少了路径依赖，使得调查更全面、更独立。</p>
+<p>一旦智能达到一定阈值，多代理系统便成为规模化性能的关键方式。举例而言，过去 10 万年里，个体人类未必变得更聪明，但在信息时代，人类社会因我们的<em>集体的</em>智能与协作能力而变得<em>指数级</em>更强。即便是通用智能代理，作为个体运行也会面临边界；成组的代理能完成得更多。</p>
+<p>我们的内部评估显示，多代理研究系统在需要同时追踪多个独立方向的广度优先查询上表现尤其出色。我们发现，以 Claude Opus 4 为主代理、Claude Sonnet 4 为子代理的多代理系统，在内部研究评测上较单代理的 Claude Opus 4 提升了 90.2%。例如，在被要求识别信息技术板块标普 500 成分公司所有董事会成员时，多代理系统将任务分解给子代理从而找到正确答案，而单代理系统则因缓慢、串行的搜索而未能找到答案。</p>
+<p>多代理系统之所以有效，主要在于它们帮助花足够多的 token 来解决问题。在我们的分析中，<a href="https://openai.com/index/browsecomp/">BrowseComp</a> 评测（测试浏览代理定位难以发现的信息的能力）的性能方差有 95% 可由三个因素解释。我们发现，单就 token 使用量就能解释 80% 的方差；其余的解释因素是工具调用次数与模型选择。这个发现验证了我们的架构：将工作分配给拥有独立上下文窗口的代理，以增加并行推理的容量。最新的 Claude 模型对 token 使用具有巨大的效率乘数效应——从 Claude Sonnet 3.7 升级到 Claude Sonnet 4 的性能提升要大于将 Sonnet 3.7 的 token 配额加倍。对于超出单代理极限的任务，多代理架构能有效扩展 token 使用。</p>
+<p>当然也有代价：在实践中，这类架构的 token 消耗极快。我们的数据表明，代理通常比聊天交互多用约 4 倍 token，而多代理系统比聊天多用约 15 倍 token。要具备经济可行性，多代理系统需要用于那些任务价值足够高、能为性能提升买单的场景。此外，一些领域需要所有代理共享相同上下文，或者代理之间存在大量依赖关系，这在当下并不适合多代理系统。比如，大多数编码任务的真正可并行化部分少于研究任务；而且当前 LLM 代理仍不擅长实时协调与委派。我们发现，多代理系统在以下高价值任务上表现突出：需要大量并行化、信息规模超过单一上下文窗口、以及需要对众多复杂工具进行接口对接。</p>
+<h3>Research 的架构概览</h3>
+<p>我们的 Research 系统采用“协调者-工作者”的多代理架构：一个主代理负责协调流程，并将工作委托给能够并行运行的专门子代理。</p>
+<figure>
+  <img src="/images/anthropic/2025-06-13-multi-agent-research-system-17e6c1a0.jpg" alt="">
+  <figcaption>多代理架构的工作方式：用户查询流经主代理，主代理创建专门子代理以并行搜索不同侧面。</figcaption>
+</figure>
+<p>当用户提交查询时，主代理会进行分析、制定策略，并派生子代理以同时探索不同方面。如上图所示，子代理通过反复使用搜索工具来收集信息（此例聚焦 2025 年的 AI 代理公司），并将公司清单返回主代理以便汇总最终答案，子代理在这个过程中充当“智能过滤器”。</p>
+<p>传统的检索增强生成（RAG）方法使用静态检索：它会提取与输入查询最相似的一组文本块，并用这些文本块生成响应。相比之下，我们的架构采用多步搜索，能够动态发现相关信息、基于新发现自适应，并分析结果以给出高质量答案。</p>
+<figure>
+  <img src="/images/anthropic/2025-06-13-multi-agent-research-system-5ee8bf49.jpg" alt="">
+  <figcaption>流程图展示了我们的多代理 Research 系统的完整工作流：当用户提交查询时，系统会创建一个 LeadResearcher（主研究者）代理，进入迭代式研究流程。LeadResearcher 会先思考方法并将计划保存到 Memory 中以持久化上下文，因为一旦上下文窗口超过 200,000 token 就会被截断，保留计划非常重要。随后，它会创建具备具体研究任务的专门子代理（此处示意 2 个，实际数量可变）。每个子代理独立执行网页搜索，利用[交错思维](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking#interleaved-thinking)评估工具结果，并将发现返回给 LeadResearcher。LeadResearcher 综合这些结果并判断是否需要继续研究——如需继续，它可以创建更多子代理或优化策略。一旦收集到足够的信息，系统会退出研究循环，并将所有发现交给 CitationAgent，该代理会处理文档与研究报告，标注具体的引用位置，确保所有论断都正确对应到来源。最终，含有完整引用的研究结果会返回给用户。</figcaption>
+</figure>
+<h3>面向研究代理的提示工程与评估</h3>
+<p>多代理系统与单代理系统有重要差异，其中最突出的是协调复杂度的快速增长。早期代理会犯下诸如：对简单查询也生成 50 个子代理、在不存在来源的情况下无休止地搜网、以及用过于频繁的状态更新彼此干扰等错误。由于每个代理都由提示来引导，提示工程成为我们改善这些行为的主要杠杆。以下是我们为代理提示总结的一些原则：</p>
+<ol>
+<li><strong>像你的代理那样思考。</strong> 要迭代提示，你必须理解其效果。为此我们在<a href="https://console.anthropic.com/">Console</a> 中构建了与系统完全一致的提示与工具的模拟，然后逐步观察代理的工作过程。这立即暴露了失败模式：已经有足够结果却仍继续、搜索查询过于冗长、或选择了错误的工具。有效的提示依赖于对代理形成准确的心智模型，这能让最有影响力的改动变得显而易见。</li>
+<li><strong>教会协调者如何委派。</strong> 在我们的系统中，主代理会把查询分解为子任务并向子代理描述它们。每个子代理都需要目标、输出格式、关于工具与来源的指引，以及清晰的任务边界。缺少详细的任务描述时，代理会重复劳动、留下空白，或找不到必要信息。我们一开始允许主代理给出简短的指令，比如“研究半导体短缺”，但发现这些指令往往过于模糊，子代理会误解任务，或彼此做着完全相同的搜索。例如，一个子代理在研究 2021 年汽车芯片危机的同时，另外两个子代理在研究 2025 年当前供应链，却没有形成有效的分工。</li>
+<li><strong>让投入随查询复杂度而扩放。</strong> 代理很难判断不同任务的合理投入，因此我们在提示中嵌入了扩放规则。简单事实查找仅需 1 个代理、3–10 次工具调用；直接对比可能需要 2–4 个子代理、每个 10–15 次调用；复杂研究可能需要 10 个以上、职责清晰划分的子代理。这些明确的指南帮助主代理高效分配资源，并防止在简单查询上过度投入，这曾是我们早期版本的常见失败模式。</li>
+<li><strong>工具的设计与选择至关重要。</strong> 代理-工具接口与人机接口同等关键。用对工具可以高效——很多时候更是必要条件。例如，当所需上下文只存在于 Slack 时，去全网搜索的代理从一开始就注定失败。借助让模型访问外部工具的 <a href="https://modelcontextprotocol.io/introduction">MCP servers</a>，问题会被放大，因为代理会遇到从未见过、且描述质量参差不齐的工具。我们给代理明确的启发式：例如先检查所有可用工具，将工具使用与用户意图匹配，进行广泛外部探索时用网页搜索，或在可行时优先使用专用工具而非通用工具。糟糕的工具描述会把代理带上完全错误的道路，因此每个工具都需要明确的用途与清晰的描述。</li>
+<li><strong>让代理自我改进。</strong> 我们发现 Claude 4 系列模型可以成为出色的提示工程师。给定一个提示与一种失败模式，它们能诊断代理失败的原因并提出改进建议。我们甚至创建了一个“工具测试代理”——在面对一个有缺陷的 MCP 工具时，它会尝试使用该工具，然后重写工具描述以避免失败。通过对工具进行数十次测试，这个代理能发现关键细节与缺陷。改进工具易用性的流程让后续代理完成任务的时间减少了 40%，因为它们能避开大多数错误。</li>
+<li><strong>先广后窄。</strong> 搜索策略应当映射专家型人类的研究方式：先勘探全局，再钻研细节。代理常常默认使用过长且过于具体的查询，导致结果稀少。我们通过提示引导代理先发起简短而广泛的查询，评估可得信息，然后逐步收窄焦点。</li>
+<li><strong>引导思维过程。</strong> <a href="https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking">扩展思维模式</a>会让 Claude 输出可见的思维过程，可作为可控的“草稿本”。主代理用思维来规划方法、评估哪些工具契合任务、判定查询复杂度与子代理数量，并定义每个子代理的角色。我们的测试显示，扩展思维提升了指令遵循、推理与效率。子代理也先规划，再在工具返回后使用<a href="https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking#interleaved-thinking">交错思维</a>评估质量、识别空白并优化下一条查询。这使子代理在适应各种任务时更有效。</li>
+<li><strong>并行工具调用显著提升速度与表现。</strong> 复杂研究任务天然需要探索多种来源。我们的早期代理按顺序执行搜索，速度极慢。为提速，我们引入了两种并行化：(1) 主代理并行而非串行地启动 3–5 个子代理；(2) 子代理并行使用 3 个以上的工具。这些改动将复杂查询的研究时间缩短至原来的 10% 左右，使 Research 能在几分钟内完成过去需要数小时的工作，同时覆盖的信息面也更广。</li>
+</ol>
+<p>我们的提示策略聚焦于灌输良好的启发式，而非僵化规则。我们研究了熟练人类如何开展研究任务，并将这些策略编码进提示——例如把困难问题拆解为更小的任务、仔细评估来源质量、根据新信息调整搜索方式、以及在需要时分辨何时应“深挖”（深入研究单一主题）与“广扫”（并行探索多个主题）。我们也通过显式的护栏来主动缓解副作用，防止代理“失控”。最后，我们专注于具备可观测性与测试用例的快速迭代闭环。</p>
+<h3>有效评估代理</h3>
+<p>高质量的评估对构建可靠的 AI 应用至关重要，代理也不例外。然而，多代理系统的评估有其独特挑战。传统评估往往假设 AI 每次都走同样的步骤：给定输入 X，系统应按路径 Y 产出输出 Z。但多代理系统不是这样。即便起点相同，代理也可能沿着完全不同且同样有效的路径达成目标。有的代理查 3 个来源，有的查 10 个，或者使用不同的工具找到相同答案。由于我们通常并不知道“正确步骤”为何，所以无法简单检查代理是否遵循了预先规定的“正确步骤”。相反，我们需要更灵活的评估方法：既判断代理是否达成正确的结果，也评估其过程是否合理。</p>
+<p><strong>从小样本立刻开始评估。</strong> 在代理开发早期，改动常常产生巨大影响，因为低垂的果实很多。一次提示微调就可能把成功率从 30% 提升到 80%。在如此大的效应量下，只需要少量测试样例就能观察到变化。我们起初使用了约 20 个能够代表真实使用模式的查询。测试这些查询常常足以清晰看出改动的影响。我们经常听到 AI 团队延迟创建评测，因为他们认为只有包含数百个用例的大型评测才有用。然而，最佳做法是立即用少量样例开展小规模测试，而不是等到能构建更全面的评测再行动。</p>
+<p><strong>用 LLM 作为评审在方法得当时可良好扩展。</strong> 研究输出很难用程序化方式评估：它通常是自由文本，也很少存在唯一正确答案。LLM 天然适合作为评分者。我们使用一个 LLM 评审，根据量表中的评判标准来打分：事实准确性（论断是否与来源一致？）、引用准确性（引用是否对应论断？）、完整性（是否覆盖所有请求面向？）、来源质量（是否优先使用一手来源而非低质量的二手来源？）、工具效率（是否在合理次数内使用了合适的工具？）。我们尝试过为各项指标分别使用多个评审，但发现“单个 LLM 调用 + 单个提示、输出 0.0–1.0 分数与通过/未通过”这一方法最稳定、也最符合人工判断。该方法在测试集确有明确答案时尤其有效，此时我们只需让 LLM 判断答案是否正确（例如“是否准确列出了研发投入前三的制药公司？”）。用 LLM 作为评审让我们能以可扩展方式评估数百个输出。</p>
+<p><strong>人工评估能捕捉自动化所遗漏的部分。</strong> 人类测试者能发现评测遗漏的边角情况，包括对于异常查询的幻觉回答、系统性失败，或微妙的来源选择偏差。就我们而言，人工测试者注意到早期代理经常选择 SEO 优化的内容农场，而非权威性更高但排名不那么靠前的来源（如学术 PDF 或个人博客）。我们在提示中加入来源质量启发式后，问题得到缓解。即便在自动化评测的世界里，手工测试仍不可或缺。</p>
+<p>多代理系统会产生“涌现行为”，这类行为并非通过显式编程得到。例如，对主代理的小改动会以难以预测的方式改变子代理的行为。成功需要理解互动模式，而不仅是单个代理的行为。因此，最好的代理提示不只是严格的指令，而是协作框架：定义分工、解题方法与投入预算。做到这一点依赖细致的提示与工具设计、扎实的启发式、可观测性与紧密的反馈回路。参见我们在<a href="https://github.com/anthropics/anthropic-cookbook/tree/main/patterns/agents/prompts">Cookbook 开源的提示</a>，其中包含系统中使用的示例提示。</p>
+<h3>生产级可靠性与工程挑战</h3>
+<p>在传统软件中，一个 bug 可能破坏某个功能、降低性能或引发故障。在代理系统中，细微改动会级联为巨大的行为变化，这让为需要在长时运行过程中维护状态的复杂代理编写代码变得格外困难。</p>
+<p><strong>代理是有状态的，错误会复合。</strong> 代理可能长时间运行，并在多次工具调用之间维护状态。这意味着我们必须可靠地执行代码并在过程中处理错误。如果没有有效缓解措施，细小的系统性失败也可能对代理造成灾难性影响。出现错误时，我们不能简单地从头重来：重试既昂贵也让用户沮丧。相反，我们构建了能够从出错位置恢复的系统。我们也利用模型的智能优雅地处理问题：例如，当某个工具失败时告知代理并让其自适应，常常效果意外地好。我们将 Claude 构建的 AI 代理的适应性与确定性的保障（如重试逻辑与定期检查点）结合起来。</p>
+<p><strong>调试需要新方法的加持。</strong> 代理会做出动态决策，即便提示完全相同，不同运行之间也可能不确定。这让调试更难。例如，用户会反馈代理“没有找到显而易见的信息”，但我们并不清楚原因。是搜索查询不佳？来源选择不好？还是工具失败？引入完整的生产追踪让我们能诊断失败原因，并系统性地修复问题。除了标准可观测性外，我们还监控代理的决策模式与交互结构——同时不监控单次对话的具体内容，以维护用户隐私。这种高层次的可观测性帮助我们定位根因、发现意外行为并修复常见失败。</p>
+<p><strong>部署需要审慎协调。</strong> 代理系统是高度有状态的提示、工具与执行逻辑的网络，几乎持续运行。这意味着每当我们部署更新时，代理可能处于流程中的任意位置。因此，我们必须避免善意的代码变更破坏正在运行的代理。我们无法让所有代理同时升级到新版本。相反，我们使用<a href="https://brandon.dimcheff.com/2018/02/rainbow-deploys-with-kubernetes/">彩虹部署（rainbow deployments）</a>来避免打断正在运行的代理：逐步将流量从旧版本切到新版本，同时让二者并行运行。</p>
+<p><strong>同步执行会造成瓶颈。</strong> 目前，我们的主代理以同步方式执行子代理：在继续之前等待每一批子代理完成。这简化了协调，但在代理之间的信息流上造成了瓶颈。例如，主代理无法在过程中引导子代理，子代理之间也无法协调，整个系统可能被一个耗时较长的子代理阻塞。异步执行将启用更多并行性：代理并发工作，并在需要时创建新的子代理。但这种异步性也会在结果协调、状态一致性与跨子代理的错误传播上带来挑战。随着模型能够处理更长、更复杂的研究任务，我们预计由此带来的性能增益会值得这份复杂度。</p>
+<h3>结语</h3>
+<p>在构建 AI 代理时，“最后一公里”往往变成“旅程的大部分”。能在开发者机器上运行的代码，距离成为可靠的生产系统仍需大量工程化工作。在代理系统中，错误的复合性意味着对传统软件来说的轻微问题，可能完全让代理脱轨。某一步失败会让代理走上完全不同的路径，导致不可预测的结果。由于本文所述的种种原因，原型到生产之间的鸿沟往往超出预期。</p>
+<p>尽管存在这些挑战，多代理系统在开放式研究任务中已证明其价值。用户表示，Claude 帮助他们发现此前未想到的商业机会、在复杂医疗选项中做出抉择、解决棘手的技术 bug，并通过发掘他们独自难以发现的研究连接而节省多日至一周的工作时间。通过严密的工程实践、全面的测试、注重细节的提示与工具设计、稳健的运维手段，以及对当前代理能力有深刻理解的研发、产品与工程团队的紧密协作，多代理研究系统可以在规模上可靠运行。我们已经看到这些系统在改变人们解决复杂问题的方式。</p>
+<figure>
+  <img src="/images/anthropic/2025-06-13-multi-agent-research-system-1f34c7c4.jpg" alt="">
+  <figcaption>一张 [Clio](https://www.anthropic.com/research/clio) 嵌入可视化，展示了当下人们使用 Research 功能的最常见方式。主要用例类别包括：跨专业领域开发软件系统（10%）、开发与优化专业/技术内容（8%）、制定业务增长与营收策略（8%）、辅助学术研究与教育内容开发（7%）、以及研究与核验有关人物、地点或组织的信息（5%）。</figcaption>
+</figure>
+<h3>致谢</h3>
+<p>作者：Jeremy Hadfield、Barry Zhang、Kenneth Lien、Florian Scholz、Jeremy Fox 与 Daniel Ford。本文凝聚了 Anthropic 多个团队的共同努力，正是他们让 Research 功能成为可能。特别感谢 Anthropic 的应用工程团队——他们将这一复杂的多代理系统带入了生产。我们也感谢早期用户提供的宝贵反馈。</p>
+<h2>附录</h2>
+<p>以下是关于多代理系统的一些补充性要点。</p>
+<p><strong>针对跨多轮改变状态的代理进行终态评估。</strong> 评估在多轮会话中持续修改持久化状态的代理有其独特挑战。不同于只读型的研究任务，每一步都会改变环境，从而为后续步骤制造依赖，这令传统评估方法难以应对。我们发现，聚焦“终态评估”而非逐轮分析更为可行。与其评判代理是否遵循某个特定过程，不如评估它是否达成正确的最终状态。该方法承认代理可能通过替代路径抵达同一目标，同时确保其交付预期结果。对于复杂工作流，可将评估拆分为一系列离散检查点，在这些节点上应当发生了特定的状态变更，而无需验证每个中间步骤。</p>
+<p><strong>长范围对话管理。</strong> 生产环境中的代理往往会进行跨越数百轮的对话，需要精心的上下文管理策略。随着对话延长，标准上下文窗口会变得不足，因而需要智能的压缩与记忆机制。我们采用的模式是：代理会在完成某个阶段的工作后进行摘要，并将关键信息存入外部记忆，再推进到新任务。当上下文接近极限时，代理可以在保持连贯性的前提下，通过仔细的任务交接启动新的、上下文干净的子代理。同时，它们可以检索已存储的关键信息（比如研究计划），以避免在接近上下文上限时丢失既有工作。这个分布式方法能防止上下文溢出，同时在长期互动中保持对话一致性。</p>
+<p><strong>将子代理输出写入文件系统以减少“传话损失”。</strong> 对于某些类型的结果，让子代理的输出绕过主协调者、直接落地为持久化制品，能提升保真度与性能。与其要求子代理通过主代理传递所有内容，不如实现“制品系统”：专门代理创建可独立持久化的输出，然后只把轻量级的引用传回协调者。这样可以防止多阶段加工时的信息丢失，并减少在会话历史中复制大型输出的 token 开销。该模式特别适用于结构化输出（如代码、报告或数据可视化），当子代理的专门提示直接产出的结果，往往优于经由通用协调者过滤后的版本。</p>
+<h3>想要进一步了解？</h3>
+<p>在 Anthropic Academy 上系统学习 API 开发、Model Context Protocol 与 Claude Code，并在完成课程后获得证书。</p>
+<p><a href="https://anthropic.skilljar.com/">查看课程</a></p>
+<h2>订阅开发者通讯</h2>
+<p>产品更新、实操指南、社区精选等，每月一次直达你的收件箱。</p>
+<p>如果你希望收到我们的月度开发者通讯，请留下你的邮箱地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "我们如何构建多代理研究系统",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-06-13T00:00:00.000Z",
+  "dateModified": "2025-06-13T00:00:00.000Z",
+  "description": "我们的 Research 功能使用多个 Claude 代理来更高效地探索复杂议题。本文分享我们在构建该系统过程中遇到的工程挑战与经验教训。 Claude 现在具备Research 能力，能够跨网络、Google Workspace 以及任意集成进行搜索，从而...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-06-13-multi-agent-research-system.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
