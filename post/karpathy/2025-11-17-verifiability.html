@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>可验证性 - 人工智能文摘</title>
+  <meta name="description" content="【Andrej Karpathy 文章中文翻译】人们常把 AI 与各种历史先例相提并论：电力、工业革命等等。我认为最贴切的类比是把 AI 看作一种新的计算范式，因为两者的本质都是数字信息处理的自动化。 如果你在 20 世纪 80 年代左右预测计算机对就业市场的影响，最有预...">
+  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,可验证性,中文翻译">
+  <meta name="author" content="Andrej Karpathy">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/karpathy/2025-11-17-verifiability.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/karpathy/2025-11-17-verifiability.html">
+  <meta property="og:title" content="可验证性 - 人工智能文摘">
+  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】人们常把 AI 与各种历史先例相提并论：电力、工业革命等等。我认为最贴切的类比是把 AI 看作一种新的计算范式，因为两者的本质都是数字信息处理的自动化。 如果你在 20 世纪 80 年代左右预测计算机对就业市场的影响，最有预...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-11-17T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-11-17T00:00:00.000Z">
+  <meta property="article:author" content="Andrej Karpathy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/karpathy/2025-11-17-verifiability.html">
+  <meta name="twitter:title" content="可验证性 - 人工智能文摘">
+  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】人们常把 AI 与各种历史先例相提并论：电力、工业革命等等。我认为最贴切的类比是把 AI 看作一种新的计算范式，因为两者的本质都是数字信息处理的自动化。 如果你在 20 世纪 80 年代左右预测计算机对就业市场的影响，最有预...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1763560688462">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-0">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">可验证性</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Verifiability</span>
+            <span>|</span>
+            
+            <span>Andrej Karpathy</span>
+            <span>|</span>
+            <span>2025-11-17</span>
+          </div>
+        </div>
+
+        <p>人们常把 AI 与各种历史先例相提并论：电力、工业革命等等。我认为最贴切的类比是把 AI 看作一种新的计算范式，因为两者的本质都是数字信息处理的自动化。</p>
+<p>如果你在 20 世纪 80 年代左右预测计算机对就业市场的影响，最有预测力的任务/工作的特征就是 <strong>specifiability（可指定性）</strong>——你是否只是按照容易描述的算法机械地转换信息（例如打字、簿记、人肉计算器等）？在那个时代的计算能力之内，我们能做的就是亲手（手动）编写这类程序。我把手写程序称为 “Software 1.0”。</p>
+<p>而今天，借助 AI，我们可以写出此前根本无从手写的新程序。我们通过指定目标（例如分类准确率、奖励函数），然后在程序空间中用梯度下降搜索，找到在目标上表现良好的神经网络。这就是我之前写的 <a href="https://karpathy.medium.com/software-2-0-a64152b37c35">Software 2.0 博客</a>。在这种新的编程范式下，最值得关注的特征变成了 <strong>verifiability（可验证性）</strong>。如果某个任务/工作是可验证的，那么它就可以直接被优化，或者通过强化学习来优化，神经网络就能被训练到表现极好。这其实在于 AI 能在多大程度上 “练习” 某件事。环境必须：</p>
+<ul>
+<li>可重置（你可以重新开始一次尝试），</li>
+<li>高效（能进行大量尝试），以及</li>
+<li>可奖励（存在某种自动流程来奖励每次尝试）。</li>
+</ul>
+<p>某个任务/工作越可验证，它就越适合在这种新的编程范式下被自动化。如果不可验证，就只能寄希望于神经网络神奇的泛化能力，或者靠模仿等更弱的方式。这正是推动 LLM 进展出现 “锯齿状” 前沿的原因。那些可验证的任务进步迅速，甚至可能超越顶级专家（例如数学、代码、花大量时间看视频、任何像谜题且有正确答案的事情），而许多其他任务则相对落后（创造性、策略性，以及那些需要结合现实世界知识、状态、上下文和常识的任务）。</p>
+<ul>
+<li>Software 1.0 很容易自动化你能明确指定的内容。</li>
+<li>Software 2.0 很容易自动化你能可靠验证的内容。</li>
+</ul>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/verifiability/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "可验证性",
+  "author": {
+    "@type": "Person",
+    "name": "Andrej Karpathy"
+  },
+  "datePublished": "2025-11-17T00:00:00.000Z",
+  "dateModified": "2025-11-17T00:00:00.000Z",
+  "description": "人们常把 AI 与各种历史先例相提并论：电力、工业革命等等。我认为最贴切的类比是把 AI 看作一种新的计算范式，因为两者的本质都是数字信息处理的自动化。 如果你在 20 世纪 80 年代左右预测计算机对就业市场的影响，最有预...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/karpathy/2025-11-17-verifiability.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
