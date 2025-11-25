@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2025-11-24-advanced-tool-use.html</loc>
+    <lastmod>2025-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/karpathy/2025-11-17-verifiability.html</loc>
     <lastmod>2025-11-17</lastmod>
     <changefreq>monthly</changefreq>
@@ -175,6 +181,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/author/anthropic.html</loc>
+    
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/author/karpathy.html</loc>
     
     <changefreq>weekly</changefreq>
@@ -182,12 +194,6 @@
   </url>
   <url>
     <loc>https://digest.qcngt.com/author/thinkingmachines.html</loc>
-    
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://digest.qcngt.com/author/anthropic.html</loc>
     
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
