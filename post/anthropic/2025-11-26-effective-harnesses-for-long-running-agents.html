@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>为长时间运行的智能体打造高效挂载框架 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】智能体在跨越多个上下文窗口时依旧存在挑战。我们从人类工程师身上汲取灵感，为长时间运行的智能体构建了更高效的挂载框架。 随着 AI 智能体的能力不断提升，开发者越来越多地让它们承担跨越数小时甚至数天的复杂任务。然...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,为长时间运行的智能体打造高效挂载框架,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2025-11-26-effective-harnesses-for-long-running-agents.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2025-11-26-effective-harnesses-for-long-running-agents.html">
+  <meta property="og:title" content="为长时间运行的智能体打造高效挂载框架 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】智能体在跨越多个上下文窗口时依旧存在挑战。我们从人类工程师身上汲取灵感，为长时间运行的智能体构建了更高效的挂载框架。 随着 AI 智能体的能力不断提升，开发者越来越多地让它们承担跨越数小时甚至数天的复杂任务。然...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-11-26T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-11-26T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2025-11-26-effective-harnesses-for-long-running-agents.html">
+  <meta name="twitter:title" content="为长时间运行的智能体打造高效挂载框架 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】智能体在跨越多个上下文窗口时依旧存在挑战。我们从人类工程师身上汲取灵感，为长时间运行的智能体构建了更高效的挂载框架。 随着 AI 智能体的能力不断提升，开发者越来越多地让它们承担跨越数小时甚至数天的复杂任务。然...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1764290730392">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">为长时间运行的智能体打造高效挂载框架</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Effective harnesses for long-running agents</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2025-11-26</span>
+          </div>
+        </div>
+
+        <p>智能体在跨越多个上下文窗口时依旧存在挑战。我们从人类工程师身上汲取灵感，为长时间运行的智能体构建了更高效的挂载框架。</p>
+<p>随着 AI 智能体的能力不断提升，开发者越来越多地让它们承担跨越数小时甚至数天的复杂任务。然而，让智能体在多个上下文窗口间持续取得一致进展依然是个未解难题。</p>
+<p>长时间运行智能体的核心挑战在于，它们必须在离散的会话中工作，并且每个新会话开始时对之前发生的事情毫无记忆。想象一个由轮班工程师负责的软件项目，每位新工程师到岗时都对上一班发生的事一无所知。由于上下文窗口有限，且大多数复杂项目无法在单个窗口内完成，智能体需要一种方式来弥合各个编码会话之间的鸿沟。</p>
+<p>我们设计了双重方案，让 <a href="https://platform.claude.com/docs/en/agent-sdk/overview">Claude Agent SDK</a> 能够在多个上下文窗口间高效工作：一个 <strong>初始化智能体</strong> 用于首次运行时设置环境，以及一个 <strong>编码智能体</strong> 在每个会话中负责取得渐进式进展，同时留下清晰的工件供下一次会话使用。示例代码可以在附带的 <a href="https://github.com/anthropics/claude-quickstarts/tree/main/autonomous-coding">快速入门</a> 中找到。</p>
+<h2>长时间运行智能体的问题</h2>
+<p>Claude Agent SDK 是一个功能强大的通用智能体挂载框架，擅长编码以及其他需要模型使用工具收集上下文、规划和执行的任务。它具备诸如压缩（compaction）之类的上下文管理能力，使智能体能够在不耗尽上下文窗口的情况下处理任务。理论上，在这样的设置下，智能体应该可以在任意长的时间内持续做有用的工作。</p>
+<p>然而，压缩并不足够。即使是像 Opus 4.5 这样的一线编码模型，若在 Claude Agent SDK 中循环跨越多个上下文窗口，在仅仅给出诸如“构建一个 <a href="http://claude.ai/redirect/website.v1.bcd1298e-326f-4965-891e-6a83e9eec7ca">claude.ai</a> 克隆”这样的高层提示时，也难以构建出生产级别的 Web 应用。</p>
+<p>Claude 的失败表现出两种模式。首先，智能体倾向于一次做太多事情——本质上是试图一次性完成整个应用。往往导致模型在实现过程中耗尽上下文，令下一次会话从一个半实现且无文档记录的功能开始。然后智能体不得不猜测发生了什么，并花费大量时间重新让基础应用运行起来。即使有上下文压缩，这种情况也会发生，因为压缩并不总能向下一个智能体传递完全清晰的指令。</p>
+<p>第二种失败模式经常发生在项目后期。在一些功能已构建完成后，后续的智能体会查看环境，认为已有进展，然后宣布工作完成。</p>
+<p>这样我们把问题分解为两部分。首先，需要设置一个初始环境，为给定提示要求的 <em>所有</em> 功能打下基础，引导智能体逐步、按功能地工作。其次，应当提示每个智能体在目标上取得渐进式进展，同时在会话结束时将环境保持在干净状态。所谓“干净状态”，指的是适合合并到主分支的代码：没有重大 bug，代码有序且有良好文档，总体上开发者可以轻松开始新的功能开发，而无需先清理无关的烂摊子。</p>
+<p>在内部实验时，我们用一个由两部分组成的方案解决了这些问题：</p>
+<ol>
+<li>初始化智能体：第一次智能体会话使用特殊提示，要求模型设置初始环境：一个 <code>init.sh</code> 脚本、一个记录智能体操作日志的 claude-progress.txt 文件，以及展示新增文件的初始 git 提交。</li>
+<li>编码智能体：之后的每个会话要求模型取得渐进式进展，然后留下结构化更新。1</li>
+</ol>
+<p>这里的关键洞察是找到一种方式，让智能体在全新的上下文窗口中快速理解工作状态，这依赖于 claude-progress.txt 文件和 git 历史。我们从优秀软件工程师的日常实践中获得了这些做法的灵感。</p>
+<h2>环境管理</h2>
+<p>在更新的 <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/claude-4-best-practices#multi-context-window-workflows">Claude 4 提示指南</a> 中，我们分享了多上下文窗口工作流的一些最佳实践，包括一种使用“在第一个上下文窗口中使用不同提示”的挂载结构。这个“不同的提示”要求初始化智能体设置环境，提供后续编码智能体有效工作所需的全部上下文。这里我们更深入地探讨这样一个环境的一些关键组件。</p>
+<h3>功能清单</h3>
+<p>为了解决智能体一次性构建应用或过早认为项目完成的问题，我们提示初始化智能体编写一份详尽的功能需求文件，对用户初始提示进行扩展。在 <a href="http://claude.ai/redirect/website.v1.bcd1298e-326f-4965-891e-6a83e9eec7ca">claude.ai</a> 克隆示例中，这意味着 200 多个功能，例如“用户可以打开新聊天，输入查询，按回车并看到 AI 响应。” 这些功能最初都标记为“失败”，这样后续的编码智能体就有了清晰的全功能轮廓。</p>
+<pre><code>{
+    &quot;category&quot;: &quot;functional&quot;,
+    &quot;description&quot;: &quot;New chat button creates a fresh conversation&quot;,
+    &quot;steps&quot;: [
+      &quot;Navigate to main interface&quot;,
+      &quot;Click the 'New Chat' button&quot;,
+      &quot;Verify a new conversation is created&quot;,
+      &quot;Check that chat area shows welcome state&quot;,
+      &quot;Verify conversation appears in sidebar&quot;
+    ],
+    &quot;passes&quot;: false
+  }
+</code></pre>
+<p>复制</p>
+<p>我们提示编码智能体只通过修改 passes 字段的状态来编辑此文件，并使用强烈的措辞，如“删除或修改测试是不可接受的，因为这可能导致遗漏或有缺陷的功能。” 经过一些试验，我们最终选择了 JSON，因为相比 Markdown 文件，模型更不容易不当修改或覆盖 JSON 文件。</p>
+<h3>渐进式进展</h3>
+<p>基于这个初始环境脚手架，下一轮的编码智能体被要求一次只处理一个功能。这种渐进式的方法对于解决智能体一次想做太多事情的问题至关重要。</p>
+<p>即使采用渐进式工作方式，模型在做出代码变更后仍必须在会话结束时将环境保持在干净状态。在实验中，我们发现最有效的方式是要求模型用描述性的提交信息将进展提交到 git，并在进度文件中写下摘要。这让模型可以利用 git 回滚不良代码改动并恢复到可运行的代码库状态。</p>
+<p>这些方法还提升了效率，因为它们消除了智能体猜测发生了什么并花时间重新让基础应用运行的需求。</p>
+<h3>测试</h3>
+<p>我们观察到的最后一个主要失败模式是 Claude 倾向于在缺乏充分测试的情况下将功能标记为完成。如果没有明确提示，Claude 往往会进行代码修改，甚至使用单元测试或针对开发服务器的 <code>curl</code> 命令进行测试，但却未能认知到功能并未端到端正常工作。</p>
+<p>在构建 Web 应用的场景下，一旦明确提示使用浏览器自动化工具并像人类用户一样进行所有测试，Claude 在端到端验证方面表现良好。</p>
+<figure>
+  <img src="/images/anthropic/2025-11-26-effective-harnesses-for-long-running-agents-a1053e55.jpg" alt=" Screenshots taken by Claude through the Puppeteer MCP server as it tested the claude.ai clone. ">
+  <figcaption>Screenshots taken by Claude through the Puppeteer MCP server as it tested the claude.ai clone.</figcaption>
+</figure>
+<p>为 Claude 提供这些测试工具显著提升了性能，因为智能体能够识别并修复仅从代码中不易发现的 bug。</p>
+<p>仍然存在一些问题，比如 Claude 的视觉能力和浏览器自动化工具的限制，使得识别某些类型的 bug 变得困难。例如，Claude 无法通过 Puppeteer MCP 看到浏览器原生的警告模态框，依赖这些模态框的功能因此更容易出现 bug。</p>
+<h2>快速上手</h2>
+<p>在上述所有内容的基础上，每个编码智能体都会被提示按照一系列步骤来熟悉环境，其中一些非常基础，但仍然有帮助：</p>
+<ol>
+<li><em>运行 <code>pwd</code> 以查看你正在工作的目录。你只能编辑此目录中的文件。</em></li>
+<li><em>阅读 git 日志和进度文件，了解最近完成的工作。</em></li>
+<li><em>阅读功能清单文件，并选择尚未完成的最高优先级功能来开展工作。</em></li>
+</ol>
+<p>这种方法在每次会话中都能为 Claude 节省一些 tokens，因为它无需再去摸索如何测试代码。它也有助于让初始化智能体编写一个能够运行开发服务器的 <a href="http://init.sh">init.sh</a> 脚本，然后在实现新功能之前先运行一次基础端到端测试。</p>
+<p>在 <a href="http://claude.ai">claude.ai</a> 克隆的案例中，这意味着智能体始终会启动本地开发服务器，并使用 Puppeteer MCP 发起新聊天、发送消息并接收响应。这样就确保 Claude 可以迅速识别应用是否处于损坏状态，并立即修复现有 bug。如果智能体直接开始实现新功能，很可能会让问题更糟。</p>
+<p>综合来看，一个典型的会话从以下助理消息开始：</p>
+<pre><code>[Assistant] I'll start by getting my bearings and understanding the current state of the project.
+[Tool Use] &lt;bash - pwd&gt;
+[Tool Use] &lt;read - claude-progress.txt&gt;
+[Tool Use] &lt;read - feature_list.json&gt;
+[Assistant] Let me check the git log to see recent work.
+[Tool Use] &lt;bash - git log --oneline -20&gt;
+[Assistant] Now let me check if there's an init.sh script to restart the servers.
+&lt;Starts the development server&gt;
+[Assistant] Excellent! Now let me navigate to the application and verify that some fundamental features are still working.
+&lt;Tests basic functionality&gt;
+[Assistant] Based on my verification testing, I can see that the fundamental functionality is working well. The core chat features, theme switching, conversation loading, and error handling are all functioning correctly. Now let me review the tests.json file more comprehensively to understand what needs to be implemented next.
+&lt;Starts work on a new feature&gt;
+</code></pre>
+<p>复制</p>
+<p>智能体的失败模式与解决方案</p>
+<table>
+<thead>
+<tr>
+<th><strong>问题</strong></th>
+<th><strong>初始化智能体的行为</strong></th>
+<th><strong>编码智能体的行为</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude 过早宣布整个项目完成。</td>
+<td>根据输入规范设置功能清单文件，建立包含端到端功能描述的结构化 JSON。</td>
+<td>在会话开始时读取功能清单文件，选择单个功能着手实现。</td>
+</tr>
+<tr>
+<td>Claude 让环境处于有 bug 或缺乏记录的状态。</td>
+<td>写入初始 git 仓库和进度记录文件。</td>
+<td>通过读取进度记录文件和 git 提交日志开始会话，并在开发服务器上运行基础测试以捕捉未记录的 bug；在会话结束时写下 git 提交和进度更新。</td>
+</tr>
+<tr>
+<td>Claude 过早将功能标记为完成。</td>
+<td>设置功能清单文件。</td>
+<td>自我验证所有功能。只有在仔细测试后才将功能标记为“通过”。</td>
+</tr>
+<tr>
+<td>Claude 需要花时间弄清楚如何运行应用。</td>
+<td>编写可运行开发服务器的 <code>init.sh</code> 脚本。</td>
+<td>以阅读 <code>init.sh</code> 开始会话。</td>
+</tr>
+</tbody>
+</table>
+<p>概述长时间运行 AI 智能体的四种常见失败模式及解决方案。</p>
+<h2>未来工作</h2>
+<p>这项研究展示了一套在长时间运行智能体挂载框架中实现渐进式进展的可行解决方案。不过仍有一些未解问题。</p>
+<p>最值得注意的是，目前尚不清楚单个通用编码智能体是否能在多上下文场景中表现最佳，或者是否通过多智能体架构可以获得更好的性能。看起来，测试智能体、质量保证智能体或代码清理智能体等专职智能体在软件开发生命周期的子任务上可能表现得更佳。</p>
+<p>此外，这个演示针对的是全栈 Web 应用开发。未来方向之一是将这些发现泛化到其他领域。这些经验教训很可能在诸如科学研究或金融建模等需要长周期智能体任务的场景中得到应用。</p>
+<h3>致谢</h3>
+<p>由 Justin Young 撰写。特别感谢 David Hershey、Prithvi Rajasakeran、Jeremy Hadfield、Naia Bouscal、Michael Tingley、Jesse Mu、Jake Eaton、Marius Buleandara、Maggie Vo、Pedram Navid、Nadine Yasser 和 Alex Notov 的贡献。</p>
+<p>这项工作体现了多个团队的集体努力，他们让 Claude 能够安全地进行长周期自主软件工程，尤其是 code RL 与 Claude Code 团队。欢迎有兴趣的候选人申请 <a href="http://anthropic.com/careers">anthropic.com/careers</a>。</p>
+<h3>脚注</h3>
+<p>1. 我们在此将它们称为不同智能体仅仅是因为它们的初始用户提示不同。系统提示、工具集和整体智能体挂载框架则完全相同。</p>
+<h2>订阅开发者新闻简报</h2>
+<p>产品更新、操作指南、社区亮点等，每月送达你的收件箱。</p>
+<p>如果你希望收到我们的每月开发者新闻简报，请提供你的电子邮件地址。你可随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "为长时间运行的智能体打造高效挂载框架",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2025-11-26T00:00:00.000Z",
+  "dateModified": "2025-11-26T00:00:00.000Z",
+  "description": "智能体在跨越多个上下文窗口时依旧存在挑战。我们从人类工程师身上汲取灵感，为长时间运行的智能体构建了更高效的挂载框架。 随着 AI 智能体的能力不断提升，开发者越来越多地让它们承担跨越数小时甚至数天的复杂任务。然...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2025-11-26-effective-harnesses-for-long-running-agents.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
