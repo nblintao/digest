@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>用事后视角自动评分十年前的 Hacker News 讨论 - 人工智能文摘</title>
+  <meta name="description" content="【Andrej Karpathy 文章中文翻译】TLDR: < 昨天我偶然刷到这条 HN 讨论：Show HN: Gemini Pro 3 hallucinates the HN front page 10 years from now，Gemini 3 在幻觉式地生成 10 年后的首页。不过另一条评论更让我眼前一亮——Bjartr 链接了恰好 10 年前的...">
+  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,用事后视角自动评分十年前的 Hacker News 讨论,中文翻译">
+  <meta name="author" content="Andrej Karpathy">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/karpathy/2025-12-10-auto-grade-hn.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/karpathy/2025-12-10-auto-grade-hn.html">
+  <meta property="og:title" content="用事后视角自动评分十年前的 Hacker News 讨论 - 人工智能文摘">
+  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】TLDR: < 昨天我偶然刷到这条 HN 讨论：Show HN: Gemini Pro 3 hallucinates the HN front page 10 years from now，Gemini 3 在幻觉式地生成 10 年后的首页。不过另一条评论更让我眼前一亮——Bjartr 链接了恰好 10 年前的...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-12-10T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-12-10T00:00:00.000Z">
+  <meta property="article:author" content="Andrej Karpathy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/karpathy/2025-12-10-auto-grade-hn.html">
+  <meta name="twitter:title" content="用事后视角自动评分十年前的 Hacker News 讨论 - 人工智能文摘">
+  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】TLDR: < 昨天我偶然刷到这条 HN 讨论：Show HN: Gemini Pro 3 hallucinates the HN front page 10 years from now，Gemini 3 在幻觉式地生成 10 年后的首页。不过另一条评论更让我眼前一亮——Bjartr 链接了恰好 10 年前的...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1765652916128">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-0">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">用事后视角自动评分十年前的 Hacker News 讨论</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Auto-grading decade-old Hacker News discussions with hindsight</span>
+            <span>|</span>
+            
+            <span>Andrej Karpathy</span>
+            <span>|</span>
+            <span>2025-12-10</span>
+          </div>
+        </div>
+
+        <p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/hnhero.webp" alt="hnhero"></p>
+<p>TLDR: <a href="https://karpathy.ai/hncapsule/">https://karpathy.ai/hncapsule/</a></p>
+<hr>
+<p>昨天我偶然刷到这条 HN 讨论：<a href="https://news.ycombinator.com/item?id=46205632">Show HN: Gemini Pro 3 hallucinates the HN front page 10 years from now</a>，Gemini 3 在幻觉式地生成 10 年后的首页。不过另一条评论更让我眼前一亮——Bjartr 链接了<a href="https://news.ycombinator.com/front?day=2015-12-09">恰好 10 年前的 HN 首页</a>，也就是 2015 年 12 月。我翻看着十年前的讨论，脑补着它们的先见之明，突然意识到：这事儿让 LLM 来干可能更合适。我把其中一篇文章+评论串手动复制到 ChatGPT 5.1 Thinking 里，它给了我一份漂亮的分析，把人们当时的想法和后来发生的事情对照得清清楚楚，比我手动做得好且详细得多。我意识到这任务很适合 LLM，我正想找个理由用刚发布的 Opus 4.5 来小小狂飙，就开干了。我要抓下整个 12 月的首页（31 天、每天 30 篇文章），让 ChatGPT 5.1 Thinking 做分析，再把结果以舒适的方式呈现，供历史阅读。</p>
+<p>我觉得这个练习有两点更普遍的价值：</p>
+<ol>
+<li>我认为只要有训练和投入，打造一个面向未来的预测器是完全可能且值得的。</li>
+<li>我再次想起我曾发过的推文：<em>“要行善，未来的 LLM 在看着你。”</em> 你可以从很多角度理解这句话，但这里我想聚焦在“未来的 LLM <strong>确实</strong>在看着”这个想法上。我们今天做的一切，未来都可能被细致审视，因为这样做将“免费”。很多人的行为方式隐含一种“靠模糊带来的安全”的假设。但如果智能真的廉价到不计量，就有可能对一切做到完美重建和综合。LLM 在看着（或者是用它们的未来人类在看着）。最好行善。</li>
+</ol>
+<p>用 Opus 4.5 进行 vibe coding 实际项目相对顺利，花了大约 3 小时，中间有点小波折，但整体非常惊艳。代码仓库在 GitHub：<a href="https://github.com/karpathy/hn-time-capsule">karpathy/hn-time-capsule</a>。下面是代码功能的演进：</p>
+<ul>
+<li>
+<p>给定日期，下载当天首页的 30 篇文章</p>
+</li>
+<li>
+<p>对每篇文章，使用 Algolia API 下载/解析文章本身以及完整的评论串。</p>
+</li>
+<li>
+<p>把所有内容打包成一个请求分析的 markdown prompt。下面是我用的 prompt 前缀：</p>
+<p>下面是一篇 10 年前出现在 Hacker News 上的文章及其讨论串。</p>
+<p>现在让我们利用事后视角，从 6 个部分展开：</p>
+<ol>
+<li>简要总结文章和讨论串。</li>
+<li>这个话题后来发生了什么？（简要检索一下并写个总结）</li>
+<li>评出“最有先见”与“最离谱”评论奖，结合后来的事实。</li>
+<li>提到文章或讨论中的其他有趣/值得注意的方面。</li>
+<li>结合后来的发展，为特定评论者打分。</li>
+<li>最后给出一个评分（0-10），衡量这篇文章及其事后分析的有趣程度。</li>
+</ol>
+<p>第 5 部分的格式，请使用标题“Final grades”，并跟一个无序列表，格式为“name: grade (optional comment)”。例如：</p>
+<p>Final grades</p>
+<ul>
+<li>speckx: A+ (excellent predictions on ...)</li>
+<li>tosh: A (correctly predicted this or that ...)</li>
+<li>keepamovin: A</li>
+<li>bgwalter: D</li>
+<li>fsflover: F (completely wrong on ...)</li>
+</ul>
+<p>你的列表当然可以包含比这个玩具示例更多的人。请严格遵守该格式，因为我会用程序解析。想法是我会积累每个账号的得分，找出在较长时间内最有先见/最离谱的账号。</p>
+<p>第 6 部分的格式，请使用前缀“Article hindsight analysis interestingness score:”，然后是一个数值（0-10）。对于在事后看来显著、重要或有趣的文章/讨论给高分；当几乎没人做预测、话题非常小众、或讨论在事后不太有趣时给低分。</p>
+<h2>例如：
+Article hindsight analysis interestingness score: 8</h2>
+</li>
+<li>
+<p>将 prompt 提交给 OpenAI API 的 GPT 5.1 Thinking</p>
+</li>
+<li>
+<p>收集并解析结果</p>
+</li>
+<li>
+<p>将结果渲染为静态 HTML 页面以便浏览</p>
+</li>
+<li>
+<p>把 HTML 结果页托管在我的网站上：<a href="https://karpathy.ai/hncapsule/">https://karpathy.ai/hncapsule/</a></p>
+</li>
+<li>
+<p>托管所有中间结果数据，方便别人玩。它就是同一 url 前缀下的 <code>data.zip</code> 文件（刻意不放直链）。</p>
+</li>
+</ul>
+<p>我花了几个小时随便逛了逛，觉得很有意思。下面是一些有趣的示例串：</p>
+<ul>
+<li>2015 年 12 月 3 日 <a href="https://karpathy.ai/hncapsule/2015-12-03/index.html#article-10669891">Swift 开源了</a>。</li>
+<li>2015 年 12 月 6 日 <a href="https://karpathy.ai/hncapsule/2015-12-06/index.html#article-10685407">Figma 发布</a></li>
+<li>2015 年 12 月 11 日 <a href="https://karpathy.ai/hncapsule/2015-12-11/index.html#article-10720176">OpenAI 的最初公告</a> :')。</li>
+<li>2015 年 12 月 16 日 <a href="https://karpathy.ai/hncapsule/2015-12-16/index.html#article-10744206">geohot 在打造 Comma</a></li>
+<li>2015 年 12 月 22 日 <a href="https://karpathy.ai/hncapsule/2015-12-22/index.html#article-10774865">SpaceX 发射网络直播：Orbcomm-2 任务</a></li>
+<li>2015 年 12 月 28 日 <a href="https://karpathy.ai/hncapsule/2015-12-28/index.html#article-10799261">Theranos 的挣扎</a></li>
+</ul>
+<p>然后当你点进<a href="https://karpathy.ai/hncapsule/hall-of-fame.html">名人堂</a>，可以看到 2015 年 12 月 Hacker News 的顶级评论者，按 imdb 风格的绩点排序。特别祝贺 pcwalton、tptacek、paulmd、cstross、greglindahl、moxie、hannob、0xcde4c3db、Manishearth、johncolanduoni —— GPT 5.1 Thinking 觉得你们的评论极具洞察力和先见之明。你也可以一直往下翻，找到 HN 的噪声区，我想大家都很熟悉吧 :)</p>
+<p>我的<a href="https://github.com/karpathy/hn-time-capsule">代码</a>（等等，是 Opus 的代码？）在 GitHub，可以用来复现或调整结果。让 31 天、每天 30 篇文章跑一遍 GPT 5.1 Thinking 就是 <code>31 * 30 =</code> 930 次 LLM 调用，花了大概 58 美元、约 1 小时。未来的 LLM 大佬们可能会觉得这种事轻轻松松、又快又便宜。</p>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/auto-grade-hn/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "用事后视角自动评分十年前的 Hacker News 讨论",
+  "author": {
+    "@type": "Person",
+    "name": "Andrej Karpathy"
+  },
+  "datePublished": "2025-12-10T00:00:00.000Z",
+  "dateModified": "2025-12-10T00:00:00.000Z",
+  "description": "TLDR: < 昨天我偶然刷到这条 HN 讨论：Show HN: Gemini Pro 3 hallucinates the HN front page 10 years from now，Gemini 3 在幻觉式地生成 10 年后的首页。不过另一条评论更让我眼前一亮——Bjartr 链接了恰好 10 年前的...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/karpathy/2025-12-10-auto-grade-hn.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

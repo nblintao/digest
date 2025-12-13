@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>Tinker：全面可用与视觉输入 - 人工智能文摘</title>
+  <meta name="description" content="【Thinking Machines Lab 文章中文翻译】今天我们宣布 Tinker 的四项更新： 不再需要等候名单 新的推理模型：Kimi K2 Thinking 新的推理接口，兼容 OpenAI API Qwen3-VL 的视觉输入支持 全面可用 等候名单结束！现在每个人都可以使用 Tinker 了；在这里注册即可开...">
+  <meta name="keywords" content="Thinking Machines Lab,AI,人工智能,机器学习,Tinker：全面可用与视觉输入,中文翻译">
+  <meta name="author" content="Thinking Machines Lab">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/thinkingmachines/2025-12-12-tinker-general-availability.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/thinkingmachines/2025-12-12-tinker-general-availability.html">
+  <meta property="og:title" content="Tinker：全面可用与视觉输入 - 人工智能文摘">
+  <meta property="og:description" content="【Thinking Machines Lab 文章中文翻译】今天我们宣布 Tinker 的四项更新： 不再需要等候名单 新的推理模型：Kimi K2 Thinking 新的推理接口，兼容 OpenAI API Qwen3-VL 的视觉输入支持 全面可用 等候名单结束！现在每个人都可以使用 Tinker 了；在这里注册即可开...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-12-12T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-12-12T00:00:00.000Z">
+  <meta property="article:author" content="Thinking Machines Lab">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/thinkingmachines/2025-12-12-tinker-general-availability.html">
+  <meta name="twitter:title" content="Tinker：全面可用与视觉输入 - 人工智能文摘">
+  <meta name="twitter:description" content="【Thinking Machines Lab 文章中文翻译】今天我们宣布 Tinker 的四项更新： 不再需要等候名单 新的推理模型：Kimi K2 Thinking 新的推理接口，兼容 OpenAI API Qwen3-VL 的视觉输入支持 全面可用 等候名单结束！现在每个人都可以使用 Tinker 了；在这里注册即可开...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1765652916128">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-2">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">Tinker：全面可用与视觉输入</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Tinker: General Availability and Vision Input</span>
+            <span>|</span>
+            
+            <span>Thinking Machines Lab</span>
+            <span>|</span>
+            <span>2025-12-12</span>
+          </div>
+        </div>
+
+        <p>今天我们宣布 Tinker 的四项更新：</p>
+<ul>
+<li>不再需要等候名单</li>
+<li>新的推理模型：Kimi K2 Thinking</li>
+<li>新的推理接口，兼容 OpenAI API</li>
+<li>Qwen3-VL 的视觉输入支持</li>
+</ul>
+<h2>全面可用</h2>
+<p>等候名单结束！现在每个人都可以使用 Tinker 了；<a href="https://auth.thinkingmachines.ai/sign-up">在这里注册</a>即可开始。可用模型和定价见 <a href="https://thinkingmachines.ai/tinker/">Tinker 主页</a>，代码示例见 <a href="https://github.com/thinking-machines-lab/tinker-cookbook">Tinker cookbook</a>。</p>
+<h2>使用 Kimi K2 Thinking 获得更多推理能力</h2>
+<p>用户现在可以在 Tinker 上微调 Kimi K2 Thinking。Kimi K2 拥有一万亿参数，是目前我们阵容中最大的模型。它为长链路推理和工具使用而构建。</p>
+<h2>兼容 OpenAI API 的采样</h2>
+<p>Tinker 有一个标准推理函数：</p>
+<pre><code>prompt = types.ModelInput.from_ints(tokenizer.encode(&quot;The capital of France is&quot;,))
+params = types.SamplingParams(max_tokens=20, temperature=0.0, stop=[&quot;\n&quot;])
+future = sampling_client.sample(prompt=prompt, sampling_params=params)
+</code></pre>
+<p>随着这次发布，我们新增了 OpenAI API 兼容的脚手架，只需指定路径，就能在模型仍在训练时快速进行采样。这也意味着 Tinker 现在可以即插即用地接入任何兼容 OpenAI API 的平台。更多信息见我们的 <a href="https://tinker-docs.thinkingmachines.ai/compatible-apis/openai">Tinker 文档</a>。</p>
+<pre><code>response = openai_client.completions.create(
+    model=&quot;tinker://0034d8c9-0a88-52a9-b2b7-bce7cb1e6fef:train:0/sampler_weights/000080&quot;,
+    prompt=&quot;The capital of France is&quot;,
+    max_tokens=20,
+    temperature=0.0,
+    stop=[&quot;\n&quot;],
+)
+</code></pre>
+<h2>使用 Qwen3-VL 进行视觉输入</h2>
+<p>我们向 Tinker 新增了两个视觉模型：Qwen3-VL-30B-A3B-Instruct 和 Qwen3-VL-235B-A22B-Instruct。借助它们，用户可以处理图片、截图和图表，应用场景丰富。</p>
+<p>要输入图片，只需把一个 <a href="https://tinker-docs.thinkingmachines.ai/api-reference/types#imagechunk-objects">ImageChunk</a>（由你的图片字节组成）与文本块交错即可。例如：</p>
+<pre><code>model_input = tinker.ModelInput(chunks=[
+  tinker.types.ImageChunk(data=image_data, format=&quot;png&quot;),
+  tinker.types.EncodedTextChunk(tokens=tokenizer.encode(&quot;What is this?&quot;)),
+])
+</code></pre>
+<p>这些视觉输入可以直接用于多种应用，包括 SFT 和 RL 微调。</p>
+<p>为了演示视觉理解的效果，我们分享了<a href="https://github.com/thinking-machines-lab/tinker-cookbook/tree/main/tinker_cookbook/recipes/vlm_classifier">一个将 VLM 微调为图像分类器的新 cookbook 配方</a>。Qwen3-VL-235B-A22B-Instruct 即使每类只有一个样本也能获得不错的准确率；更多标注数据会带来更好的表现。</p>
+<h2>使用 Tinker 训练图像分类器</h2>
+<p>为了展示 Tinker 的新视觉能力，我们对 <a href="https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct">Qwen3-VL-235B-A22B-Instruct</a> 进行了微调，用它来对四个经典数据集的图片进行分类：</p>
+<ul>
+<li><a href="https://data.caltech.edu/records/mzrjq-6wc02">Caltech 101</a>：包含 101 个通用物体类别的数据集。</li>
+<li><a href="https://www.kaggle.com/datasets/eduardo4jesus/stanford-cars-dataset">Stanford Cars</a>：包含汽车品牌、车型和年份的数据集。</li>
+<li><a href="https://www.robots.ox.ac.uk/~vgg/data/flowers/102/">Oxford Flowers</a>：花卉物种数据集。</li>
+<li><a href="https://www.robots.ox.ac.uk/~vgg/data/pets/">Oxford Pets</a>：宠物品种数据集。</li>
+</ul>
+<p>由于 Qwen3-VL 是一个语言模型，我们把分类视为文本生成：给定一张图片，模型输出类别名称。我们将这种方法与传统视觉基线——微调仅视觉模型 DINOv2-base——进行对比。<a href="https://arxiv.org/pdf/2304.07193">DINOv2</a> 是一个自监督视觉 Transformer，被训练来编码图像，常用作纯视觉任务的骨干网络。对于 DINOv2，我们添加了一个分类头来预测所有 N 个类别的分布。两个模型都使用 LoRA 进行微调。</p>
+<p>对于许多真实世界的用例，标注图像数据很稀缺，因此数据效率是我们关注的首要指标。我们展示了在跨越每类标注样本数量时的分类准确率，从只提供一个样本开始。</p>
+<p><img src="images/vlm-graphs.png" alt=""> 比较微调后的 Qwen3-VL-235-A22B 和 DINOv2 在简单图像分类任务上的表现。</p>
+<p>在小数据场景下，Qwen3-VL-235-A22B 优于 DINOv2。它不仅参数更大，作为 VLM，它还自带语言知识（例如什么是“金毛”或“向日葵”）。Qwen3-VL 这种通用的语言+视觉能力也让它可以现成地用于分类之外的视觉任务。</p>
+<h2>节日快乐</h2>
+<p>Tinker 的使命是帮助建设者和研究者训练、定制最先进的模型。一如既往，我们期待看到你用 Tinker 打造的成果。节日快乐！</p>
+
+        
+        <div class="original-link">
+          <a href="https://thinkingmachines.ai/blog/tinker-general-availability/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tinker：全面可用与视觉输入",
+  "author": {
+    "@type": "Person",
+    "name": "Thinking Machines Lab"
+  },
+  "datePublished": "2025-12-12T00:00:00.000Z",
+  "dateModified": "2025-12-12T00:00:00.000Z",
+  "description": "今天我们宣布 Tinker 的四项更新： 不再需要等候名单 新的推理模型：Kimi K2 Thinking 新的推理接口，兼容 OpenAI API Qwen3-VL 的视觉输入支持 全面可用 等候名单结束！现在每个人都可以使用 Tinker 了；在这里注册即可开...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/thinkingmachines/2025-12-12-tinker-general-availability.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
