@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>化学卫生 - 人工智能文摘</title>
+  <meta name="description" content="【Andrej Karpathy 文章中文翻译】继上一篇数字卫生之后，我想写下我关于化学卫生的（不断演化、带有主观看法的）指南。我最近不停地向所有朋友吐槽这个话题（你可以想象我在派对上有多好玩），所以我觉得值得把它写下来，放在同一个地方/链接里： 水 先从管好你...">
+  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,化学卫生,中文翻译">
+  <meta name="author" content="Andrej Karpathy">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/karpathy/2025-12-18-chemical-hygiene.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/karpathy/2025-12-18-chemical-hygiene.html">
+  <meta property="og:title" content="化学卫生 - 人工智能文摘">
+  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】继上一篇数字卫生之后，我想写下我关于化学卫生的（不断演化、带有主观看法的）指南。我最近不停地向所有朋友吐槽这个话题（你可以想象我在派对上有多好玩），所以我觉得值得把它写下来，放在同一个地方/链接里： 水 先从管好你...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-12-18T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-12-18T00:00:00.000Z">
+  <meta property="article:author" content="Andrej Karpathy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/karpathy/2025-12-18-chemical-hygiene.html">
+  <meta name="twitter:title" content="化学卫生 - 人工智能文摘">
+  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】继上一篇数字卫生之后，我想写下我关于化学卫生的（不断演化、带有主观看法的）指南。我最近不停地向所有朋友吐槽这个话题（你可以想象我在派对上有多好玩），所以我觉得值得把它写下来，放在同一个地方/链接里： 水 先从管好你...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1766191626094">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-0">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">化学卫生</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Chemical hygiene</span>
+            <span>|</span>
+            
+            <span>Andrej Karpathy</span>
+            <span>|</span>
+            <span>2025-12-18</span>
+          </div>
+        </div>
+
+        <p>继上一篇<a href="https://karpathy.bearblog.dev/digital-hygiene/">数字卫生</a>之后，我想写下我关于化学卫生的（不断演化、带有主观看法的）指南。我最近不停地向所有朋友吐槽这个话题（你可以想象我在派对上有多好玩），所以我觉得值得把它写下来，放在同一个地方/链接里：</p>
+<p><strong>水</strong></p>
+<p>先从管好你的供水系统说起，这是最容易给出具体且高置信度建议的一项，而在我的经验中仍然只有不到 5% 的朋友采用：</p>
+<ul>
+<li>所有饮用水都应来自反渗透——这是用水点（Point of Use）过滤系统的黄金标准，并配有再矿化后置滤芯。理想情况下安装在水槽下方，但如果只能用台式也可以。Brita 等基础滤水器不足以充分过滤饮用水。</li>
+<li>此外，安装全屋净水系统（通常是沉积物+活性炭，而不是反渗透，那样不现实），这样你家里所有用水都会更干净，包括淋浴、洗碗机、洗衣等。如果太贵或无法安装（例如租房），至少装一个淋浴过滤器。</li>
+<li>联系当地公司为你安装并维护这两套系统（维护包括大约每年更换滤芯）。</li>
+<li>不要喝瓶装水，尤其是塑料瓶，但总体上也尽量避免。你无法控制那条供应链及其环境条件（尤其是光照、温度）。</li>
+<li>如需检测水质，找专业人员上门很容易——对比自来水、全屋净水、反渗透饮用水，以验证你的安装效果。</li>
+</ul>
+<p><strong>空气</strong></p>
+<p>和水类似，空气相对更容易理解，只要是在你家里也容易控制：</p>
+<ul>
+<li>在家里安装 HVAC 过滤器，和/或配一个独立空气净化器，例如 Dyson Big+Quiet 看起来不错，或类似 IQAir 的产品。</li>
+<li>总体上避免在家中燃烧——它会产生各种烟雾和不完全燃烧产物：
+<ul>
+<li>避免蜡烛（如果真的喜欢，可以只用蜂蜡，我偶尔会用）</li>
+<li>避免燃气灶（改用电磁炉）</li>
+<li>避免非密封式燃气壁炉，只用密封式电点火</li>
+</ul>
+</li>
+<li>除非你确实生活在非常干燥的环境，否则不要用加湿器；若维护不到位会有霉菌/细菌风险。</li>
+<li>避免所有空气清新剂、精油扩香器和各种香氛产品，它们是监管极其薄弱的合成化学品“西部荒野”。</li>
+<li>测量你家里的基础空气质量。我最近买的示例设备在<a href="https://www.amazon.com/dp/B0FXDQX5XQ">这里</a>。</li>
+<li>与水类似，检测空气也很容易——请专业人员做更全面的测试面板，例如包括可能从地底冒出的氡气、霉菌、孢子等。</li>
+</ul>
+<p><strong>食物</strong></p>
+<p>食物是最难控制的类别，因为它涉及极其深的供应链，而过去几十年里这些链条被残酷地以效率最大化推进，对公共健康外部性几乎不予考虑。行业有清晰而直接的财务动机：只要在足够长的时间尺度上出现、以至于会计上难以归因，就愿意用便宜 10% 的东西换取对你有害 10 倍的东西。而事实证明，在食品里有很多很多偷工减料的方式。遗憾的是，美国政府在约束该行业方面极其无力，远落后于其他国家（尤其是欧洲），因此才有最近的 <a href="https://en.wikipedia.org/wiki/Make_America_Healthy_Again">MAHA</a> 努力。我把这一节分成 1) 食材来源 和 2) 烹饪/准备。</p>
+<p><strong>食物：1) 来源</strong></p>
+<ul>
+<li>水果/蔬菜：买<a href="https://www.ams.usda.gov/sites/default/files/media/Organic%20Practices%20Factsheet.pdf">有机</a>，它限制了很多化学处理。标签（PLU）通常以 9* 开头。</li>
+<li>三文鱼：找“太平洋”（不是大西洋）和“野生捕捞”（不是养殖）。养殖三文鱼来自拥挤、不自然的养殖环境，其中混杂化学品、疾病与寄生虫，以及为了让它们看起来颜色正确而添加的饲料补充剂。</li>
+<li>鸡肉：优先 1) “散养”（Pasture raised）（其他形容词如“笼外”“散养范围”都是骗局，不是你以为的那样），然后 2) “有机”，再 3) “气冷”处理（如果你不喜欢鸡肉泡在氯水里）。你需要这三个形容词都具备。</li>
+<li>鸡蛋/乳制品：找“散养”“有机”。</li>
+<li>包装食品：看配料表。应当简短、易懂。比如你的面包不该有 50 个你不会念的配料，而应该只有 4 个（面粉、水、盐和酵母）。可以用 “Ivy” 和 “BobbyApproved” 这类 App 扫码（我两者都在用，也很喜欢）。</li>
+<li>不要买“可食用的类食品物质”，它们通常摆在超市中间货架。只在墙边购物，那里才是食物——果蔬、乳制品、肉类、面包。例如，Froot Loops 之类的并不是食物，常常含有有害成分，我真心震惊它们居然合法，其中许多在欧洲和世界其他地方早已被禁。</li>
+<li>避免罐装汤/罐头产品。</li>
+<li>避免触摸小票，它们含有 BPA/BPS（内分泌干扰物）。</li>
+<li>可以考虑家庭配送服务，例如我目前很喜欢并在用的 <a href="https://www.shoplocale.com/">Locale</a>。</li>
+</ul>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/gvwk5b1x0aeevjd.webp" alt="GvWK5b1X0AEevjd"> 示例食物，以及一家超市应有的样子。来自这条<a href="https://x.com/karpathy/status/1942612984481870068">推文</a>，并附有更多讨论。</p>
+<p><strong>食物：2) 烹饪与准备</strong></p>
+<ul>
+<li>规则一：避免塑料，尤其是与热结合时。
+<ul>
+<li>只用不锈钢或铸铁锅。不要用不粘锅（特氟龙等）。</li>
+<li>储存：使用非塑料容器，如玻璃、不锈钢、陶瓷。</li>
+<li>砧板：只用木质。</li>
+<li>餐具：木质、金属厨具。</li>
+<li>搅拌机：玻璃或不锈钢，不要让食物在高速下与塑料接触，塑料会碎裂进食物。</li>
+<li>不要用塑料容器装的外卖热食。</li>
+<li>不要在塑料容器中用微波炉加热，以防渗出。把食物转移到可微波的非塑料盘子中。</li>
+<li>不要用黄色海绵（用棉质、丝瓜络或不锈钢擦洗垫）。</li>
+<li>不要用一次性杯子喝热咖啡或热饮（如星巴克），它们都内衬塑料。最好自带杯子，或问“堂食杯”。</li>
+<li>不要用廉价咖啡机的热咖啡（如 Keurig——它们让热液体经过塑料部件）。</li>
+<li>不要用茶包，它们含有塑料和会渗入茶中的化学物质。只买散叶茶并用不锈钢滤网。</li>
+</ul>
+</li>
+<li>食用油：种子油目前争议很大。我个人觉得它们非常可疑，更倾向于使用干净的油脂：特级初榨橄榄油（最好低温）、牛油果油（烹饪），或黄油、酥油、牛脂（煎炸）。</li>
+<li>你的厨房基本应由木材、不锈钢、玻璃、陶瓷构成；任何纺织品也尽量用天然材质（棉、竹、亚麻、羊毛等）。</li>
+</ul>
+<p><strong>纺织品</strong></p>
+<p>我们的身体经常与各种纺织品接触（衣物、床品、家具、地毯、垫子……）。当你触碰这些材料时，它们会掉落颗粒，你最终会吸入其中。</p>
+<ul>
+<li>再次强调，避开无处不在的有毒石油基塑料产业——这些纤维更便宜（所以无处不在），但它们会释放纳米/微塑料，且夹带着一整座化学添加剂“动物园”（增塑剂）。</li>
+<li>只用天然纤维：棉、麻、工业大麻、羊毛、丝绸，有机更佳，额外认证更佳（如 GOTS）。你会发现塑料在纺织品（如衣物）中的使用极其普遍。它们真的潜入了每个角落。即使你此前没注意，你的衣服几乎肯定含有涤纶、尼龙、氨纶等。你的地毯几乎肯定是涤纶。</li>
+<li>警惕“竹纤维”——听起来很天然，但行业里存在普遍且可疑的手段，FTC 在 2010 年已就此欺诈营销起诉。那不是竹子，而是把纤维素经过重化学加工制成的纤维，称为人造丝/粘胶。</li>
+</ul>
+<p><strong>清洁用品：肥皂、洗碗、洗衣、马桶、喷雾清洁剂</strong></p>
+<ul>
+<li>寻找成分很少且简单的产品，最好是“无香”和“无染色”。我目前这些都用 <a href="https://www.blueland.com/">Blueland</a>。</li>
+</ul>
+<p><strong>牙齿卫生</strong></p>
+<p>这是我在个人生活中无法取得突破的一类，尽管尝试了很多。整体目标是抓住 80:20 的低垂果实，而这一类对我来说属于后者：</p>
+<ul>
+<li>牙刷——塑料刷毛在你牙齿上大力摩擦，会掉落一些材料，这一点并不奇怪。同样别在亚马逊上被“竹子”噱头骗了。这些产品并不是大家想的那样，它们是合成材质，刷毛仍然含有涤纶或尼龙等。我最终找到真正无塑料的牙刷（例如 <a href="https://primals.shop/products/primals-horse-bristle-bamboo-toothbrush-4-pack">Primal</a>），刷毛来自马/野猪毛，但说实话不如塑料刷毛舒服，所以我现在仍在用塑料刷毛牙刷。</li>
+<li>牙线——与牙刷类似。唯一真正天然的类型是丝线，但它比你习惯的更脆，而且我没找到更易用的牙线棒形式。我目前仍用塑料牙线，并在尝试冲牙器。</li>
+<li>牙膏——如今不含氟被吐槽得很流行，但我个人还未被说服，所以仍用含氟牙膏。</li>
+</ul>
+<p><strong>防晒</strong></p>
+<ul>
+<li>大多数防晒霜是<em>化学</em>的。我更偏好矿物防晒，它们在皮肤表面形成一层物理屏障以阻挡紫外线（例如含锌），但不幸的是会显得“泛白”。化学防晒会渗入皮肤（及血液），而对其中某些成分及其潜在的内分泌干扰作用存在担忧。我还要补充一点：我也有些怀疑防晒的必要性和过度使用，我个人只在长时间、强烈的日晒情况下才涂，毕竟我这计算机科学吸血鬼皮肤对高紫外线非常不友好。你可以查看天气 App 的 UV 指数来判断暴露时间段。</li>
+<li>我对更广义的化妆品了解不多，因为我自己不怎么使用这些产品，但我一点也不会惊讶如果它是一个巨大的雷区。</li>
+</ul>
+<p><strong>健康</strong></p>
+<ul>
+<li>有氧（确保做对——大多数人花在 3 区以上太多，应把更多时间放在 2 区）</li>
+<li>桑拿（<a href="https://blueprint.bryanjohnson.com/blogs/news/is-sauna-worth-the-hype">研究显示</a>可通过出汗减少不可避免积累的毒素）</li>
+<li>维生素 D——你大概像所有人一样缺乏。抽血检测相对容易，我鼓励大家每年做一次完整面板以跟踪健康和缺乏项。</li>
+</ul>
+<p><strong>了解更多</strong></p>
+<ul>
+<li>推荐观看：我现在用 Instagram 分享更多非 AI/生活方式相关内容，例如你可以在<a href="https://www.instagram.com/karpathy/">我的账号</a>的转发区看到我长期积累的相关短视频。</li>
+<li>推荐阅读： <a href="https://www.amazon.com/Poison-Like-Other-Microplastics-Corrupted/dp/1642832359">“Poison like no other”</a>（关于塑料），<a href="https://www.amazon.com/Defense-Food-Michael-Pollan/dp/1594133328">“In Defense of Food”</a>（关于食物与“可食用的类食品物质”），<a href="https://www.amazon.com/Poison-Squad-Chemists-Single-Minded-Twentieth/dp/1594205140">“Poison Squad”</a>，<a href="https://www.amazon.com/Metabolical-Processed-Nutrition-Modern-Medicine/dp/0063027712">“Metabolical”</a>。</li>
+<li>即便做到以上所有事情，你也只是在降低风险，永远不可能彻底消除。例如，当 <a href="https://www.plasticlist.org/">plasticlist.org</a> 测试各种食物/饮料中的塑料时，发现许多随机产品的增塑剂含量远高于其他产品，而你根本猜不到。比如当时最严重的竟然是 Boba Guys——你的波霸会让你摄入显著高于其他任何产品的剂量，原因出在其供应链的某个环节。另一个例子是某个农场为了降低成本，连包裹干草的塑料膜都懒得拆，让奶牛直接吃下去，导致该农场的牛奶检测出显著更高的增塑剂含量。不幸的是，政府对这些深层供应链的检测、审查与监管还远远不够。</li>
+<li>还有很多内容我在这份指南中没有覆盖。比如现代小麦为何被极度优化以快速生长（可测量、可盈利），却以缺乏营养为代价（消费者通常不会测量），相较古老谷物如单粒小麦。又比如<a href="https://www.youtube.com/watch?v=mCALGI1r4WY">现代蜂蜜</a>几乎只是葡萄糖浆，而中世纪蜂蜜才是真正的奇迹食物。以成本为驱动的行业极度优化是一个远超本文范围的深坑。为了变得更便宜、通过牺牲营养和/或增加长期公共健康风险来偷工减料的方式太多了。如果我能说服少数人至少开始关注，这篇文章就达到目标了。</li>
+</ul>
+<p><strong>TLDR</strong>。让你的家保持不复杂。过滤水和空气。吃真正的食物（不是可食用的类食品物质），来自被善待的动物，并且配料少、合理，供应链和加工步骤尽量不复杂。尽量对各类染料和香精说不。让自己周围都是简单的天然材料或坚固且惰性的材料（如不锈钢）。避免塑料，尤其是被处理、加热、冷冻的塑料——风险不仅仅来自这些奇异材料的微小颗粒在你体内<a href="https://hscnews.unm.edu/news/hsc-newsroom-post-microplastics-human-brains">到处累积</a>并干扰其化学作用，还来自添加到塑料中并渗出的庞大化学<a href="https://en.wikipedia.org/wiki/Plasticizer">增塑剂</a>群。政府在化学监管上明显落后于行业，而这是<em>你的</em>责任。</p>
+<p>这份指南并不完美，它仍在完善中。我不是专业毒理学家或食品科学家，所以我上面的语气里有对政府让我不得不成为兼职调查记者、才能在现代社会中生存并不觉得自己在毒害自己和家人的挫败感。我甚至没有谈到并覆盖这些行业的所有环境方面。在美国，这种状况比欧洲更糟——欧盟禁止或限制许多在这里司空见惯的食品添加剂、染料、化学品和食品加工做法。FDA 的“普遍认为安全”（GRAS）体系让制造商无需独立审查就能自我认证配料，而新的外来化学品或工艺在“无罪推定”下进入市场；在欧洲，默认往往是相反的。所以把这一切当作起点，向你最喜欢的 LLM 询问更多信息，告诉我你的想法（例如 X/Instagram 私信），我会随着时间更新这份指南。</p>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/chemical-hygiene/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "化学卫生",
+  "author": {
+    "@type": "Person",
+    "name": "Andrej Karpathy"
+  },
+  "datePublished": "2025-12-18T00:00:00.000Z",
+  "dateModified": "2025-12-18T00:00:00.000Z",
+  "description": "继上一篇数字卫生之后，我想写下我关于化学卫生的（不断演化、带有主观看法的）指南。我最近不停地向所有朋友吐槽这个话题（你可以想象我在派对上有多好玩），所以我觉得值得把它写下来，放在同一个地方/链接里： 水 先从管好你...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/karpathy/2025-12-18-chemical-hygiene.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
