@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>揭开 AI 智能体评测的神秘面纱 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】让智能体有用的能力，也使其难以评估。跨部署有效的策略需要组合多种技术，来匹配被衡量系统的复杂度。 引言 好的评测能帮助团队更有信心地交付 AI 智能体。没有评测，很容易陷入被动循环——只在生产环境里发现问题，而修复一...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,揭开 AI 智能体评测的神秘面纱,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2026-01-09-demystifying-evals-for-ai-agents.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2026-01-09-demystifying-evals-for-ai-agents.html">
+  <meta property="og:title" content="揭开 AI 智能体评测的神秘面纱 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】让智能体有用的能力，也使其难以评估。跨部署有效的策略需要组合多种技术，来匹配被衡量系统的复杂度。 引言 好的评测能帮助团队更有信心地交付 AI 智能体。没有评测，很容易陷入被动循环——只在生产环境里发现问题，而修复一...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-01-09T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-01-09T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2026-01-09-demystifying-evals-for-ai-agents.html">
+  <meta name="twitter:title" content="揭开 AI 智能体评测的神秘面纱 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】让智能体有用的能力，也使其难以评估。跨部署有效的策略需要组合多种技术，来匹配被衡量系统的复杂度。 引言 好的评测能帮助团队更有信心地交付 AI 智能体。没有评测，很容易陷入被动循环——只在生产环境里发现问题，而修复一...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1768174562223">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">揭开 AI 智能体评测的神秘面纱</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Demystifying evals for AI agents</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2026-01-09</span>
+          </div>
+        </div>
+
+        <p>让智能体有用的能力，也使其难以评估。跨部署有效的策略需要组合多种技术，来匹配被衡量系统的复杂度。</p>
+<h2>引言</h2>
+<p>好的评测能帮助团队更有信心地交付 AI 智能体。没有评测，很容易陷入被动循环——只在生产环境里发现问题，而修复一个失败往往会引发其他问题。评测让问题和行为变化在影响用户之前可见，其价值会在智能体的生命周期内不断累积。</p>
+<p>正如我们在<a href="https://www.anthropic.com/engineering/building-effective-agents">《构建高效智能体》</a>中所述，智能体会跨多轮运行：调用工具、修改状态，并根据中间结果进行适配。使 AI 智能体有用的这些能力——自主性、智能与灵活性——也让它们更难评估。</p>
+<p>通过内部实践以及与处在智能体开发前沿的客户合作，我们学会了如何为智能体设计更严格、更有用的评测。下面总结的是在真实部署中、覆盖多种智能体架构与用例的有效做法。</p>
+<h2>评测的结构</h2>
+<p><strong>评测</strong>（evaluation，“eval”）是对 AI 系统的测试：给 AI 一个输入，再对输出应用评分逻辑来衡量成功与否。在本文中，我们聚焦于<strong>自动化评测</strong>，它们可在开发期间运行而无需真实用户。</p>
+<p><strong>单轮评测</strong>很直接：一个提示、一条回复、再加评分逻辑。对于早期 LLM，单轮、非智能体评测是主要评测方法。随着 AI 能力提升，<strong>多轮评测</strong>变得越来越常见。</p>
+<figure>
+  <img src="/images/anthropic/2026-01-09-demystifying-evals-for-ai-agents-e341a08e.jpg" alt="">
+  <figcaption>在一个简单评测中，智能体处理一个提示，评分器检查输出是否符合预期。在更复杂的多轮评测里，编码智能体会获得工具、任务（此处为构建一个 MCP 服务器）和环境，执行“智能体循环”（工具调用与推理），并把实现写回环境。评分随后使用单元测试来验证 MCP 服务器是否可用。</figcaption>
+</figure>
+<p><strong>智能体评测</strong>更加复杂。智能体会在多轮中使用工具、修改环境状态并不断适配——这意味着错误会传播并叠加。前沿模型也能找到超出静态评测设想的创意解法。例如，Opus 4.5 在一个关于订机票的 <a href="https://github.com/sierra-research/tau2-bench">𝜏2-bench</a> 问题上，通过<a href="https://www.anthropic.com/news/claude-opus-4-5">发现</a>策略漏洞而完成任务。它在既定评测中“失败”了，但其实给出了更好的用户方案。</p>
+<p>在构建智能体评测时，我们使用以下定义：</p>
+<ul>
+<li><strong>任务</strong>（task，也称<strong>问题</strong>或<strong>测试用例</strong>）是一个具备明确输入与成功标准的单个测试。</li>
+<li>每次尝试一个任务称为一次<strong>试次</strong>（trial）。由于模型输出在不同运行间会变化，我们会运行多次试次以获得更一致的结果。</li>
+<li><strong>评分器</strong>（grader）是对智能体表现某个方面进行打分的逻辑。一个任务可以有多个评分器，每个评分器包含多个断言（有时称为<strong>检查</strong>）。</li>
+<li><strong>记录</strong>（transcript，也称<strong>trace</strong>或<strong>trajectory</strong>）是一次试次的完整记录，包含输出、工具调用、推理、中间结果以及其他交互。对于 Anthropic API，这就是一次评测运行结束时的完整消息数组——包含所有 API 调用及其返回。</li>
+<li><strong>结果</strong>（outcome）是试次结束时环境中的最终状态。订票智能体的记录里可能写着“你的机票已预订”，但真正的结果是环境的 SQL 数据库中是否存在预订记录。</li>
+<li><strong>评测框架</strong>（evaluation harness）是端到端运行评测的基础设施。它提供指令和工具、并行运行任务、记录所有步骤、评分输出并汇总结果。</li>
+<li><strong>智能体框架</strong>（agent harness，或 scaffold）是让模型以智能体形式行动的系统：处理输入、编排工具调用并返回结果。我们评测“一个智能体”时，评估的是框架与模型的协作。例如，<a href="https://claude.com/product/claude-code">Claude Code</a> 是一个灵活的智能体框架，我们在构建<a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">长程智能体框架</a>时，通过<a href="https://platform.claude.com/docs/en/agent-sdk/overview">Agent SDK</a>使用了其核心原语。</li>
+<li><strong>评测套件</strong>（evaluation suite）是为衡量特定能力或行为而设计的一组任务。套件中的任务通常有一个共同的宏观目标。例如，客服评测套件可能测试退款、取消和升级处理。</li>
+</ul>
+<figure>
+  <img src="/images/anthropic/2026-01-09-demystifying-evals-for-ai-agents-9f2ca236.jpg" alt="">
+  <figcaption>智能体评测的组成部分。</figcaption>
+</figure>
+<h2>为什么要构建评测？</h2>
+<p>当团队刚开始构建智能体时，往往可以依靠手动测试、<a href="https://en.wikipedia.org/wiki/Eating_your_own_dog_food">狗粮测试</a>和直觉取得进展。更严格的评测甚至看起来像会拖慢交付的开销。但当智能体进入生产并开始规模化之后，没有评测的开发就会失灵。</p>
+<p>转折点通常出现在用户报告“改了之后更差”，而团队“盲飞”，只能靠猜测验证。没有评测时，调试是被动的：等投诉、手动复现、修 bug、再祈祷别回归。团队无法区分真实回归与噪声，也无法在上线前自动对数百种场景做回归测试，更无法衡量改进。</p>
+<p>我们多次看到这一过程。例如，Claude Code 起初依赖 Anthropic 员工和外部用户的反馈快速迭代。后来我们加入评测——先在简洁性和文件编辑等窄域，然后扩展到过度工程等更复杂的行为。这些评测帮助识别问题、指导改进，并聚焦研究与产品协作。结合线上监控、A/B 测试、用户研究等，评测为持续提升 Claude Code 提供了信号。</p>
+<p>在智能体生命周期的任何阶段编写评测都很有用。早期，评测迫使产品团队明确智能体的成功标准；后期，评测有助于维持一致的质量门槛。</p>
+<p><a href="https://www.descript.com/">Descript</a> 的智能体帮助用户编辑视频，因此他们围绕成功编辑工作流的三维度构建评测：不破坏东西、做我要求的事、且做得好。他们从人工评分发展到由产品团队制定标准的 LLM 评分器，并定期由人工校准，如今持续运行两个独立套件用于质量基准和回归测试。<a href="https://bolt.new/">Bolt</a> AI 团队在智能体已广泛使用后才开始搭建评测。三个月内，他们构建了一个评测系统：运行智能体并用静态分析评分、用浏览器智能体测试应用、并用 LLM 评审诸如遵循指令等行为。</p>
+<p>一些团队在开发初期就建立评测，另一些团队在规模化时才加评测，当评测成为提升瓶颈后再投入。评测在智能体开发早期尤其有用，因为它明确编码了期望行为。两个工程师读同一份初始规格，可能对 AI 如何处理边缘情况产生不同理解。评测套件能消除这种歧义。无论何时创建，评测都会加速开发。</p>
+<p>评测还影响你采用新模型的速度。更强模型出现时，没有评测的团队需要数周测试，而有评测的团队能快速确定模型优势、调整提示，并在数天内升级。</p>
+<p>一旦有了评测，就免费获得基线与回归测试：延迟、token 使用、单任务成本、错误率都能在固定任务集上跟踪。评测也能成为产品与研究团队之间带宽最高的沟通渠道，定义研究者可优化的指标。显然，评测的收益远超追踪回归与改进。其复利价值很容易被忽视，因为成本立刻可见，而收益在后期累积。</p>
+<h2>如何评估 AI 智能体</h2>
+<p>当下我们看到多种在规模化部署的智能体类型，包括编码智能体、研究智能体、电脑使用智能体，以及对话智能体。每种类型都可能在多行业部署，但它们可以用类似方法评估。你不必从零发明评测。下文描述了多种智能体类型的成熟方法。以此为基础，再扩展到你的领域。</p>
+<h3>智能体评分器的类型</h3>
+<p>智能体评测通常结合三类评分器：基于代码、基于模型、以及人工。每个评分器评估记录或结果的一部分。有效评测设计的关键是为工作选择合适评分器。</p>
+<p>基于代码的评分器</p>
+<table>
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>优势</strong></th>
+<th><strong>劣势</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>• 字符串匹配（精确、正则、模糊等）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 二元测试（fail-to-pass、pass-to-pass）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 静态分析（lint、类型、安全）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 结果验证</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 工具调用验证（使用的工具、参数）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 记录分析（轮数、token 使用）</td>
+<td>• 快</td>
+<td></td>
+</tr>
+<tr>
+<td>• 便宜</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 客观</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 可复现</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 易调试</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 验证特定条件</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 对合理的变体很脆弱，无法匹配预期模式时会失败</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 缺少细腻性</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>• 对某些更主观的任务能力有限</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>基于模型的评分器</p>
+<table>
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>优势</strong></th>
+<th><strong>劣势</strong></th>
+</tr>
+</thead>
+</table>
+<ul>
+<li>基于量表的评分</li>
+<li>自然语言断言</li>
+<li>成对比较</li>
+<li>参考答案评估</li>
+<li>多评审共识</li>
+</ul>
+<p>|</p>
+<ul>
+<li>灵活</li>
+<li>可扩展</li>
+<li>能捕捉细微差别</li>
+<li>适用于开放式任务</li>
+<li>能处理自由形式输出</li>
+</ul>
+<p>|</p>
+<ul>
+<li>非确定性</li>
+<li>比代码评分更贵</li>
+<li>需要与人工评分器校准以保证准确性</li>
+</ul>
+<p>人工评分器</p>
+<table>
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>优势</strong></th>
+<th><strong>劣势</strong></th>
+</tr>
+</thead>
+</table>
+<ul>
+<li>专家评审</li>
+<li>众包判断</li>
+<li>抽样复核</li>
+<li>A/B 测试</li>
+<li>评审一致性</li>
+</ul>
+<p>|</p>
+<ul>
+<li>质量金标准</li>
+<li>更符合专家用户判断</li>
+<li>用于校准模型评分器</li>
+</ul>
+<p>|</p>
+<ul>
+<li>昂贵</li>
+<li>缓慢</li>
+<li>常常需要规模化的专家资源</li>
+</ul>
+<p>对每个任务，评分可以加权（合并分数达到阈值）、二元（所有评分器必须通过），或混合方式。</p>
+<h3>能力评测 vs. 回归评测</h3>
+<p><strong>能力评测或“质量”评测</strong>回答“这个智能体擅长做什么？”它们应从较低通过率起步，针对智能体不擅长的任务，为团队提供可以攀登的山坡。</p>
+<p><strong>回归评测</strong>回答“智能体是否仍然能处理过去能处理的所有任务？”它们应该接近 100% 通过率。它们防止回退：分数下降意味着某处出错，需要改进。团队在能力评测上爬坡时，也应同时运行回归评测以确保变更不会引发其他问题。</p>
+<p>在智能体上线并优化后，通过率较高的能力评测可以“毕业”为持续运行的回归套件，用于捕捉漂移。曾经衡量“能不能做到”的任务，转而衡量“还能否可靠做到”。</p>
+<h3>评估编码智能体</h3>
+<p><strong>编码智能体</strong>会写、测、调试代码，浏览代码库并运行命令，方式类似人类开发者。对现代编码智能体的有效评测通常依赖定义清晰的任务、稳定的测试环境以及对生成代码的充分测试。</p>
+<p>确定性评分器对编码智能体很自然，因为软件通常易于评估：代码能否运行？测试是否通过？两个广泛使用的编码智能体基准——<a href="https://www.swebench.com/SWE-bench/">SWE-bench Verified</a> 与 <a href="https://www.tbench.ai/">Terminal-Bench</a>——都采用这种方式。SWE-bench Verified 提供来自流行 Python 仓库的 GitHub 问题，通过运行测试套件评分；只有在修复失败测试且不破坏既有测试时才算通过。LLM 在一年内从 40% 提升到 &gt;80%。Terminal-Bench 走另一条路线：测试端到端技术任务，例如从源码构建 Linux 内核或训练 ML 模型。</p>
+<p>一旦有了通过/失败测试来验证编码任务的关键<em>结果</em>，通常还需要对<em>记录</em>进行评分。例如，基于启发式的代码质量规则可以在测试之外评估生成代码，带有清晰量表的模型评分器也能评估工具调用或与用户交互等行为。</p>
+<p><strong>示例：编码智能体的理论评测</strong></p>
+<p>考虑一个编码任务：智能体必须修复认证绕过漏洞。如下面的示例 YAML 文件所示，可以使用评分器与指标来评估该智能体。</p>
+<pre><code>task:
+  id: &quot;fix-auth-bypass_1&quot;
+  desc: &quot;Fix authentication bypass when password field is empty and ...&quot;
+  graders:
+    - type: deterministic_tests
+      required: [test_empty_pw_rejected.py, test_null_pw_rejected.py]
+    - type: llm_rubric
+      rubric: prompts/code_quality.md
+    - type: static_analysis
+      commands: [ruff, mypy, bandit]
+    - type: state_check
+      expect:
+        security_logs: {event_type: &quot;auth_blocked&quot;}
+    - type: tool_calls
+      required:
+        - {tool: read_file, params: {path: &quot;src/auth/*&quot;}}
+        - {tool: edit_file}
+        - {tool: run_tests}
+  tracked_metrics:
+    - type: transcript
+      metrics:
+        - n_turns
+        - n_toolcalls
+        - n_total_tokens
+    - type: latency
+      metrics:
+        - time_to_first_token
+        - output_tokens_per_sec
+        - time_to_last_token
+</code></pre>
+<p>Copy</p>
+<p>请注意，此示例为了说明而展示了完整的评分器范围。实际中，编码评测通常依赖单元测试验证正确性，并用 LLM 量表评估总体代码质量；其他评分器与指标只在必要时添加。</p>
+<h3>评估对话智能体</h3>
+<p><strong>对话智能体</strong>在支持、销售或辅导等领域与用户交互。不同于传统聊天机器人，它们会维护状态、使用工具，并在对话中采取动作。虽然编码与研究智能体也可能涉及多轮用户互动，但对话智能体有一个独特挑战：互动质量本身就是评估的一部分。有效的对话智能体评测通常依赖可验证的终态结果和捕捉任务完成度与交互质量的量表。与大多数评测不同，它们往往需要第二个 LLM 来模拟用户。我们在<a href="https://alignment.anthropic.com/2025/automated-auditing/">对齐审计智能体</a>中使用了这种方式，通过延长、对抗式对话来压力测试模型。</p>
+<p>对话智能体的成功可能是多维度的：工单是否解决（状态检查）、是否在 &lt;10 轮内完成（记录约束）、语气是否合适（LLM 量表）？两个体现多维度的基准是 <a href="https://arxiv.org/abs/2406.12045">𝜏-Bench</a> 及其继任 <a href="https://arxiv.org/abs/2506.07982">τ2-Bench</a>。它们模拟零售支持与机票预订等领域的多轮互动：一个模型扮演用户人格，智能体在真实场景中操作。</p>
+<p><strong>示例：对话智能体的理论评测</strong></p>
+<p>考虑一个支持任务：智能体必须为愤怒客户处理退款。</p>
+<pre><code>graders:
+  - type: llm_rubric
+    rubric: prompts/support_quality.md
+    assertions:
+      - &quot;Agent showed empathy for customer's frustration&quot;
+      - &quot;Resolution was clearly explained&quot;
+      - &quot;Agent's response grounded in fetch_policy tool results&quot;
+  - type: state_check
+    expect:
+      tickets: {status: resolved}
+      refunds: {status: processed}
+  - type: tool_calls
+    required:
+      - {tool: verify_identity}
+      - {tool: process_refund, params: {amount: &quot;&lt;=100&quot;}}
+      - {tool: send_confirmation}
+  - type: transcript
+    max_turns: 10
+tracked_metrics:
+  - type: transcript
+    metrics:
+      - n_turns
+      - n_toolcalls
+      - n_total_tokens
+  - type: latency
+    metrics:
+      - time_to_first_token
+      - output_tokens_per_sec
+      - time_to_last_token
+</code></pre>
+<p>Copy</p>
+<p>如同编码智能体示例，本任务为了说明而展示了多种评分器。在实际中，对话智能体评测通常使用基于模型的评分器来评估沟通质量与目标完成度，因为许多任务——例如回答问题——可能有多个“正确”解法。</p>
+<h3>评估研究智能体</h3>
+<p><strong>研究智能体</strong>会收集、综合和分析信息，然后输出答案或报告。与编码智能体的单元测试提供二元通过/失败信号不同，研究质量只能相对于任务来判断。什么算“全面”“有据可依”甚至“正确”，取决于情境：市场扫描、并购尽调、科学报告各有不同标准。</p>
+<p>研究评测面临独特挑战：专家可能对综合内容是否全面存在分歧，参考内容持续变化导致真实标准漂移，且更长、更开放的输出带来更多出错空间。比如 <a href="http://arxiv.org/abs/2504.12516">BrowseComp</a> 测试 AI 智能体能否在开放网络中找“草堆里的针”——问题易验证但难解决。</p>
+<p>构建研究智能体评测的一种策略是组合不同类型的评分器。基于来源的可信度检查验证主张是否由检索来源支持；覆盖性检查定义一个好答案必须包含的关键事实；来源质量检查确保所用来源权威，而非只是最先检索到的。对于有客观正确答案的问题（如“公司 X 的 Q3 收入是多少？”），精确匹配就足够。LLM 可以标记未经支持的主张和覆盖缺口，也能验证开放式综合的连贯性与完整性。</p>
+<p>鉴于研究质量的主观性，基于 LLM 的量表应经常与专家人工判断校准，以有效评估这些智能体。</p>
+<h3>电脑使用智能体</h3>
+<p><strong>电脑使用智能体</strong>通过与人类相同的界面与软件交互——屏幕截图、鼠标点击、键盘输入与滚动——而不是通过 API 或代码执行。它们可以操作任何有图形界面（GUI）的应用，从设计工具到遗留企业软件。评测需要在真实或沙盒环境中运行智能体并检查是否达到预期结果。例如，<a href="https://arxiv.org/abs/2307.13854">WebArena</a> 测试浏览器任务，使用 URL 与页面状态检查确认导航正确，并通过后端状态验证需要修改数据的任务（确认订单确实下单，而不仅是显示确认页）。<a href="https://os-world.github.io/">OSWorld</a> 将此扩展到完整操作系统控制，评测脚本会在任务完成后检查多样的工件：文件系统状态、应用配置、数据库内容与 UI 元素属性。</p>
+<p>浏览器使用智能体需要在 token 效率与延迟之间取得平衡。基于 DOM 的交互执行快但耗 token，多截图的交互更慢但更省 token。比如，让 Claude 总结维基百科时，从 DOM 提取文本更高效；而在亚马逊寻找新的笔记本电脑壳时，用截图更高效（提取整页 DOM 的 token 成本很高）。在我们的 Claude for Chrome 产品中，我们开发了评测来检查智能体是否在不同情境选择了正确工具，从而更快更准确地完成浏览器任务。</p>
+<h3>如何看待智能体评测中的非确定性</h3>
+<p>无论智能体类型如何，行为都会在不同运行间变化，这使评测结果比看起来更难解释。每个任务都有自己的成功率——可能某任务 90%，另一个 50%——同一任务在一次评测中通过，下一次却失败。有时我们真正想衡量的是智能体成功的<em>频率</em>（在试次中成功的比例）。</p>
+<p>两个指标有助于捕捉这种细节：</p>
+<p><a href="https://proceedings.neurips.cc/paper/2019/file/7298332f04ac004a0ca44cc69ecf6f6b-Paper.pdf"><strong>pass@k</strong></a> 衡量在 <em>k</em> 次尝试中至少获得一个正确解的概率。随着 k 增大，pass@k 提升——“射门”越多，至少一次成功的概率越高。pass@1 为 50% 表示模型在评测中的任务有一半能在第一次尝试就成功。在编码中，我们往往最关注首次尝试就找到答案——pass@1。在其他场景，只要有一个方案可行，多次尝试也可以。</p>
+<p><a href="https://arxiv.org/abs/2406.12045"><strong>pass^k</strong></a> 衡量 <em>k</em> 次试次全部成功的概率。随着 <em>k</em> 增大，pass^k 下降，因为要求跨多次试次保持一致是更高的门槛。如果智能体单次成功率为 75%，运行 3 次则全部成功的概率为 (0.75)³ ≈ 42%。这一指标对面向客户的智能体尤其重要，因为用户期待每次都可靠。</p>
+<figure>
+  <img src="/images/anthropic/2026-01-09-demystifying-evals-for-ai-agents-c1ad1284.jpg" alt="">
+  <figcaption>随着试次增加，pass@k 与 pass^k 出现分歧。k=1 时二者相同（均等于单次成功率）。到 k=10 时，它们讲述相反的故事：pass@k 趋近 100%，而 pass^k 降至 0%。</figcaption>
+</figure>
+<p>这两个指标都很有用，选择哪一个取决于产品需求：一次成功就足够的工具适合用 pass@k，需要稳定一致的智能体适合用 pass^k。</p>
+<h2>从零到一：打造出色智能体评测的路线图</h2>
+<p>本节给出我们经实践检验的建议，帮助你从无评测走到可信评测。这是一条以评测驱动智能体开发的路线图：尽早定义成功，清晰衡量，并持续迭代。</p>
+<h3>为初始评测数据集收集任务</h3>
+<p><strong>第 0 步：尽早开始</strong></p>
+<p>我们看到团队延迟构建评测，因为他们认为需要数百个任务。实际上，从真实失败中抽取 20-50 个简单任务就是很好的起点。毕竟在早期智能体开发中，系统的每次变更往往带来明显影响，这种大效应量使得较小样本也够用。更成熟的智能体可能需要更大、更难的评测以检测更小的效应，但最好在开始阶段遵循 80/20 原则。拖得越久，评测越难构建。早期，产品需求自然会转化为测试用例。等太久，你只能从线上系统反推成功标准。</p>
+<p><strong>第 1 步：从你已手动测试的内容开始</strong></p>
+<p>从开发中已经进行的手动检查开始——每次发布前验证的行为以及用户常做的任务。如果你已经上线，查看 bug 跟踪与支持队列。把用户报告的失败转化为测试用例，确保套件反映真实使用；按用户影响排序能让你把精力投在关键处。</p>
+<p><strong>第 2 步：写出明确无歧义的任务与参考解</strong></p>
+<p>把任务质量做好比想象中更难。好的任务应能让两个领域专家独立得出相同的通过/失败结论。他们自己能完成任务吗？如果不能，需要精炼任务。任务规格的歧义会成为指标噪声。对模型评分器的标准也一样：模糊的量表会带来不一致的判断。</p>
+<p>每个任务都应能被严格遵循指令的智能体通过。这有时很微妙。例如，审计 Terminal-Bench 时发现：如果任务要求编写脚本但没指定路径，而测试假设脚本在特定路径，智能体会因规格不清而失败。评分器检查的所有内容都必须从任务描述中清晰可知；智能体不应因规格含糊而失败。对于前沿模型，多次试次 0% 通过率（即 0% pass@100）最常见的原因不是模型不行，而是任务有问题——应反查任务规格与评分器。对每个任务，创建一个参考解也很有用：一个能通过所有评分器的已知输出。这能证明任务可解，并验证评分器配置正确。</p>
+<p><strong>第 3 步：构建均衡的问题集</strong></p>
+<p>测试行为<em>应该</em>发生的案例，也测试<em>不应该</em>发生的案例。单侧评测会造成单侧优化。例如，如果只测试智能体是否在应该搜索时搜索，你可能得到一个几乎什么都搜索的智能体。尽量避免<a href="https://developers.google.com/machine-learning/crash-course/overfitting/imbalanced-datasets">类别不平衡</a>的评测。我们在为 <a href="http://claude.ai/redirect/website.v1.224009de-aa69-4b05-90e9-d06fd5ace768">Claude.ai</a> 构建网页搜索评测时就经历过这一点：挑战是既阻止模型在不该搜索时搜索，又保留其在适当场景中进行深度研究的能力。团队建立了双向覆盖的评测：模型应该搜索的查询（如查天气）与应该使用已有知识回答的查询（如“谁创立了苹果？”）。在不触发（不该搜索却没搜）与过触发（不该搜索却去搜）之间取得平衡很难，需要多轮优化提示与评测。随着新问题出现，我们也在不断补充评测以提升覆盖度。</p>
+<h3>设计评测框架与评分器</h3>
+<p><strong>第 4 步：构建稳定环境中的稳健评测框架</strong></p>
+<p>至关重要的是，评测中的智能体应与生产中的智能体大体一致，环境本身也不要引入额外噪声。每次试次应从干净环境开始，以实现“隔离”。不必要的共享状态（遗留文件、缓存数据、资源耗尽）会导致基础设施不稳定引发的相关失败，而非智能体表现。共享状态也会虚假抬高性能。例如，在一些内部评测中，我们观察到 Claude 通过查看前次试次的 git 历史而获得不公平优势。如果多个不同试次因同一环境限制（如 CPU 内存不足）失败，这些试次就不是独立的，因为受到同一因素影响，从而使评测结果对衡量智能体性能不可靠。</p>
+<p><strong>第 5 步：有意识地设计评分器</strong></p>
+<p>如上所述，优秀评测设计在于为智能体与任务选择最佳评分器。我们建议尽可能选择确定性评分器，在必要时使用 LLM 评分器以获得更多灵活性，并谨慎地使用人工评分器进行额外验证。</p>
+<p>常见直觉是检查智能体是否按特定顺序执行了具体步骤，比如按顺序调用工具。我们发现这太僵硬，导致测试过于脆弱，因为智能体经常找到评测设计者未预料的有效方法。为了不无谓地惩罚创造力，通常最好评判智能体<em>产出</em>，而不是路径。</p>
+<p>对于包含多个组件的任务，要设计部分得分<strong>。</strong> 能正确识别问题并验证客户但未处理退款的支持智能体，显然比一开始就失败的智能体更好。结果应体现这种成功的连续谱。</p>
+<p>模型评分需要精细迭代以验证准确性。LLM 评分器应与人类专家紧密校准，以确保人类评分与模型评分之间差异很小。为避免幻觉，应给 LLM 一个退出通道，例如指示其在信息不足时返回“Unknown”。也可用清晰、结构化的量表来评分任务各维度，并用独立的 LLM 逐维评分，而不是用一个模型评分所有维度。系统一旦稳健，人工复核只需偶尔进行。</p>
+<p>一些评测存在微妙的失败模式，即使智能体表现良好也会得低分，因为评分器有 bug、智能体框架受限、或任务规格含糊。即使是成熟团队也会错过这些问题。例如，<a href="https://x.com/sayashk/status/1996334941832089732?s=46&amp;t=c5pEvnVdVbMkcR_rcCHplg">Opus 4.5 起初在 CORE-Bench 仅得 42%</a>，直到 Anthropic 研究员发现多个问题：僵硬评分惩罚了“96.12”而期待“96.124991…”，任务规格含糊，以及随机性任务无法精确复现。修复 bug 并使用更少约束的脚手架后，Opus 4.5 的分数跃升至 95%。同样，<a href="https://x.com/metr_evals/status/2001473506442375645?s=46">METR 发现</a>其时间跨度基准中存在多个配置错误的任务：任务要求智能体优化到指定阈值，但评分器要求超过阈值。这惩罚了遵循指令的模型，而忽略目标的模型反而得分更高。认真复查任务与评分器可避免这些问题。</p>
+<p>让评分器具备抗绕过或作弊能力。智能体不应能轻易“作弊”通过评测。任务与评分器应设计为只有真正解决问题才能通过，而不是利用意外漏洞。</p>
+<h3>长期维护并使用评测</h3>
+<p><strong>第 6 步：检查记录</strong></p>
+<p>不阅读大量试次的记录与评分，你就无法确认评分器是否有效。在 Anthropic，我们投入了查看评测记录的工具，并定期阅读。当任务失败时，记录能告诉你是智能体真实失误，还是评分器拒绝了有效解。记录还常常揭示智能体与评测行为的关键细节。</p>
+<p>失败看起来必须公平：要清楚智能体错在哪里、为何错。当分数不提升时，我们需要确信原因是智能体表现，而不是评测问题。阅读记录能验证评测是否衡量了真正重要的东西，是智能体开发的一项关键技能。</p>
+<p><strong>第 7 步：监控能力评测饱和</strong></p>
+<p>评测达到 100% 能跟踪回归，但对改进不再有信号。<strong>评测饱和</strong>是指智能体通过了所有可解任务，已经没有改进空间。例如，SWE-Bench Verified 的分数今年从 30% 起步，前沿模型如今接近 &gt;80% 的饱和。随着评测趋近饱和，进步也会变慢，因为只剩下最难的任务。这会使结果具有欺骗性：能力大幅提升却只表现为小幅分数上涨。比如代码审查创业公司 <a href="https://www.qodo.ai/">Qodo</a> 最初对 Opus 4.5 不太满意，因为他们的一次性编码评测未能捕捉长链复杂任务上的增益。后来他们开发了新的智能体评测框架，才更清晰地看到进展。</p>
+<p>我们的原则是：除非有人深入评测细节并读过一些记录，否则不要把分数当作最终结论。如果评分不公平、任务含糊、有效解被惩罚、或框架限制模型，评测就应修订。</p>
+<p><strong>第 8 步：通过开放贡献与维护让评测套件长期健康</strong></p>
+<p>评测套件是需要持续关注与明确责任的“活”产物。</p>
+<p>在 Anthropic，我们尝试过多种评测维护方式。最有效的是建立专门的评测团队负责核心基础设施，而领域专家与产品团队贡献大部分评测任务**，并自己运行评测。</p>
+<p>对 AI 产品团队而言，拥有并迭代评测应像维护单元测试一样常规。团队可能浪费数周在早期测试“能跑”的 AI 功能上，但这些功能未满足隐含期望；设计良好的评测本可更早暴露问题。定义评测任务是检验产品需求是否足够具体、可开始构建的最佳方式之一。</p>
+<p>我们建议实践评测驱动开发：先构建评测定义计划能力，然后迭代直到智能体表现良好。内部我们常常构建“眼下够用”的功能，这是对未来模型能力的投注。低通过率的能力评测能让这种投注显性化。当新模型发布时，快速运行套件即可揭示哪些投注奏效。</p>
+<p>最接近产品需求和用户的人，最适合定义成功标准。以当前模型能力，产品经理、客户成功或销售人员都可以用 Claude Code 提交评测任务 PR——就该这么做！更好的是，主动为他们赋能。</p>
+<figure>
+  <img src="/images/anthropic/2026-01-09-demystifying-evals-for-ai-agents-dcabfe0d.jpg" alt="">
+  <figcaption>*创建高效评测的过程。*</figcaption>
+</figure>
+<h2>评测如何与其他方法一起构建对智能体的整体理解</h2>
+<p>自动化评测可在数千任务上运行，无需部署生产或影响真实用户。但这只是理解智能体表现的方式之一。完整图景还包括生产监控、用户反馈、A/B 测试、人工记录审查以及系统化人工评估。</p>
+<p>理解 AI 智能体性能的方法概览</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>**自动化评测</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>** <em>在没有真实用户的情况下通过程序化方式运行测试</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>更快迭代</li>
+<li>完全可复现</li>
+<li>不影响用户</li>
+<li>可在每次提交上运行</li>
+<li>在不需上线部署的情况下规模化测试场景</li>
+</ul>
+<p>|</p>
+<ul>
+<li>前期投入更高</li>
+<li>需要持续维护以避免产品与模型演化导致漂移</li>
+<li>若不能匹配真实使用模式，可能造成虚假信心</li>
+</ul>
+<p>**生产监控<br>
+** <em>跟踪线上系统的指标与错误</em><br>
+|</p>
+<ul>
+<li>在规模化环境中揭示真实用户行为</li>
+<li>捕捉合成评测遗漏的问题</li>
+<li>提供智能体实际表现的真实依据</li>
+</ul>
+<p>|</p>
+<ul>
+<li>被动，问题会先影响用户后才被发现</li>
+<li>信号可能很噪</li>
+<li>需要在监测与采集上投入</li>
+<li>缺乏评分的真实标准</li>
+</ul>
+<p>**A/B 测试<br>
+** <em>用真实用户流量比较不同版本</em><br>
+|</p>
+<ul>
+<li>衡量真实用户结果（留存、任务完成）</li>
+<li>控制混杂因素</li>
+<li>可扩展且系统化</li>
+</ul>
+<p>|</p>
+<ul>
+<li>慢，需数天或数周才能显著且需要足够流量</li>
+<li>只能测试已部署变更</li>
+<li>没有深入审查记录时，对指标变化“为什么”的解释信号较弱</li>
+</ul>
+<p>**用户反馈<br>
+** <em>显式信号如点踩或 bug 报告</em><br>
+|</p>
+<ul>
+<li>揭示你未预期的问题</li>
+<li>带来真实用户的实际例子</li>
+<li>反馈通常与产品目标相关</li>
+</ul>
+<p>|</p>
+<ul>
+<li>稀疏且自选择</li>
+<li>偏向严重问题</li>
+<li>用户很少解释<em>为何</em>失败</li>
+<li>非自动化</li>
+<li>主要依赖用户发现问题会带来负面影响</li>
+</ul>
+<p>**人工记录审查<br>
+** <em>人类阅读智能体对话</em><br>
+|</p>
+<ul>
+<li>建立对失败模式的直觉</li>
+<li>捕捉自动化检查遗漏的细微质量问题</li>
+<li>有助于校准“好”的标准并理解细节</li>
+</ul>
+<p>|</p>
+<ul>
+<li>耗时</li>
+<li>难以规模化</li>
+<li>覆盖不一致</li>
+<li>审阅疲劳或不同审阅者影响信号质量</li>
+<li>通常只提供定性信号，而非清晰量化评分</li>
+</ul>
+<p>**系统化人工研究<br>
+** <em>由训练有素的评审员进行结构化评分</em><br>
+|</p>
+<ul>
+<li>来自多名人类评审的质量金标准判断</li>
+<li>处理主观或歧义任务</li>
+<li>为改进模型评分器提供信号</li>
+</ul>
+<p>|</p>
+<ul>
+<li>相对昂贵且周转慢</li>
+<li>难以频繁开展</li>
+<li>评审不一致需要协调</li>
+<li>复杂领域（法律、金融、医疗）需要专家参与研究</li>
+</ul>
+<p>这些方法对应智能体开发的不同阶段。自动化评测在上线前与 CI/CD 中尤为有用，作为每次智能体变更或模型升级的第一道质量防线。生产监控在上线后发挥作用，检测分布漂移与未预期的真实世界失败。A/B 测试在有足够流量后验证重大变更。用户反馈与记录审查是持续实践，用来填补空白——持续分流反馈、每周抽样阅读记录，并在需要时深入调查。系统化人工研究可用于校准 LLM 评分器或评估主观输出，以人类共识作为参考标准。</p>
+<figure>
+  <img src="/images/anthropic/2026-01-09-demystifying-evals-for-ai-agents-4a5aa1c2.jpg" alt="">
+  <figcaption>如同安全工程中的[瑞士奶酪模型](https://en.wikipedia.org/wiki/Swiss_cheese_model)，没有任何单一评测层能捕捉所有问题。多种方法结合后，从某一层漏掉的失败会被另一层捕获。</figcaption>
+</figure>
+<p>最有效的团队会组合这些方法——自动化评测用于快速迭代、生产监控提供真实依据、定期人工复核用于校准。</p>
+<h2>结论</h2>
+<p>没有评测的团队会陷入被动循环——修复一个失败又引入另一个，无法区分真实回归与噪声。及早投入评测的团队则相反：开发更快，因为失败变成测试用例，测试用例阻止回归，指标取代猜测。评测为整个团队提供清晰的攀登目标，把“智能体变差了”转化为可执行行动。价值会复利增长，但前提是把评测当作核心组成，而非事后补救。</p>
+<p>不同智能体类型的模式各异，但本文的基础原则是一致的。尽早开始，不要等待完美套件。用你看到的失败来收集真实任务。定义明确且稳健的成功标准。谨慎设计评分器并组合多类型方法。确保问题对模型足够困难。迭代评测以提升信噪比。阅读记录！</p>
+<p>AI 智能体评测仍是一个年轻、快速演进的领域。随着智能体承担更长任务、在多智能体系统中协作，并处理更主观的工作，我们需要不断调整技术。我们会继续分享我们学到的最佳实践。</p>
+<h3><strong>致谢</strong></h3>
+<p>由 Mikaela Grace、Jeremy Hadfield、Rodrigo Olivares 和 Jiri De Jonghe 撰写。感谢 David Hershey、Gian Segato、Mike Merrill、Alex Shaw、Nicholas Carlini、Ethan Dixon、Pedram Navid、Jake Eaton、Alyssa Baum、Lina Tawfik、Karen Zhou、Alexander Bricken、Sam Kennedy、Robert Ying 等人的贡献。特别感谢我们通过评测合作学习过的客户与伙伴，包括 iGent、Cognition、Bolt、Sierra、<a href="http://Vals.ai">Vals.ai</a>、Macroscope、PromptLayer、Stripe、Shopify、Terminal Bench 团队等。这项工作体现了多支团队在 Anthropic 评测实践发展中的集体努力。</p>
+<h2>附录：评测框架</h2>
+<p>一些开源与商业框架可帮助团队实现智能体评测，无需从零搭建基础设施。选择取决于智能体类型、现有技术栈，以及是否需要离线评测、生产可观测性或两者兼具。</p>
+<p><a href="https://harborframework.com/">Harbor</a> 适合在容器化环境中运行智能体，提供跨云规模化试次的基础设施，以及定义任务与评分器的标准格式。像 Terminal-Bench 2.0 这样的基准通过 Harbor registry 分发，使得运行既有基准与自定义评测套件更容易。</p>
+<p><a href="https://www.promptfoo.dev/">Promptfoo</a> 是一个轻量、灵活的开源框架，侧重于声明式 YAML 的提示测试配置，断言类型从字符串匹配到 LLM 量表。我们在很多产品评测中使用了 Promptfoo 的一个版本。</p>
+<p><a href="https://www.braintrust.dev/">Braintrust</a> 是一个结合离线评测、生产可观测性与实验追踪的平台——适合既要在开发中迭代又要在线监控质量的团队。其 <code>autoevals</code> 库包含事实性、相关性等维度的预置评分器。</p>
+<p><a href="https://docs.langchain.com/langsmith/evaluation">LangSmith</a> 提供追踪、离线与在线评测、数据集管理，并与 LangChain 生态紧密集成。<a href="https://langfuse.com/">Langfuse</a> 作为自托管开源替代方案，适合有数据驻留需求的团队。</p>
+<p>许多团队会组合多种工具、自建评测框架，或仅用简单评测脚本作为起点。我们发现，框架虽能加速与标准化，但其有效性取决于你运行的评测任务。通常最好先快速选择适合工作流的框架，然后把精力投入到评测本身：迭代高质量测试用例与评分器。</p>
+<h2>获取开发者通讯</h2>
+<p>产品更新、使用指南、社区亮点等，每月一次发送到你的邮箱。</p>
+<p>如果你希望接收我们的开发者月度通讯，请提供你的电子邮箱地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "揭开 AI 智能体评测的神秘面纱",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2026-01-09T00:00:00.000Z",
+  "dateModified": "2026-01-09T00:00:00.000Z",
+  "description": "让智能体有用的能力，也使其难以评估。跨部署有效的策略需要组合多种技术，来匹配被衡量系统的复杂度。 引言 好的评测能帮助团队更有信心地交付 AI 智能体。没有评测，很容易陷入被动循环——只在生产环境里发现问题，而修复一...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2026-01-09-demystifying-evals-for-ai-agents.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

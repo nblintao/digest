@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>2025 LLM 年度回顾 - 人工智能文摘</title>
+  <meta name="description" content="【Andrej Karpathy 文章中文翻译】2025 年是 LLM 取得强劲且事件密集进展的一年。以下是我个人认为值得注意、略显意外的“范式变化”清单——这些变化改变了格局，并在概念上让我印象深刻。 1\. 来自可验证奖励的强化学习（RLVR） 2025 年初，各实验室的 LLM 生产...">
+  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,2025 LLM 年度回顾,中文翻译">
+  <meta name="author" content="Andrej Karpathy">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/karpathy/2025-12-19-year-in-review-2025.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/karpathy/2025-12-19-year-in-review-2025.html">
+  <meta property="og:title" content="2025 LLM 年度回顾 - 人工智能文摘">
+  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】2025 年是 LLM 取得强劲且事件密集进展的一年。以下是我个人认为值得注意、略显意外的“范式变化”清单——这些变化改变了格局，并在概念上让我印象深刻。 1\. 来自可验证奖励的强化学习（RLVR） 2025 年初，各实验室的 LLM 生产...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2025-12-19T00:00:00.000Z">
+  <meta property="article:modified_time" content="2025-12-19T00:00:00.000Z">
+  <meta property="article:author" content="Andrej Karpathy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/karpathy/2025-12-19-year-in-review-2025.html">
+  <meta name="twitter:title" content="2025 LLM 年度回顾 - 人工智能文摘">
+  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】2025 年是 LLM 取得强劲且事件密集进展的一年。以下是我个人认为值得注意、略显意外的“范式变化”清单——这些变化改变了格局，并在概念上让我印象深刻。 1\. 来自可验证奖励的强化学习（RLVR） 2025 年初，各实验室的 LLM 生产...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1768174562223">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-0">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">2025 LLM 年度回顾</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">2025 LLM Year in Review</span>
+            <span>|</span>
+            
+            <span>Andrej Karpathy</span>
+            <span>|</span>
+            <span>2025-12-19</span>
+          </div>
+        </div>
+
+        <p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/unnamed.webp" alt="unnamed"></p>
+<p>2025 年是 LLM 取得强劲且事件密集进展的一年。以下是我个人认为值得注意、略显意外的“范式变化”清单——这些变化改变了格局，并在概念上让我印象深刻。</p>
+<h3>1. 来自可验证奖励的强化学习（RLVR）</h3>
+<p>2025 年初，各实验室的 LLM 生产栈大致如下：</p>
+<ol>
+<li>预训练（GPT-2/3，约 2020）</li>
+<li>监督微调（InstructGPT，约 2022）以及</li>
+<li>人类反馈强化学习（RLHF，约 2022）</li>
+</ol>
+<p>这一配方在一段时间内都是训练生产级 LLM 的稳定可靠路线。2025 年，来自可验证奖励的强化学习（RLVR）成为事实上的新增关键阶段。通过在多个环境中（比如数学/代码谜题）用自动可验证的奖励训练 LLM，模型会自发形成对人类来说类似“推理”的策略——学会把解题拆成中间计算，并学会若干回退与往返的解题策略（可参见 DeepSeek R1 论文中的例子）。在此前范式中，这些策略很难实现，因为我们不清楚对 LLM 来说最优的推理轨迹与回退应该是什么样，它必须通过奖励优化自行发现。</p>
+<p>与 SFT 和 RLHF 阶段（计算上相对薄/短的小规模微调）不同，RLVR 使用客观（不可被钻空子）的奖励函数，允许更长时间的优化。运行 RLVR 被证明具备很高的能力/成本比，消耗了原本用于预训练的算力。因此，2025 年大部分能力进展源于实验室把这新增阶段的“积压”算力吃完，总体上我们看到的是相近规模的 LLM，但更长的 RL 训练周期。这个新阶段还带来一个全新“旋钮”（以及对应的缩放定律）：通过生成更长的推理轨迹、增加“思考时间”来控制测试时算力与能力。OpenAI o1（2024 年末）是 RLVR 模型的首个演示，但 o3 的发布（2025 年初）显然是一个拐点，你能直观感到差异。</p>
+<h3>2. 幽灵 vs. 动物 / 锯齿状智能</h3>
+<p>2025 年是我（我想业内其他人也是）第一次更直观地内化 LLM 智能的“形状”。我们不是在“进化/成长动物”，而是在“召唤幽灵”。LLM 技术栈的所有方面都不同（神经架构、训练数据、训练算法，尤其是优化压力），因此我们在智能空间里得到完全不同的实体并不奇怪，用动物视角去理解它们并不合适。从监督的比特角度看，人类神经网络为了在丛林中部落生存而优化，而 LLM 神经网络则为了模仿人类文本、在数学谜题中收集奖励、在 LM Arena 上获得人类点赞而优化。可验证领域允许 RLVR 后，LLM 在这些领域附近出现能力“尖峰”，整体表现出有趣的锯齿状特征——它既是天才博学家，又是困惑、认知受限的小学生，距离被越狱诱骗窃取数据只差几秒。</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/g6zymj4a0amnjkj.webp" alt="G6zymj4a0AMNJkJ">（人类智能：蓝色，AI 智能：红色。我喜欢这个表情包版本（抱歉我找不到其在 X 上的原始出处），它指出人类智能也以其独特方式呈现锯齿状。）</p>
+<p>与此相关的是我在 2025 年对基准测试的普遍冷淡与信任下降。核心问题在于：基准几乎天然是可验证环境，因此立刻易受 RLVR 以及更弱形式的合成数据生成影响。在典型的 benchmaxxing 过程中，LLM 实验室团队不可避免地构建靠近基准所在嵌入空间的小环境，并长出锯齿去覆盖它们。在测试集上训练成为一门新艺术。</p>
+<p>如何做到“刷爆所有基准”，但仍未达到 AGI？</p>
+<p>我在这一主题上写过更多内容：</p>
+<ul>
+<li><a href="https://karpathy.bearblog.dev/animals-vs-ghosts/">Animals vs. Ghosts</a></li>
+<li><a href="https://karpathy.bearblog.dev/verifiability/">Verifiability</a></li>
+<li><a href="https://karpathy.bearblog.dev/the-space-of-minds">The Space of Minds</a></li>
+</ul>
+<h3>3. Cursor / LLM 应用的新层</h3>
+<p>我认为 Cursor（除了今年的迅猛增长）最值得注意之处在于：它有力揭示了“LLM 应用”的一个新层次——人们开始谈论“某某领域的 Cursor”。正如我在今年的 Y Combinator 演讲中强调的（<a href="https://www.donnamagi.com/articles/karpathy-yc-talk">文字稿</a> 与 <a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">视频</a>），像 Cursor 这样的 LLM 应用会为特定垂直领域打包并编排 LLM 调用：</p>
+<ol>
+<li>进行“上下文工程”</li>
+<li>在幕后编排多次 LLM 调用，串成日益复杂的 DAG，仔细平衡性能与成本</li>
+<li>为人类在环提供特定应用的 GUI</li>
+<li>提供“自主性滑块”</li>
+</ol>
+<p>2025 年围绕这个新应用层到底有多“厚”讨论很多。LLM 实验室会捕获所有应用，还是 LLM 应用有广阔绿地？我个人怀疑，LLM 实验室会趋向训练出通用能力强的“大学生”，而 LLM 应用将通过提供私有数据、传感器、执行器与反馈回路来组织、微调并真正驱动一支面向特定垂直领域的“专业团队”。</p>
+<h3>4. Claude Code / 住在你电脑上的 AI</h3>
+<p>Claude Code（CC）是首个令人信服的 LLM Agent 演示——以循环方式把工具使用与推理串联起来进行长时间问题求解。此外，CC 还在于它运行在你的电脑上，并使用你私有的环境、数据与上下文。我认为 OpenAI 做错了，因为他们把早期 Codex/智能体的重点放在由 ChatGPT 管理的容器化云部署，而不是直接 <code>localhost</code>。虽然在云中运行智能体群可能更像“AGI 终局”，但我们处于一个能力锯齿、起飞足够慢的中间世界，因此让智能体直接运行在开发者电脑上更合理。需要注意的是，关键差异不在于“AI 操作”运行在哪里（云端、本地或其他），而在于其他一切——已启动的电脑、其安装、上下文、数据、秘密、配置，以及低延迟交互。Anthropic 把优先级顺序做对了，并将 CC 打包成令人愉悦的极简 CLI 形态，改变了 AI 的样子——它不再只是你像 Google 一样访问的网站，而是住在你电脑里的小精灵/幽灵。这是与 AI 交互的一个全新、独特范式。</p>
+<h3>5. Vibe coding</h3>
+<p>2025 年，AI 跨过了必要的能力阈值，使人们仅用英语就能构建各种令人印象深刻的程序，甚至忘了代码的存在。有趣的是，我在<a href="https://x.com/karpathy/status/1886192184808149383">这条“洗澡时的胡思乱想”推文</a>里创造了“vibe coding”这个词，当时完全没想到它会走这么远 :). 借助 vibe coding，编程不再只属于受过高等训练的专业人士，任何人都能做。就此而言，这也是我在<a href="https://karpathy.bearblog.dev/power-to-the-people/">《赋能大众：LLM 如何颠覆技术扩散脚本》</a>中所写的另一例证：与以往技术不同，普通人从 LLM 中受益远多于专业人士、公司与政府。Vibe coding 不仅赋能普通人接触编程，也赋能专业人士写出更多（vibe coded）软件——这些在过去可能永远不会写。在 nanochat 中，我通过 vibe coding 用 Rust 自写了高效的 BPE 分词器，而不是采用现成库或把 Rust 学到那个程度。今年我用 vibe coding 做了很多项目，作为我希望存在的快速应用 demo（例如 <a href="https://karpathy.bearblog.dev/vibe-coding-menugen">menugen</a>、<a href="https://github.com/karpathy/llm-council">llm-council</a>、<a href="https://github.com/karpathy/reader3">reader3</a>、<a href="https://github.com/karpathy/hn-time-capsule">HN time capsule</a>）。我还会 vibe coding 临时做出整套一次性应用，只为找一个 bug，因为为什么不呢——代码突然变得免费、短暂、可塑，并可在单次使用后丢弃。Vibe coding 将重塑软件并改变岗位描述。</p>
+<h3>6. Nano banana / LLM GUI</h3>
+<p>Google Gemini Nano banana 是 2025 年最令人惊叹、范式变革的模型之一。在我的世界观中，LLM 是继 1970、80 年代计算机之后的下一次重要计算范式。因此，我们将因类似原因看到类似创新：类似个人计算、微控制器（认知核心）、互联网（智能体之网）等。在 UI/UX 方面，“与 LLM 聊天”有点像 1980 年代在计算机控制台里输入命令。文本是计算机（与 LLM）的原始/偏好数据表示，但并不是人们偏好的格式，尤其在输入层面。人们其实不喜欢读文本——慢而费力。相反，人们喜欢以视觉与空间方式消费信息，这就是传统计算中 GUI 出现的原因。同理，LLM 应以人们偏好的格式与我们交流——图像、信息图、幻灯片、白板、动画/视频、网页应用等。早期与当前版本当然包括 emoji 和 Markdown，它们通过标题、加粗、斜体、列表、表格等方式让文本更易消费。但谁会来构建 LLM GUI 呢？在这个世界观里，nano banana 是可能形态的早期信号。更重要的是，它不只是图像生成本身，而是文本生成、图像生成与世界知识在模型权重中的联合能力。</p>
+<hr>
+<p><strong>TLDR</strong>. 2025 是令人兴奋且略有意外的一年。LLM 正在成为一种新型智能，同时又比我预期的聪明，也比我预期的笨。无论如何，它们极其有用，而我认为行业甚至还未充分挖掘当前能力的 10%。与此同时，有大量值得尝试的点子，整体领域感觉非常开放。正如我今年早些时候在<a href="https://www.dwarkesh.com/p/andrej-karpathy">Dwarkesh 播客</a>中提到的，我同时（表面上看似矛盾）相信我们会持续看到快速进步<em>且</em>仍有大量工作要做。系好安全带。</p>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/year-in-review-2025/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "2025 LLM 年度回顾",
+  "author": {
+    "@type": "Person",
+    "name": "Andrej Karpathy"
+  },
+  "datePublished": "2025-12-19T00:00:00.000Z",
+  "dateModified": "2025-12-19T00:00:00.000Z",
+  "description": "2025 年是 LLM 取得强劲且事件密集进展的一年。以下是我个人认为值得注意、略显意外的“范式变化”清单——这些变化改变了格局，并在概念上让我印象深刻。 1\\. 来自可验证奖励的强化学习（RLVR） 2025 年初，各实验室的 LLM 生产...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/karpathy/2025-12-19-year-in-review-2025.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
