@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>设计对 AI 具有抗性的技术评估 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】我们从 Claude 屡次击败的一份性能工程居家作业中学到的东西。 作者 Tristan Hume，Anthropic 性能优化团队负责人。Tristan 设计并反复迭代了这份居家作业测试，帮助 Anthropic 招募了数十名性能工程师。 随着 AI 能力提升...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,设计对 AI 具有抗性的技术评估,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2026-01-21-AI-resistant-technical-evaluations.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2026-01-21-AI-resistant-technical-evaluations.html">
+  <meta property="og:title" content="设计对 AI 具有抗性的技术评估 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】我们从 Claude 屡次击败的一份性能工程居家作业中学到的东西。 作者 Tristan Hume，Anthropic 性能优化团队负责人。Tristan 设计并反复迭代了这份居家作业测试，帮助 Anthropic 招募了数十名性能工程师。 随着 AI 能力提升...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-01-21T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-01-21T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2026-01-21-AI-resistant-technical-evaluations.html">
+  <meta name="twitter:title" content="设计对 AI 具有抗性的技术评估 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】我们从 Claude 屡次击败的一份性能工程居家作业中学到的东西。 作者 Tristan Hume，Anthropic 性能优化团队负责人。Tristan 设计并反复迭代了这份居家作业测试，帮助 Anthropic 招募了数十名性能工程师。 随着 AI 能力提升...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1769129632102">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">设计对 AI 具有抗性的技术评估</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Designing AI-resistant technical evaluations</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2026-01-21</span>
+          </div>
+        </div>
+
+        <p>我们从 Claude 屡次击败的一份性能工程居家作业中学到的东西。</p>
+<p><em>作者 Tristan Hume，Anthropic 性能优化团队负责人。Tristan 设计并反复迭代了这份居家作业测试，帮助 Anthropic 招募了数十名性能工程师。</em></p>
+<p>随着 AI 能力提升，技术候选人的评估变得更难。今天还能清楚区分人类技能水平的居家作业，明天可能就会被模型轻松解决——从而失去评估价值。</p>
+<p>自 2024 年初起，我们的性能工程团队一直使用一份居家作业测试，让候选人对一个模拟加速器上的代码进行优化。已有超过 1,000 名候选人完成了该测试，几十位如今在这里工作，包括把我们的 Trainium 集群带起来、并交付 Claude 3 Opus 以来每个模型的工程师。</p>
+<p>但每推出一代新的 Claude 模型，我们就不得不重做测试。在相同的时间限制下，Claude Opus 4 的表现超过了大多数人类申请者。这仍然让我们能区分最强的候选人——但随后 Claude Opus 4.5 也追平了他们。若给足时间，人类仍能超越模型，但在这份居家作业的限制下，我们已经无法区分顶尖候选人的产出与我们最强模型的输出。</p>
+<p>我已经对这份居家作业迭代了三版，努力确保它依然能传递有效信号。每一次，我都学到了关于如何让评估对 AI 辅助更具韧性，以及哪些做法行不通的新东西。</p>
+<p>本文描述原始居家作业的设计、各代 Claude 如何击败它，以及我为让测试领先于我们顶级模型能力而采取的越来越不寻常的做法。我们的工作随着模型演进而改变，但我们仍然需要更多优秀工程师——只是需要越来越有创意的方法来找到他们。</p>
+<p>为此，我们发布原始居家作业作为一个公开挑战，因为在不限时的情况下，最佳人类表现仍能超过 Claude 的成绩。如果你能击败 Opus 4.5，我们很乐意听到你的消息——细节在文末。</p>
+<h2>居家作业的起源</h2>
+<p>在 2023 年 11 月，我们正准备训练并发布 Claude Opus 3。我们拿到了新的 TPU 和 GPU 集群，我们的大型 Trainium 集群即将上线，我们在加速器上的花费比过去多得多，但我们没有足够的性能工程师来匹配新的规模。我在 <a href="https://x.com/trishume/status/1730386529997238605?s=20">Twitter 上发帖</a>请大家发邮件给我们，结果带来了比我们标准面试流程所能评估的更多有潜力的候选人，而该流程对员工和候选人都耗时巨大</p>
+<p>我们需要一种更高效评估候选人的方式。于是，我花了两周设计了一份居家作业测试，既能充分覆盖岗位需求，又能识别最有能力的申请者。</p>
+<h3>设计目标</h3>
+<p>居家作业的名声并不好。它们通常充满了工程师觉得无聊的泛化题目，筛选效果也很差。我的目标不同：创造一项真正有吸引力的测试，让候选人兴致勃勃地参与，同时让我们以高分辨率捕捉其技术能力。</p>
+<p>这种形式在评估性能工程技能方面也比现场面试有优势：</p>
+<p><strong>更长的时间跨度：</strong> 工程师写代码时很少面对少于一小时的截止时间。4 小时窗口（后来缩短为 2 小时）更贴近工作的真实节奏。它仍然比多数真实任务短，但我们需要在现实性与负担之间平衡。</p>
+<p><strong>更真实的环境：</strong> 没有人旁观或期待你口头讲解。候选人在自己的编辑器里不受干扰地工作。</p>
+<p><strong>理解和工具的时间：</strong> 性能优化需要理解现有系统，有时还要构建调试工具。在普通 50 分钟面试里，这两者都难以现实评估。</p>
+<p><strong>兼容 AI 辅助：</strong> Anthropic 的<a href="https://www.anthropic.com/candidate-ai-guidance">候选人通用指导</a>要求候选人在未特别说明时不要使用 AI 完成居家作业。对这份作业，我们明确说明相反——允许使用。</p>
+<p>时间跨度更长的问题更难被 AI 完整解决，因此候选人可以使用 AI 工具（就像在工作中一样），同时仍需展示自己的能力。</p>
+<p>除这些形式层面的目标外，我还遵循了我在设计任何面试时都会用的原则来打造这份居家作业：</p>
+<p><strong>贴近真实工作：</strong> 题目应让候选人感受到岗位实际涉及的内容。</p>
+<p><strong>高信号：</strong> 居家作业应避免依赖单一灵感的题目，确保候选人有多次机会展示全部能力——尽可能减少偶然性。它还应具有广泛的评分分布，并且足够深入，使得即便很强的候选人也无法做完所有内容。</p>
+<p><strong>不要求特定领域知识：</strong> 基础扎实的人可以在工作中学习具体细节。要求狭窄专业会不必要地缩小候选人池。</p>
+<p><strong>有趣：</strong> 快速的开发反馈、深度有趣的问题，以及创造空间。</p>
+<h3>模拟机器</h3>
+<p>我构建了一个模拟加速器的 Python 仿真器，其特性类似于 TPU。候选人优化运行在这台机器上的代码，并使用一个热重载的 <a href="https://perfetto.dev/">Perfetto</a> trace 来展示每条指令，类似于<a href="https://awsdocs-neuron.readthedocs-hosted.com/en/latest/tools/neuron-explorer/overview-device-profiles.html">我们在 Trainium 上使用的工具</a>。</p>
+<p>这台机器包含让加速器优化变得有趣的特性：手动管理的 scratchpad 内存（不同于 CPU，加速器通常需要显式管理内存）、VLIW（每个周期并行运行多个执行单元，要求高效指令打包）、SIMD（每条指令对多个元素进行向量操作），以及多核（在多个核心间分配工作）。</p>
+<figure>
+  <img src="/images/anthropic/2026-01-21-AI-resistant-technical-evaluations-911fab59.jpg" alt="">
+</figure>
+<p>任务是一次并行树遍历，刻意避免深度学习风格，因为大多数性能工程师尚未做过深度学习，可以在工作中学习具体领域细节。这个问题受到无分支 SIMD 决策树推理（一个经典的机器学习优化挑战）的启发，作为对过去的致敬，而只有少数候选人此前遇到过。</p>
+<p>候选人从一个完全串行的实现开始，逐步利用机器的并行性。热身是多核并行，然后候选人选择是否处理 SIMD 向量化或 VLIW 指令打包。原始版本还包含一个需要候选人先调试的 bug，用以考察其构建工具的能力。</p>
+<h2></h2>
+<p>早期结果</p>
+<p>最初的居家作业效果很好。来自那批 Twitter 候选人的一位得分明显高于其他人。他在 2 月初入职，比我们通过标准流程招聘的第一批人晚两周。测试证明有预测性：他立即开始优化内核，并找到了一个启动阻塞的编译器 bug 的绕过方法，该 bug 涉及张量索引数学的 32 位溢出。</p>
+<p>在接下来的一年半里，大约 1,000 名候选人完成了这份居家作业，它帮助我们招聘了当前性能工程团队的大部分成员。它对履历经验有限的候选人尤其有价值：我们几位表现最好的工程师直接来自本科，但在居家作业中展示了足够技能，让我们有信心录用。</p>
+<p>反馈总体正面。许多候选人因为玩得很开心而超过了 4 小时限制。最强的一些不限时提交包含完整的优化型小编译器，以及我未曾预料到的巧妙优化。</p>
+<h3>随后 Claude Opus 4 击败了它</h3>
+<p>到 2025 年 5 月，Claude 3.7 Sonnet 已经接近这样一个程度：超过 50% 的候选人如果完全交给 Claude Code 会更好。我随后用一个发布前版本的 Claude Opus 4 来做这份作业。它在 4 小时限制内给出了比几乎所有人类更优化的解法。</p>
+<p>这并不是我第一次被 Claude 模型击败的面试题。我在 2023 年设计过一题现场面试，专门因为当时的问题围绕常见任务，早期 Claude 模型有大量知识，可以轻松解决。我试图设计一个要求更多问题解决能力而非知识的题目，仍基于我在工作中解决过的真实（但小众）问题。Claude 3 Opus 打败了该题的第一部分；Claude 3.5 Sonnet 打败了第二部分。我们仍在使用它，因为我们的其他现场题也不具备 AI 抗性。</p>
+<p>对居家作业来说，有一个直接的修复方式。这个问题的深度远超任何人 4 小时内能探索的范围，所以我用 Claude Opus 4 来确定它从哪里开始遇到困难。那就成了版本 2 的新起点。我写了更整洁的起始代码，增加了新的机器特性以加深深度，并移除了多核（Claude 已经解决，而它只会拖慢开发循环却不增加信号）。</p>
+<p>我还把时间限制从 4 小时缩短到 2 小时。最初选择 4 小时是基于候选人反馈，他们更偏好较低的风险，避免被一个 bug 或困惑卡住；但排期成本导致我们的流程延迟数周。2 小时更容易挤进周末安排。</p>
+<p>版本 2 更强调巧妙的优化洞见，而非调试和代码量。它在几个月里表现良好。</p>
+<h3>随后 Claude Opus 4.5 又击败了它</h3>
+<p>当我测试一个发布前的 Claude Opus 4.5 检查点时，我观看 Claude Code 用 2 小时在题目上工作，逐步改进它的解法。它解决了初始瓶颈，实施了所有常见微优化，并在不到一小时内达到我们的及格阈值。</p>
+<p>然后它停下来，认为遇到了不可逾越的内存带宽瓶颈。大多数人类也会得出同样的结论。但有一些巧妙的技巧可以利用问题结构绕过该瓶颈。当我告诉 Claude 可达到的周期数后，它思考了一会儿并找到了这个技巧。随后它调试、调参并实现了进一步优化。在 2 小时时，它的得分与该时间限制内的最佳人类表现相当——而那位人类大量使用了带引导的 Claude 4。</p>
+<p>我们在内部测试时计算框架中更严谨地验证了它，并确认它既能在 2 小时内超过人类，也能随时间继续提升。发布后我们甚至以通用方式改进了框架，并获得了更高分数。</p>
+<figure>
+  <img src="/images/anthropic/2026-01-21-AI-resistant-technical-evaluations-0481de2b.jpg" alt="">
+</figure>
+<p>我遇到了问题。我们即将发布一个模型，在我们的居家作业上最优策略将是把任务交给 Claude Code。</p>
+<h2></h2>
+<p>考虑选项</p>
+<p>有些同事建议禁止 AI 辅助。我不想这样做。除了执行上的挑战之外，我也觉得既然人类仍在我们的工作中扮演关键角色，我应该能找到<em>某种</em>方式，让他们在<em>有 AI 的</em>情境里仍然能够区分自己——就像在工作中那样。我不想就此向<a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">这种想法</a>妥协：人类只在超过几小时的任务上才有优势。</p>
+<p>另一些人建议把门槛提高到“显著超过仅由 Claude Code 达成的水平”。问题在于 Claude 工作很快。人类通常会花掉 2 小时的一半去读懂题目再开始优化。一个试图引导 Claude 的人类很可能一直落后，只能在事后理解 Claude 做了什么。主导策略可能变成坐着观看。</p>
+<p>如今，Anthropic 的性能工程师仍有大量工作要做，但更像是在艰难调试、系统设计、性能分析、思考如何验证系统正确性、以及如何让 Claude 的代码更简单更优雅。不幸的是，这些内容很难在没有大量时间或共同背景的情况下客观测试。设计能代表工作的面试一直很难，但现在比以往更难。</p>
+<p>但我也担心，如果我投入设计新的居家作业，要么 Claude Opus 4.5 也会解决它，要么题目会变得如此具有挑战性，以至于人类无法在两小时内完成。</p>
+<h3>尝试 1：不同的优化问题</h3>
+<p>我意识到 Claude 可以帮助我快速实现任何设计，这促使我尝试开发更难的居家作业。我选择了一个基于我在 Anthropic 做过的更棘手内核优化之一的问题：在避免 <a href="https://feldmann.nyc/blog/smem-microbenchmarks">bank 冲突</a>的情况下，对 2D TPU 寄存器进行高效数据<a href="https://en.wikipedia.org/wiki/Transpose">转置</a>。我将其提炼为模拟机器上的简化问题，并让 Claude 在不到一天内实现改动。</p>
+<p>Claude Opus 4.5 找到了一个我甚至没想到的很棒优化。通过细致分析，它意识到可以转置整个计算，而不是想办法转置数据，于是它重写了整个程序。</p>
+<p>在我的真实案例中，这种做法行不通，因此我修补了问题以移除该方案。Claude 随后取得进展，但找不到最有效的解法。我以为我有了新题目，只要祈祷人类候选人能足够快地拿下即可。但我有些担心，于是用 Claude Code 的“ultrathink”功能并给予更长的思考预算再次检查……它解决了。它甚至知道修复 bank 冲突的技巧。</p>
+<p>事后看来，这不是一个合适的问题。跨平台工程师在数据转置和 bank 冲突上都有过挣扎，因此 Claude 有大量训练数据可用。虽然我的方案来自第一性原理，Claude 可以从更大的经验工具箱中取用。</p>
+<h3>尝试 2：更怪一点</h3>
+<p>我需要一个人类推理能胜过 Claude 更大经验基的题目：足够分布外的东西。不幸的是，这与我希望它能被视为与工作相似的目标相冲突。</p>
+<p>我想到自己最喜欢的一些不寻常优化问题，最终落在了 <a href="https://www.zachtronics.com/">Zachtronics 游戏</a>上。这些编程解谜游戏使用非常不寻常、限制极多的指令集，迫使你以非传统方式编程。例如，在 <a href="https://www.zachtronics.com/shenzhen-io/">Shenzhen I/O</a> 中，程序被拆分到多个相互通信的芯片上，每个芯片只保存大约 10 条指令与一两个状态寄存器。巧妙的优化通常涉及把状态编码进指令指针或分支标志。</p>
+<p>我设计了一份新的居家作业，由使用一个极小且高度受限指令集的谜题组成，目标是将解法的指令数最小化。我实现了一个中等难度的谜题，并在 Claude Opus 4.5 上测试。它失败了。我补充了更多谜题，并让同事验证：即便对这个问题不如我熟悉的人，也仍能超过 Claude。</p>
+<p>与 Zachtronics 游戏不同，我刻意不提供可视化或调试工具。起始代码只检查解法是否有效。构建调试工具是被测试的一部分：你可以插入精心设计的打印语句，或让编码模型在几分钟内生成交互式调试器。如何在工具上投入的判断也是信号的一部分。</p>
+<p>我对新的居家作业相当满意。它可能比原版的方差更低，因为由更多独立子问题组成。早期结果令人鼓舞：得分与候选人过去工作的水平高度相关，而我最有能力的一位同事得分高于目前任何候选人。</p>
+<p>我仍然为放弃原有的真实感与深度多样性而遗憾。但真实感可能已经成为我们无法承担的奢侈品。原版有效是因为它像真实工作；替代方案有效是因为它模拟了全新的工作。</p>
+<h2></h2>
+<p>公开挑战</p>
+<p>我们发布原始居家作业，供任何人不限时尝试。在足够长的时间跨度上，人类专家<a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">仍有优势</a>超过当前模型。最快的人类解法显著优于 Claude 即便在大量测试时计算下的最佳成绩。</p>
+<p>发布版本从零开始（类似版本 1），但使用了版本 2 的指令集与单核设计，因此周期计数与版本 2 可比。</p>
+<p>性能基准（以模拟机器的时钟周期计）：</p>
+<ul>
+<li><strong>2164 cycles</strong> : Claude Opus 4 在测试时计算框架中经过多小时</li>
+<li><strong>1790 cycles</strong> : Claude Opus 4.5 在一次随意的 Claude Code 会话中，约等于 2 小时内最佳人类表现</li>
+<li><strong>1579 cycles</strong> : Claude Opus 4.5 在测试时计算框架中运行 2 小时后</li>
+<li><strong>1548 cycles</strong> : Claude Sonnet 4.5 在测试时计算框架中运行远超 2 小时后</li>
+<li><strong>1487 cycles</strong> : Claude Opus 4.5 在框架中运行 11.5 小时后</li>
+<li><strong>1363 cycles</strong> : Claude Opus 4.5 在改进的测试时计算框架中运行多小时后</li>
+</ul>
+<p><a href="https://github.com/anthropics/original_performance_takehome">在 GitHub 上下载</a>。如果你将优化做到低于 1487 cycles，击败 Claude 发布时的最佳表现，请把你的代码和简历发到 <a href="mailto:performance-recruiting@anthropic.com">performance-recruiting@anthropic.com</a>。</p>
+<p>或者你也可以<a href="https://www.anthropic.com/careers/jobs">通过常规流程申请</a>，它使用我们（现在）对 Claude 具有抗性的居家作业。我们很好奇它能坚持多久。</p>
+<h2>获取开发者新闻通讯</h2>
+<p>产品更新、操作指南、社区聚焦等内容，每月发送到你的收件箱。</p>
+<p>如果你愿意接收我们的每月开发者新闻通讯，请提供你的电子邮件地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/AI-resistant-technical-evaluations" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "设计对 AI 具有抗性的技术评估",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2026-01-21T00:00:00.000Z",
+  "dateModified": "2026-01-21T00:00:00.000Z",
+  "description": "我们从 Claude 屡次击败的一份性能工程居家作业中学到的东西。 作者 Tristan Hume，Anthropic 性能优化团队负责人。Tristan 设计并反复迭代了这份居家作业测试，帮助 Anthropic 招募了数十名性能工程师。 随着 AI 能力提升...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2026-01-21-AI-resistant-technical-evaluations.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
