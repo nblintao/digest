@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>用并行 Claude 团队构建 C 编译器 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】我们让 Opus 4.6 通过代理团队来构建一个 C 编译器，然后（大多）就放手不管了。以下是它教会我们关于自主软件开发未来的东西。 由 Nicholas Carlini 撰写，他是我们 Safeguards 团队的研究员。 我一直在试验一种用于监督语...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,用并行 Claude 团队构建 C 编译器,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2026-02-05-building-c-compiler.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2026-02-05-building-c-compiler.html">
+  <meta property="og:title" content="用并行 Claude 团队构建 C 编译器 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】我们让 Opus 4.6 通过代理团队来构建一个 C 编译器，然后（大多）就放手不管了。以下是它教会我们关于自主软件开发未来的东西。 由 Nicholas Carlini 撰写，他是我们 Safeguards 团队的研究员。 我一直在试验一种用于监督语...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-02-05T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-02-05T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2026-02-05-building-c-compiler.html">
+  <meta name="twitter:title" content="用并行 Claude 团队构建 C 编译器 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】我们让 Opus 4.6 通过代理团队来构建一个 C 编译器，然后（大多）就放手不管了。以下是它教会我们关于自主软件开发未来的东西。 由 Nicholas Carlini 撰写，他是我们 Safeguards 团队的研究员。 我一直在试验一种用于监督语...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1770425977389">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">用并行 Claude 团队构建 C 编译器</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Building a C compiler with a team of parallel Claudes</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2026-02-05</span>
+          </div>
+        </div>
+
+        <p>我们让 Opus 4.6 通过代理团队来构建一个 C 编译器，然后（大多）就放手不管了。以下是它教会我们关于自主软件开发未来的东西。</p>
+<p>*由 Nicholas Carlini 撰写，他是我们 Safeguards 团队的研究员。</p>
+<ul>
+<li></li>
+</ul>
+<p>我一直在试验一种用于监督语言模型的新方法，我们称之为“代理团队”。</p>
+<p>在代理团队中，多个 Claude 实例并行地在共享代码库上工作，而无需人工持续干预。这种方法大幅扩展了 LLM 代理所能完成的范围。</p>
+<p>为了进行压力测试，我让 16 个代理从零开始编写一个基于 Rust 的 C 编译器，能够编译 Linux 内核。在近 2,000 次 Claude Code 会话和 20,000 美元的 API 成本之后，代理团队产出了一个 100,000 行的编译器，可在 x86、ARM 和 RISC-V 上构建 Linux 6.9。</p>
+<p><a href="https://github.com/anthropics/claudes-c-compiler">这个编译器本身就是一件有趣的成果</a>，但我在这里更关注的是我对设计长期运行的自主代理团队的学习：如何编写在无人监督下仍能让代理保持方向的测试，如何组织工作让多个代理并行推进，以及这种方法的上限在哪里。</p>
+<h2>让 Claude 长时间运行</h2>
+<p>现有的代理脚手架（如 Claude Code）需要操作员在线并可协作。如果你提出一个漫长而复杂的问题，模型也许能解决一部分，但最终会停下来等待进一步输入——问题、状态更新或澄清请求。</p>
+<p>为了促成持续的自主进展，我构建了一个把 Claude 放进简单循环的 harness（如果你见过 Ralph-loop，这会很熟悉）。它完成一个任务后，立刻接下一个。<em>(在容器中运行，不要在你的真实机器上运行。)</em></p>
+<pre><code>#!/bin/bash
+
+while true; do
+    COMMIT=$(git rev-parse --short=6 HEAD)
+    LOGFILE=&quot;agent_logs/agent_${COMMIT}.log&quot;
+
+    claude --dangerously-skip-permissions \
+           -p &quot;$(cat AGENT_PROMPT.md)&quot; \
+           --model claude-opus-X-Y &amp;&gt; &quot;$LOGFILE&quot;
+done
+</code></pre>
+<p>Copy</p>
+<p>在 agent prompt 中，我告诉 Claude 要解决的问题，并让它把问题拆成小块，跟踪当前在做什么，判断下一步做什么，并有效地持续下去直到完美。（在最后一点上，Claude 别无选择。循环是永远运行的——不过有一次我看到 Claude 不小心 <code>pkill -9 bash</code>，于是把自己杀了，循环也结束了。哎。）</p>
+<h2></h2>
+<p>并行运行 Claude</p>
+<p>并行运行多个实例可以弥补单代理 harness 的两个弱点：</p>
+<ul>
+<li>一个 Claude Code 会话一次只能做一件事。随着项目规模扩大，并行调试多个问题效率更高。</li>
+<li>运行多个 Claude 代理允许专业化。除了少数代理负责解决实际问题，还可以调用其他专门代理来（例如）维护文档、关注代码质量，或解决特定子任务。</li>
+</ul>
+<p>我的并行 Claude 实现非常简陋。它会创建一个新的裸 git 仓库，并为每个代理启动一个 Docker 容器，把仓库挂载到 <code>/upstream</code>。每个代理把仓库克隆到 <code>/workspace</code>，完成后从各自的容器推送到 upstream。</p>
+<p>为防止两个代理同时处理同一个问题，harness 使用了一个简单的同步算法：</p>
+<ol>
+<li>Claude 通过在 current_tasks/ 中写入文本文件来“加锁”一个任务（例如，一个代理可能锁定 current_tasks/parse_if_statement.txt，另一个锁定 current_tasks/codegen_function_definition.txt）。如果两个代理尝试声明同一个任务，git 的同步会迫使第二个代理选择不同任务。</li>
+<li>Claude 处理任务，然后从 upstream 拉取、合并其他代理的更改、推送自己的更改，并移除锁。合并冲突很常见，但 Claude 足够聪明能处理。</li>
+<li>无限的代理生成循环会在新的容器中启动一个新的 Claude Code 会话，周期重复。</li>
+</ol>
+<p>这是一个非常早期的研究原型。我还没有实现任何其他代理间通信的方法，也没有强制任何管理高层目标的流程。我没有使用编排代理。</p>
+<p>相反，我让每个 Claude 代理自行决定如何行动。在大多数情况下，Claude 会选取“下一个最明显”的问题。当卡在 bug 上时，Claude 往往会维护一份持续更新的文档，记录失败的方法和剩余任务。在该项目的 <a href="https://github.com/anthropics/claudes-c-compiler">git 仓库</a> 中，你可以阅读其历史记录，观察它如何为各种任务上锁。</p>
+<h2>与 Claude 代理团队一起编程的经验</h2>
+<p>脚手架让 Claude 进入循环，但只有当 Claude 知道如何取得进展时，这个循环才有用。我把大部分精力放在为 Claude 设计环境上——测试、环境、反馈——让它无需我介入也能自我定位。这是我在编排多个 Claude 实例时发现最有帮助的方法。</p>
+<h3>编写极高质量的测试</h3>
+<p>Claude 会自主解决我交给它的任何问题。所以任务验证器必须几乎完美，否则 Claude 就会解决错误的问题。改进测试 harness 需要找到高质量的编译器测试套件，为开源软件包编写验证器和构建脚本，并观察 Claude 的错误，然后根据这些失效模式设计新测试。</p>
+<p>例如，在项目接近尾声时，Claude 每次实现新功能就会频繁破坏既有功能。为此，我构建了持续集成流水线，并实施更严格的约束，让 Claude 能更好地测试其工作，从而防止新提交破坏现有代码。</p>
+<h3>站在 Claude 的角度</h3>
+<p>我必须不断提醒自己，我是在为 Claude 而不是为自己编写这个测试 harness，这意味着要重新思考测试应如何传达结果。</p>
+<p>例如，每个代理都被投入一个没有上下文的新容器，在大型项目中会花大量时间进行定位。在到达测试之前，为了让 Claude 能自助，我加入了维护详尽 README 和进度文件的指示，应频繁更新当前状态。</p>
+<p>我也牢记语言模型的固有限制，在这种情况下需要围绕这些限制进行设计。这些包括：</p>
+<ul>
+<li><strong>上下文窗口污染：</strong> 测试 harness 不应输出成千上万的无用字节。最多只打印几行输出，并把所有重要信息记录到文件中，便于 Claude 需要时查找。日志文件应易于自动处理：如果有错误，Claude 应写入 ERROR 并把原因放在同一行以便 grep 找到。预先计算汇总统计信息也很有帮助，这样 Claude 不必重新计算。</li>
+<li><strong>时间盲：</strong> Claude 无法感知时间，若放任不管，会乐此不疲地花数小时跑测试而不是推进进展。harness 会不频繁地打印增量进度（以避免污染上下文），并包含默认的 <code>--fast </code>选项，运行 1% 或 10% 的随机样本。这个子样本对每个代理是确定性的，但在不同 VM 间是随机的，因此 Claude 仍能覆盖所有文件，同时每个代理都能精准识别回归问题。</li>
+</ul>
+<h3>让并行变得容易</h3>
+<p>当有许多相互独立的失败测试时，并行化很简单：每个代理挑选一个不同的失败测试来处理。测试套件达到 99% 通过率后，每个代理转而让不同的小型开源项目（例如 SQlite、Redis、libjpeg、MQuickJS、Lua）通过编译。</p>
+<p>但当代理开始编译 Linux 内核时，它们卡住了。与拥有数百个独立测试的测试套件不同，编译 Linux 内核是一个巨大的任务。每个代理都会遇到同一个 bug，修复该 bug，然后互相覆盖对方的修改。16 个代理并行并没有帮助，因为每个代理都卡在同一个任务上。</p>
+<p>解决办法是使用 <a href="https://gcc.gnu.org/">GCC </a>作为在线的已知正确编译器参照。我写了一个新的测试 harness，随机使用 GCC 编译内核的大部分文件，剩余文件则用 Claude 的 C 编译器。如果内核能工作，则问题不在 Claude 子集的文件中；如果失败，则可进一步通过用 GCC 重新编译其中一些文件来细化范围。这使每个代理可以并行工作，修复不同文件中的不同 bug，直到 Claude 的编译器最终能编译全部文件。（在这奏效之后，仍需应用 delta debugging 技术来找到那些成对失败、但单独工作正常的文件。）</p>
+<h3>多种代理角色</h3>
+<p>并行化也能实现专业化。LLM 生成的代码经常会重复实现已有功能，因此我让一个代理去整合它发现的重复代码。我让另一个负责提升编译器自身的性能，第三个负责输出高效的编译代码。我还让另一个从 Rust 开发者的视角审视项目设计，并进行结构性调整以提升整体代码质量，另一个则负责文档。</p>
+<h2>压力测试代理团队的极限</h2>
+<p>这个项目被设计成能力基准。我对测试 LLM 当下“勉强能做到的极限”很感兴趣，以便帮助我们为未来模型能够稳定达成的能力做准备。</p>
+<p>我一直使用 C 编译器项目作为整个 Claude 4 模型系列的基准。和以前的项目一样，我先拟定了我的目标：从零开始的优化编译器、无依赖、兼容 GCC、能编译 Linux 内核、并设计为支持多后端。虽然我指定了设计的一些方面（例如必须有 SSA IR 以支持多轮优化），但没有深入细节。</p>
+<p>早期的 Opus 4 模型几乎只能勉强产出一个可用的编译器。Opus 4.5 是第一个跨过门槛、能够生成可用编译器并通过大型测试套件的版本，但仍无法编译任何真正的大型项目。我的 Opus 4.6 目标是再次测试极限。</p>
+<h3>评估</h3>
+<p>在两周内的近 2,000 次 Claude Code 会话中，Opus 4.6 消耗了 20 亿输入 token 并生成了 1.4 亿输出 token，总成本略低于 20,000 美元。即便与最昂贵的 Claude Max 计划相比，这也是一个极其昂贵的项目。但这个总成本仍只是我自己完成这项工作的成本的一小部分——更不用说整支团队了。</p>
+<p>这是一个洁净室实现（Claude 在开发过程中任何时候都没有互联网访问）；它只依赖 Rust 标准库。这个 100,000 行的编译器可以在 x86、ARM 和 RISC-V 上构建一个可引导的 Linux 6.9。它还可以编译 QEMU、FFmpeg、SQlite、postgres、redis，并在大多数编译器测试套件上有 99% 的通过率，包括 <a href="https://gcc.gnu.org/onlinedocs/gccint/Torture-Tests.html">GCC torture test suite</a>。它也通过了开发者的终极试金石：可以编译并运行 Doom。</p>
+<p>然而，这个编译器并非没有限制。这些包括：</p>
+<ul>
+<li>它缺少启动 Linux 实模式所需的 16 位 x86 编译器。为此，它会调用 GCC（x86_32 和 x86_64 编译器是它自己的）。</li>
+<li>它没有自己的汇编器和链接器；这些是 Claude 开始自动化的最后部分，仍有些 bug。演示视频使用了 GCC 的汇编器和链接器。</li>
+<li>该编译器成功构建了许多项目，但并非全部。它尚未成为真正编译器的即插即用替代品。</li>
+<li>生成的代码效率不高。即使启用所有优化，它输出的代码也比 GCC 在所有优化 <em>禁用</em> 的情况下更慢。</li>
+<li>Rust 代码质量尚可，但离真正专家级 Rust 程序员的质量还有很大差距。</li>
+</ul>
+<p>该编译器几乎触及了 Opus 能力的极限。我努力（非常努力！）修复上述若干限制，但未能完全成功。新增功能和 bug 修复经常破坏现有功能。</p>
+<p>作为一个特别具有挑战性的例子，Opus 无法实现进入 16 位实模式所需的 16 位 x86 代码生成器。尽管编译器可以通过 66/67 操作码前缀输出正确的 16 位 x86，但生成的编译输出超过 60kb，远超 Linux 强制的 32k 代码限制。于是 Claude 在这里直接取巧，调用 GCC 来完成该阶段（这只发生在 x86 上。对于 ARM 或 RISC-V，Claude 的编译器可以完全自主编译）。</p>
+<p><a href="https://github.com/anthropics/claudes-c-compiler">编译器的源代码可在此获取</a>。下载它，通读代码，并在你喜欢的 C 项目上尝试。我一直认为理解语言模型能做什么的最佳方式，就是把它们推向极限，然后研究它们开始崩坏的地方。在接下来的几天里，如果你愿意关注 Claude 持续尝试解决这些限制，我会继续让 Claude 推出新变更。</p>
+<h2>展望未来</h2>
+<p>每一代语言模型都开启了与它们协作的新方式。早期模型擅长 IDE 中的 tab 补全。不久之后，模型可以从 docstring 完成函数体。Claude Code 的发布把代理带入主流，让开发者能够与 Claude 结对编程。但这些产品都假设用户定义任务，LLM 运行几秒或几分钟给出答案，然后用户再提出后续。</p>
+<p>代理团队展示了自主实现完整复杂项目的可能性。这使我们这些工具的使用者得以变得更有雄心。</p>
+<p>我们仍处于早期阶段，完全自主开发伴随真正风险。当人类在开发过程中与 Claude 一起工作时，他们能确保质量一致并实时捕捉错误。对于自主系统而言，看到测试通过就以为工作完成非常容易，但事实往往并非如此。我过去从事渗透测试，利用大型公司产品中的漏洞，因此想到程序员部署自己从未亲自验证的软件，会让我感到担忧。</p>
+<p>因此，尽管这个实验令人兴奋，它也让我感到不安。构建这个编译器是我最近最有趣的经历之一，但我没想到 2026 年这么早就接近可能。语言模型和我们与之交互的脚手架都在快速进步，这打开了编写大量新代码的大门。我预计正面应用会超过负面影响，但我们正在进入一个需要新策略以安全导航的新世界。</p>
+<h3>致谢</h3>
+<p>特别感谢 Josef Bacik、Edwin Chen、Bernardo Meurer Costa、Jake Eaton、Dan Kelley、Felix Klock、Jannet Park、Steve Weis，以及 Anthropic 的许多其他人对本项目的帮助与贡献。</p>
+<h2>获取开发者通讯</h2>
+<p>产品更新、操作指南、社区聚焦等等。每月发送一次到你的邮箱。</p>
+<p>如果你愿意接收我们的每月开发者通讯，请提供你的邮箱地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/building-c-compiler" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "用并行 Claude 团队构建 C 编译器",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2026-02-05T00:00:00.000Z",
+  "dateModified": "2026-02-05T00:00:00.000Z",
+  "description": "我们让 Opus 4.6 通过代理团队来构建一个 C 编译器，然后（大多）就放手不管了。以下是它教会我们关于自主软件开发未来的东西。 由 Nicholas Carlini 撰写，他是我们 Safeguards 团队的研究员。 我一直在试验一种用于监督语...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2026-02-05-building-c-compiler.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
