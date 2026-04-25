@@ -7,6 +7,18 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2026-04-23-april-23-postmortem.html</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://digest.qcngt.com/post/anthropic/2026-04-08-managed-agents.html</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/anthropic/2026-03-25-claude-code-auto-mode.html</loc>
     <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
