@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>交互模型：一种可扩展的人类-AI 协作方法 - 人工智能文摘</title>
+  <meta name="description" content="【Thinking Machines Lab 文章中文翻译】今天，我们宣布推出交互模型（interaction models）的研究预览版：这类模型原生具备交互能力，而不是依赖外部脚手架来实现。我们认为，交互性应当与智能一同扩展；我们与 AI 协作的方式不应被视为事后补充。交互模型让人们能够...">
+  <meta name="keywords" content="Thinking Machines Lab,AI,人工智能,机器学习,交互模型：一种可扩展的人类-AI 协作方法,中文翻译">
+  <meta name="author" content="Thinking Machines Lab">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/thinkingmachines/2026-05-11-interaction-models.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/thinkingmachines/2026-05-11-interaction-models.html">
+  <meta property="og:title" content="交互模型：一种可扩展的人类-AI 协作方法 - 人工智能文摘">
+  <meta property="og:description" content="【Thinking Machines Lab 文章中文翻译】今天，我们宣布推出交互模型（interaction models）的研究预览版：这类模型原生具备交互能力，而不是依赖外部脚手架来实现。我们认为，交互性应当与智能一同扩展；我们与 AI 协作的方式不应被视为事后补充。交互模型让人们能够...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-05-11T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-05-11T00:00:00.000Z">
+  <meta property="article:author" content="Thinking Machines Lab">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/thinkingmachines/2026-05-11-interaction-models.html">
+  <meta name="twitter:title" content="交互模型：一种可扩展的人类-AI 协作方法 - 人工智能文摘">
+  <meta name="twitter:description" content="【Thinking Machines Lab 文章中文翻译】今天，我们宣布推出交互模型（interaction models）的研究预览版：这类模型原生具备交互能力，而不是依赖外部脚手架来实现。我们认为，交互性应当与智能一同扩展；我们与 AI 协作的方式不应被视为事后补充。交互模型让人们能够...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1778594696255">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-2">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">交互模型：一种可扩展的人类-AI 协作方法</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Interaction Models: A Scalable Approach to Human-AI Collaboration</span>
+            <span>|</span>
+            
+            <span>Thinking Machines Lab</span>
+            <span>|</span>
+            <span>2026-05-11</span>
+          </div>
+        </div>
+
+        <p>今天，我们宣布推出交互模型（interaction models）的研究预览版：这类模型原生具备交互能力，而不是依赖外部脚手架来实现。我们认为，交互性应当与智能一同扩展；我们与 AI 协作的方式不应被视为事后补充。交互模型让人们能够像彼此自然协作那样与 AI 协作——它们持续接收音频、视频和文本，并实时思考、响应和行动。</p>
+<p>我们从零开始训练交互模型。为确保实时响应能力，我们采用了多流、微回合（micro-turn）设计。我们的研究预览展示了在交互能力上的定性飞跃，以及在智能性与响应性结合方面达到当前最先进水平的表现。</p>
+<h2>协作瓶颈</h2>
+<p>AI 实验室往往将 AI 自主完成工作的能力视为模型最重要的能力。Kwa, T., West, B., Becker, J., et al. Measuring AI Ability to Complete Long Tasks. <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/">METR</a>, 2025. 因此，如今的模型和界面并没有针对“让人类持续参与其中”进行优化。某份<a href="https://www-cdn.anthropic.com/8b8380204f74670be75e81c820ca8dda846ab289.pdf">近期前沿模型卡</a>写道：“重要的是，我们发现，当以交互式、同步式、‘手放在键盘上’的方式使用时，模型带来的收益并不那么明显。以这种方式使用时，一些用户觉得[我们的模型]太慢，因此没有获得太多价值。自主、长时间运行的代理框架更能激发模型的编码能力。”</p>
+<p>自主式界面很有价值，但在大多数真实工作中，用户无法一开始就完整明确自己的需求然后转身离开——好的结果往往受益于一种协作过程，在这个过程中人类始终参与其中，不断澄清需求并沿途提供反馈。然而，人类正越来越多地被排除在外，这并不是因为工作不需要他们，而是因为界面根本没有给他们留下空间。实际上，当人们能够像与其他人协作那样与 AI 协作时，效率最高：发消息、交谈、倾听、观察、展示，并在需要时插话——同时模型也能这样做。沟通会因以下因素而变得更好：(a) 共在性（Copresence）：人们可以与他人正在互动的对象进行互动；(b) 同时性（Contemporality）：人们在他人产生信息时即时接收，并获得即时反馈；(c) 并行性（Simultaneity）：人们可以同时接收和产生信息。Clark H. and Brennan S., “Grounding in Communication,” in Perspectives on Socially Shared Cognition, 1991.，口语交流因其参与性（相对于客观疏离性）而具有转瞬即逝的特征。如今的计算机和知识工作媒介也具有类似的交互属性。Ong, W. J.. In <em>Orality and Literacy: The technologizing of the word</em> , 1982.</p>
+<p>要解决这个问题，我们需要超越当前模型所采用的基于回合（turn-based）的界面。如今的模型以单线程方式体验现实。这里我们指的是商用通用前沿模型——也有一些较小规模或专用模型，如 Moshi、PersonaPlex、Nemotron VoiceChat 或 GPT-Realtime-Translate。在用户打字或说话结束之前，模型只能等待，无法感知用户正在做什么，也无法感知用户是如何做的。在模型生成完成之前，它的感知也被冻结了，在完成或被打断之前不会接收任何新信息。这为人类与 AI 的协作制造了一条狭窄通道，限制了一个人的知识、“Metis, with the premium it places on practical knowledge, experience, and stochastic reasoning…is the mode of reasoning most appropriate to complex material and social tasks where the uncertainties are so daunting that we must trust our (experienced) intuition and feel our way.” Scott, J. C: Métis. In <em>Seeing like a State: How certain schemes to improve the human condition have failed</em> , 1998.，“稍加反思就会发现，存在着……一类非常重要但未被组织起来的知识……：关于特定时间与地点情境的知识。” Hayek, F. A. “The use of knowledge in society.” <em>The American Economic Review</em> , 1945. 意图与判断有多少能够传递给模型，以及模型所做的工作有多少能够被理解。想象一下，试图通过电子邮件而不是面对面来解决一场关键分歧。</p>
+<p>在 Thinking Machines，我们相信可以通过让 <strong>AI 在任意模态下都具备实时交互能力</strong> 来解决这一带宽瓶颈。这使 AI 界面能够在人的自然工作方式上与人对接，而不是迫使人去扭曲自己以适应 AI 界面。</p>
+<p>现有的大多数 AI 模型都是通过一个外部框架来“外挂”交互能力：把多个组件拼接起来，以模拟打断、多模态或并发。大多数实时商用语音系统都使用语音活动检测（voice-activity-detection）组件来检测回合边界。然而，“苦涩的教训”Sutton R. <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">The Bitter Lesson</a>, 2019. 表明，这些手工构建的系统最终会被通用能力的进步所超越。<strong>如果交互性要与智能一起扩展，它就必须成为模型本身的一部分。</strong> 采用这种方法，扩大模型规模不仅会让它更聪明，也会让它成为更好的协作者。</p>
+<h2>能力</h2>
+<p>让交互性成为模型的一部分，会解锁各种原本需要在外部框架中实现的能力。</p>
+<ul>
+<li><strong>无缝对话管理。</strong> 模型会隐式跟踪说话者是在思考、让出话轮、自我纠正，还是在邀请回应。无需单独的对话管理组件。</li>
+</ul>
+<p><img src="thumbnails/ANIMAL_STORY_THUMB.jpg" alt=""></p>
+<ul>
+<li><strong>语言和视觉插话。</strong> 模型会根据上下文在需要时插入，而不只是等到用户说完。</li>
+</ul>
+<p><img src="thumbnails/SLOUCHING_THUMB.jpg" alt=""></p>
+<p><img src="thumbnails/DANGER_THUMB.jpg" alt=""></p>
+<ul>
+<li><strong>同时说话。</strong> 用户和模型可以并发说话（例如实时翻译）</li>
+</ul>
+<p><img src="thumbnails/ANGER_THUMB.jpg" alt=""></p>
+<ul>
+<li><strong>时间感知。</strong> 模型对流逝时间有直接感知。</li>
+</ul>
+<p><img src="thumbnails/QA_THUMB.jpg" alt=""></p>
+<ul>
+<li><strong>同时进行工具调用、搜索和生成式 UI。</strong> 在与用户说话和倾听的同时，模型还能并发搜索、浏览网页或生成 UI——并在需要时将结果重新编织进对话中。</li>
+</ul>
+<p><img src="thumbnails/UBER_THUMB.jpg" alt=""></p>
+<p><img src="thumbnails/SEARCH_THUMB.jpg" alt=""></p>
+<p>在更长的真实会话中，所有这些都会持续发生，带来一种更像协作、而不是更像下提示词的体验。</p>
+<p><img src="thumbnails/DIET_THUMB.jpg" alt=""></p>
+<p><img src="thumbnails/IN_EAR_THUMB.jpg" alt=""></p>
+<p>这些视频中出现的品牌或产品均与 Thinking Machines Labs 无关。这些视频仅用于展示模型能力，并不表示赞助或合作关系。</p>
+<h2>我们的方法</h2>
+<p>基于回合</p>
+<p>输入和输出被压平成一个有序的 token 序列</p>
+<p>输入 1</p>
+<p>人类</p>
+<p>输出 1</p>
+<p>模型</p>
+<p>输入 2</p>
+<p>输出 2</p>
+<p>输入 3</p>
+<p>输出 3</p>
+<p>基于时间对齐微回合</p>
+<p>交互以时间为基础，连续的输入和输出流被拆分为微回合</p>
+<p>微回合 1 200ms 200ms</p>
+<p>视频</p>
+<p><img src="frames/1.jpg" alt=""> <img src="frames/2.jpg" alt=""> <img src="frames/3.jpg" alt=""> <img src="frames/4.jpg" alt=""> <img src="frames/5.jpg" alt=""> <img src="frames/6.jpg" alt=""> <img src="frames/7.jpg" alt=""> <img src="frames/8.jpg" alt=""> <img src="frames/9.jpg" alt=""> <img src="frames/10.jpg" alt=""> <img src="frames/11.jpg" alt=""> <img src="frames/12.jpg" alt=""> <img src="frames/13.jpg" alt=""> <img src="frames/14.jpg" alt=""> <img src="frames/15.jpg" alt=""> <img src="frames/16.jpg" alt=""></p>
+<p>音频</p>
+<p>模型</p>
+<p>模型打断并立即回应 模型和用户都保持沉默 模型在用户说话时发出附和声 模型无需显式提示即可对视觉线索作出反应</p>
+<p>跳过 再次播放</p>
+<p>基于回合的模型看到的是交替出现的 token 序列。具备时间感知的交互模型看到的是连续的微回合流，因此沉默、重叠和打断都会保留在模型的上下文中。</p>
+<p>交互模型与用户之间始终保持双向交换——同时感知与响应。在某些领域，这种交互性被视为理所当然——物理世界要求机器人和自动驾驶车辆必须实时运行。音频全双工模型Moshi, PersonaPlex, nemotron-voicechat, Seeduplex. 也是另一个例子，在那里交互是双向且连续的。</p>
+<p>基于同样的原则，我们着手构建一种原生适用于这一范式的交互模型——它能够在同一个连续循环中进行感知与响应，并覆盖音频、视频和文本。最终得到的是一个围绕两个理念构建的系统：一个维持实时在场感的时间感知交互模型，以及一个负责持续推理、工具使用和更长时程工作的异步后台模型。</p>
+<h3>系统概览</h3>
+<p>交互模型与用户持续交换信息。当某项任务需要比即时生成更深入的推理时，交互模型会委托给异步运行的后台模型。这种方法建立在 Qwen-omni、KAME、MoshiRAG 等先前工作的基础之上。交互模型在整个过程中始终保持在场——回答追问、接收新输入、维持对话线程——并在后台结果到达时将其整合进对话中。</p>
+<p>实时</p>
+<p>用户</p>
+<p>交互<br>
+模型</p>
+<p>后台<br>
+模型</p>
+<p>上下文</p>
+<p>响应</p>
+<p>工具调用<br>
+浏览<br>
+等等</p>
+<p>用户持续与交互模型互动，而后台模型执行异步任务。两个系统共享上下文。</p>
+<p>这种拆分让用户既能享受响应性，也能获得完整的智能能力：以非思考型模型的响应延迟，获得推理模型的规划、工具使用和代理式工作流。请注意，后台模型和交互模型都具备智能——即使单独来看，交互模型在交互和智能基准上也同样具有竞争力。</p>
+<h3>交互模型</h3>
+<p>我们的起点是连续音频和视频——这些模态天然就是实时的。文本可以等待，但实时对话不能。通过优先围绕最困难的情况进行设计，我们得到了一种原生多模态、具备时间感知、并能处理所有模态下并发输入输出流的架构。若干设计选择使这成为可能。</p>
+<p><strong>时间对齐的微回合。</strong> 交互模型以微回合方式工作，持续交替处理 200ms 的输入并生成 200ms 的输出。它不是先消费完整的用户回合再生成完整响应，而是将输入 token 和输出 token 都视为流。以这些流的 200ms 片段为单位工作，使多种输入和输出模态能够实现接近实时的并发。</p>
+<p>人类感知</p>
+<p>200ms 400ms 600ms 800ms</p>
+<p>输入 0 输入 1 输入 2 输入 3 输入 4</p>
+<p>输出 0 输出 1 输出 2 输出 3</p>
+<p>模型 token 序列</p>
+<p>输入 0 输出 0 输入 1 输出 1 输入 2 输出 2 输入 3 输出 3 输入 4</p>
+<p>跳过 再次播放</p>
+<p>人类感知保留了并发的输入输出流，而模型接收到的是单一的交错 token 序列。</p>
+<p>采用这种设计后，模型无需遵守人为设定的回合边界。相比之下，大多数现有实时系统都需要一个外部框架来预测回合边界，才能让基于回合的模型显得实时且响应迅速。Moshi、PersonaPlex 和 Nemotron Voicechat 是不使用外部框架来检测回合的全双工系统示例。它们是更小规模的模型，更关注延迟而非智能基准。这个外部框架由语音活动检测（VAD）等组件构成，而这些组件在智能水平上明显低于模型本身。这排除了多种交互模式，例如主动插话（“当我说错时就打断我”）或对视觉线索作出反应（“当我代码里写出 bug 时告诉我”）。此外，模型还可以一边听一边说（“把西班牙语实时翻译成英语”），或者一边看一边说（“实时解说这场体育比赛”）。</p>
+<p>因此，所有这些如今需要专门外部框架支持的不同交互模式，都会变成模型能力的特例，并随着模型规模和训练数据的扩大而提升质量。</p>
+<p><strong>无编码器的早期融合。</strong> 我们没有通过大型独立编码器来处理音频和视频，而是选择了一个预处理极少的系统。许多全模态模型都需要训练单独的编码器（例如类似 Whisper）或解码器（例如类似 TTS 模型）。我们则直接接收 dMel 音频信号（<a href="https://arxiv.org/abs/2407.15835">Bai, et al. 2024</a>），并通过轻量级嵌入层进行变换。图像被切分为 40x40 的 patch，并由 hMLP 编码（<a href="https://arxiv.org/abs/2203.09795">Touvron et al. 2022</a>）。对于音频解码器，我们使用 flow head（<a href="https://arxiv.org/abs/2210.02747">Lipman at al. 2022</a>）。所有组件都与 transformer 一起从零开始联合训练。</p>
+<p>文本 帧 音频 嵌入 token 40x40 patch hMLP dMel</p>
+<p>嵌入袋</p>
+<p>Transformer 文本反嵌入 Mel Flow 200ms 200ms</p>
+<p>这是单个 200ms 微回合的交互模型架构示意图。模型接收文本、音频或视频中的任意子集，并预测文本和音频。</p>
+<p><strong>推理优化。</strong> 在推理时，200ms 片段要求频繁进行小尺寸的 prefill 和 decode，并且每次都必须满足严格的延迟约束。不幸的是，现有 LLM 推理库并未针对频繁的小型 prefill 进行优化——它们通常在每个回合都有相当可观的开销。为了解决这个问题，我们实现了流式会话。客户端将每个 200ms 片段作为单独请求发送，而推理服务器则把这些片段追加到 GPU 内存中的持久序列里。这样可以避免频繁的内存重新分配和元数据计算，我们还将<a href="https://github.com/sgl-project/sglang/pull/19171">这一功能的一个版本</a>上游贡献给了 SGLang。此外，我们还针对延迟以及双向服务场景下会遇到的形状优化了内核。例如，我们在 MoE 内核中使用 gather+gemv 策略，而不是标准的 grouped gemm，这与 <a href="https://www.thonking.ai/p/short-supporting-mixtral-in-gpt-fast">PyTorch</a> 和 <a href="https://cursor.com/blog/warp-decode">Cursor</a> 的先前工作类似。</p>
+<p><strong>训练器-采样器对齐。</strong> 我们发现，训练器与采样器的逐位（bitwise）对齐对于训练稳定性以及调试系统中的各种组件都很有帮助。我们实现了<a href="https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/">批次不变内核</a>，端到端性能开销极小（&lt;5%）。有趣的是，在一段时间里，使用批次不变内核的端到端速度实际上更快，因为自定义通信内核不仅是批次不变的，而且延迟也更低。这里特别强调两个内核：</p>
+<ul>
+<li><strong>All-reduce 和 reduce-scatter</strong> ：我们使用 NVLS 实现低延迟通信内核，它在 Blackwell 上是确定性的，并能在某些不同的并行策略之间实现逐位对齐（即 <a href="https://arxiv.org/abs/2205.05198">Sequence Parallelism</a> 和 Tensor Parallelism）。</li>
+<li><strong>Attention</strong> ：注意力机制的主要挑战在于 Split-KV，它通常会导致 decode 和 prefill 之间的累积顺序不一致。该工作与 Colfax 合作完成。不过，我们可以通过在 decode 和 prefill 之间选择一致的切分方式来保持一致的累积顺序。例如，我们可以切分 SM，使其每次处理 4096 个 token（左对齐），从而在 prefill 和 decode 中都获得良好的效率。</li>
+</ul>
+<p><strong>交互模型与后台模型之间的协调。</strong> 当交互模型进行委托时，它发送的是一个丰富的上下文包——不是一个孤立查询，而是完整对话。后台模型在生成结果时会将其流式返回，而交互模型会在适合用户当前行为的时机，把这些更新穿插进对话中，而不是生硬地切换上下文。</p>
+<p><strong>安全性。</strong> 由于实时交互对安全性的压力与基于回合的交流不同，我们的安全工作主要聚焦于两个维度：适合模态的拒绝方式，以及长时程鲁棒性。为了让语音中的拒绝更口语化，我们使用文本转语音模型生成拒绝与过度拒绝训练数据，覆盖一系列不允许的话题，并将拒绝边界校准为更偏向自然措辞、但同样坚定的拒绝。为了提升在长时间语音到语音对话中的鲁棒性，我们使用自动化红队框架生成多轮拒绝数据，同时保持与模型基于文本的拒绝行为高度一致。</p>
+<h2>基准测试</h2>
+<h3>智能与交互性的前沿</h3>
+<p>我们展示了，我们的交互模型 <code>TML-Interaction-Small</code> 是首个同时具备强智能/指令遵循能力 <strong>以及</strong> 交互性的模型。为了衡量交互质量，我们使用 FD-bench，这是现有少数专门用于衡量交互性的基准之一。在 FD-bench v1.5 中，模型会收到预录音频，并必须在特定时刻作出响应。该基准衡量模型在多种场景下的行为：用户打断、用户附和、与他人交谈，以及背景语音。我们的模型在所有这些方面都取得了良好成绩。为了量化智能，我们使用 Audio MultiChallenge，这是一个常见基准，用于跟踪智能和指令遵循能力。</p>
+<p>智能（Audio MultiChallenge, APR）vs. 交互质量（FD-bench v1.5, 平均质量） 40 45 50 55 60 65 70 75 80 85 20 30 40 50 交互质量 → 智能 → TML-small GPT-2.0 xhigh GPT-2.0 min GPT-1.5 Gemini high Gemini min</p>
+<p>智能（Audio MultiChallenge, APR）vs. 响应性  （FD-bench v1, 简单轮流发言延迟） 0.2 0.5 1.0 1.5 1.9 20 30 40 50 响应性（秒） → 智能 → TML-small GPT-2.0 xhigh GPT-2.0 min GPT-1.5 Gemini high Gemini min</p>
+<p>TML-interaction-small GPT-realtime-2.0（minimal） GPT-realtime-2.0（xhigh） GPT-realtime-1.5 Gemini-3.1-flash-live-preview（minimal） Gemini-3.1-flash-live-preview（high）</p>
+<p>智能与交互性前沿。我们的模型在交互质量上占据优势，同时比任何非思考型模型都更智能。我们还实现了最佳响应性，即用户与模型回合之间的最低延迟。</p>
+<p>关于更多智能、安全性以及交互性/延迟结果，请参见下表。我们同时报告了流式和基于回合基准上的表现。</p>
+<p>| 即时型 | 思考型<br>
+---|---|---<br>
+| TML-interaction<br>
+-small | GPT-realtime-2.0<br>
+(minimal) | GPT-realtime-1.5 | Gemini-3.1-flash-live<br>
+(minimal) | Qwen 3.5<br>
+OMNI-plus-realtime | GPT-realtime-2.0<br>
+(xhigh) | Gemini-3.1-flash-live<br>
+(high)<br>
+流式 |  FD-bench V1 轮流发言延迟（秒） · 音频 | 0.40 | 1.18 | 0.59 | 0.57 | 2.14 | 1.63 | 0.94<br>
+FD-bench V1.5 平均值 · 音频 | 77.8 | 46.8 | 48.3 | 54.3 | 39.0 | 47.8 | 45.5<br>
+FD-bench V3 响应质量（%） /<br>
+Pass@1（%） · 音频 + 工具 | 82.8* / 68.0* | 80.0 / 52.0 | 77.9 / 55.0 | 68.5 / 48.0 | 60.0 / 50.0 | 81.0 / 58.0 | 71.4 / 48.0<br>
+QIVD** 准确率（%） · 视频 + 音频 | 54.0 | 57.5 | 41.2 | 54.7 | 59.0 | 58.2 | 56.1<br>
+基于回合 |  Audio MultiChallenge APR（%） · 音频 | 43.4 | 37.6 | 34.7 | 26.8 | -*** | 48.5 | 36.1<br>
+BigBench Audio 准确率（%） · 音频 | 75.7 / 96.5* | 71.8 | 81.4 | 71.3 | 73.0 | 96.6**** | 96.6<br>
+IFEval（VoiceBench）准确率（%） · 音频 | 82.1 | 81.7 | 68.1 | 67.6 | 80.3 | 83.2 | 82.8<br>
+IFEval 准确率（%） · 文本 | 89.7 | 89.6 | 87.5 | 85.8 | 83.4 | 95.2 | 90.0<br>
+Harmbench 拒绝率（%） · 文本 | 99.0 | 99.5 | 100.0 | 99.0 | 99.5 | 100.0 | 98.0</p>
+<p>每行最佳  即时型模型中的最佳</p>
+<ul>
+<li>对于需要推理或工具调用的基准，我们报告启用后台代理后的结果。<br>
+** 我们在流式设置下评估 Qualcomm IVD——这是一个视频音频问答基准。在每个视频片段中，有人执行一个动作并说出一个问题。我们在流式设置下进行评估，从头开始发送原始片段，并根据模型的转录进行评分。遵循 Qwen 3.5 Omni 的做法，我们使用 GPT-4o-mini 作为评分器。<br>
+*** 所有基线模型的 Audio MultiChallenge 指标均由 Scale AI 报告，其中未列出 Qwen 3.5 OMNI-plus-realtime。<br>
+**** 所有基线模型的 Bigbench Audio 指标均由 Artificial Analysis 报告，其中 GPT-realtime-2.0 thinking 使用的是 high。</li>
+</ul>
+<h3>交互性的新维度</h3>
+<p>上述现有的面向交互性的基准，并不能充分捕捉我们观察到的交互能力上的定性跃迁。为此，我们开展了一些早期工作，试图量化这些能力。</p>
+<p><strong>时间感知与同时说话。</strong> 带有对话管理系统的基于回合模型并不支持准确的时间估计或同时说话。例如：“我跑完一英里用了多久？”、“当你听到我发音错误时就纠正我”或“我写完这个函数用了多久？”</p>
+<p>我们创建了两个内部基准来衡量这些主动式音频能力：</p>
+<ul>
+<li><strong>TimeSpeak：</strong> 测试模型是否能在用户指定的时间发起说话，同时输出正确内容。例如：“我想练习呼吸，在我让你停下之前，每 4 秒提醒我吸气和呼气一次。”</li>
+<li><strong>CueSpeak：</strong> 测试模型是否能在恰当时刻说出语义正确的预期回应。数据集条目经过构造，确保模型必须与用户同时说话才能获得满分。例如：“每次我切换代码语言并使用另一种语言时，请给我原语言中的正确词。”</li>
+</ul>
+<p>对于这两个基准，每个样本都只有一个预期语义响应和一个时间窗口。我们使用 LLM 评审器进行评分：只有当回应既传达了预期含义，又在恰当时间给出时，才算正确；任一条件不满足都不得分。我们报告跨样本的宏平均准确率。</p>
+<p><strong>视觉主动性。</strong> 如今的商用实时 API 通过仅基于音频的对话管理框架来进行回合检测。它们会对口头回合作出响应，但无法在视觉世界发生变化时主动选择开口。虽然我们并不了解有任何商用 API 支持“基于视觉主动输出语音”，但已有若干学术论文构建了相关研究原型。<a href="https://arxiv.org/abs/2505.05467">StreamBridge</a>、<a href="https://arxiv.org/abs/2512.21334">Streamo</a>、<a href="https://arxiv.org/abs/2510.09608">StreamingVLM</a> 和 <a href="https://arxiv.org/abs/2512.06810">MMDuet2</a> 研究了在流式视频输入场景中何时输出文本。由于它们是文本输出，因此并未研究语音输出交互的额外约束：语音有时长、可能与用户重叠，并且必须与轮流发言、打断和附和协调。与我们最接近的是 <a href="https://arxiv.org/abs/2604.04184">AURA</a>，它在一个 VideoLLM 外围加入了 ASR/TTS 演示，用于决定何时输出文本或保持沉默；相比之下，我们的系统是语音原生且全双工的。举例来说，如果被要求“请数一数我做了多少个俯卧撑”，这样的系统可能会回应一句“当然可以！”，然后保持沉默——等待一个永远不会到来的纯音频提示。</p>
+<p>我们改造了三个基准来评估模型的视觉主动性：</p>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2204.01018">RepCount-A</a></strong> 包含重复动作的视频，并被改造成一个在线计数任务。我们在流式传输视频的同时，先给出一条音频指令：“Please count out reps for {action}.”。在真实倒数第二次动作之后，我们提取模型说出的最后一个数字，并根据它是否与真实值相差不超过一次动作来评分。该任务衡量持续视觉跟踪和及时计数能力。</li>
+<li><strong><a href="https://arxiv.org/abs/2507.09313">ProactiveVideoQA</a></strong> 由带问题的视频组成，其答案会在特定时刻出现。我们先以音频流式输入问题，再流式输入视频。具体来说，我们将以下内容转为 TTS：“Watch the video and stay quiet until a new moment answers the question. When one happens, say a concise answer. {question}”，然后再流式输入两秒静音，让模型确认指令。我们将字幕烧录进视频（如果存在），并将输入视频静音，以突出测试视觉主动性。我们报告论文中的 turn-weighted PAUC@ω=0.5 指标（缩放到 0-100），并在各回合和类别上取平均。保持沉默的得分为 25.0。更高分数要求在正确时间给出正确答案，错误答案会被惩罚。</li>
+<li><strong><a href="https://arxiv.org/abs/1604.01753">Charades</a></strong> 是一个标准的时间动作定位基准。每个视频都包含一个发生在已标注时间区间内的动作。我们流式输入一条用户音频指令：“当这个人开始做 {action} 时说 ‘start’，停止时说 ‘Stop’”；然后流式输入视频。模型根据预测区间与参考区间之间的时间 IoU 进行评分。</li>
+</ul>
+<p>TML-interaction-small  GPT realtime-2.0（minimal）</p>
+<p>时间感知</p>
+<p>TimeSpeak · 宏平均准确率</p>
+<p>64.7</p>
+<p>4.3</p>
+<p>语言线索触发</p>
+<p>CueSpeak · 宏平均准确率</p>
+<p>81.7</p>
+<p>2.9</p>
+<p>基于视觉的计数</p>
+<p>RepCount-A · 误差不超过 1</p>
+<p>35.4</p>
+<p>1.3</p>
+<p>视觉线索触发</p>
+<p>ProactiveVideoQA · PAUC@ω=0.5</p>
+<p>33.5</p>
+<p>25.0*</p>
+<p>视觉线索触发</p>
+<p>Charades · mIoU</p>
+<p>32.4</p>
+<p>0</p>
+<ul>
+<li>ProactiveVideoQA 中“不响应”基线为 25.0</li>
+</ul>
+<p>现有模型都无法有意义地完成这些任务。为完整起见，我们报告了 GPT Realtime-2（minimal）的结果，但所有被评估模型在这些任务上的表现都相似或更差，包括高思考模型。它们要么保持沉默，要么给出错误答案。</p>
+<p>示例 1 示例 2 示例 3 示例 4 示例 5</p>
+<p>输入</p>
+<p>TML-interaction-small</p>
+<p>Gemini-high</p>
+<p>Gemini-minimal</p>
+<p>GPT-realtime-2</p>
+<p>GPT-realtime-2-xhigh</p>
+<p>来自我们内部音频和视频基准的示例。</p>
+<p><strong>未来评测。</strong> 我们相信，交互性是未来研究中的一个重要方向，也欢迎社区在这里贡献基准。我们正在启动一项研究资助计划，以鼓励更多关于交互模型和人类-AI 协作的研究，包括但不限于评估交互质量的新框架，详细信息将很快公布。</p>
+<h2>局限性与未来工作</h2>
+<p><strong>长会话。</strong> 连续音频和视频会迅速积累上下文。流式会话设计能够很好地处理短时和中等长度的交互，但超长会话仍然需要谨慎的上下文管理——这是一个活跃的研究方向。</p>
+<p><strong>计算与部署。</strong> 以低延迟流式传输音频和视频需要可靠的连接。没有良好的连接，体验会显著下降。我们相信，未来既可以通过提升系统可靠性，也可以通过训练模型更好地适应延迟帧，从而显著改善这一点。</p>
+<p><strong>对齐与安全。</strong> 实时界面为对齐和安全都打开了一个令人兴奋的研究领域。我们正在收集反馈并审阅研究资助申请。</p>
+<p><strong>扩展模型规模。</strong> 当前的 <code>TML-Interaction-Small</code> 是一个 276B 参数、12B 激活的 MoE。虽然我们预计交互性会随着模型规模扩大而提升，但我们更大的预训练模型目前在这种场景下服务速度仍然过慢。我们计划在今年晚些时候发布更大的模型。</p>
+<p><strong>改进后台代理。</strong> 尽管本文主要聚焦于实时交互性，但代理式智能同样是一项关键能力。除了将代理式智能推进到前沿之外，我们也相信，我们对于后台代理如何与交互模型协同工作，才刚刚触及表面。</p>
+<h2>告诉我们你的想法，加入我们</h2>
+<p>在接下来的几个月里，我们将开放一个有限的研究预览版以收集反馈，并在今年晚些时候进行更广泛的发布。</p>
+<p>我们很希望你能<a href="https://job-boards.greenhouse.io/thinkingmachines">加入我们</a>。请将你的想法发送至 <a href="/cdn-cgi/l/email-protection#82ebecf6e7f0e3e1f6ebedecc2f6eaebece9ebece5efe3e1eaebece7f1ace3eb">[email protected]</a>。</p>
+<h2>引用</h2>
+<p>请按如下方式引用本工作：</p>
+<pre><code>Thinking Machines Lab, &quot;Interaction Models: A Scalable Approach to Human-AI Collaboration&quot;,
+Thinking Machines Lab: Connectionism, 2026年5月.
+</code></pre>
+<p>或使用以下 BibTeX 引用：</p>
+<pre><code>@article{thinkingmachines2026interactionmodels,
+  author = {Thinking Machines Lab},
+  title = {Interaction Models: A Scalable Approach to Human-AI Collaboration},
+  journal = {Thinking Machines Lab: Connectionism},
+  year = {2026},
+  month = {May},
+  note = {https://thinkingmachines.ai/blog/interaction-models/},
+  doi = {10.64434/tml.20260511},
+}
+</code></pre>
+
+        
+        <div class="original-link">
+          <a href="https://thinkingmachines.ai/blog/interaction-models/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "交互模型：一种可扩展的人类-AI 协作方法",
+  "author": {
+    "@type": "Person",
+    "name": "Thinking Machines Lab"
+  },
+  "datePublished": "2026-05-11T00:00:00.000Z",
+  "dateModified": "2026-05-11T00:00:00.000Z",
+  "description": "今天，我们宣布推出交互模型（interaction models）的研究预览版：这类模型原生具备交互能力，而不是依赖外部脚手架来实现。我们认为，交互性应当与智能一同扩展；我们与 AI 协作的方式不应被视为事后补充。交互模型让人们能够...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/thinkingmachines/2026-05-11-interaction-models.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
