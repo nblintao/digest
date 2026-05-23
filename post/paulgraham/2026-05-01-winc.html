@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>如何在财富税与所得税之间换算 - 人工智能文摘</title>
+  <meta name="description" content="【Paul Graham 文章中文翻译】如何在财富税与所得税之间换算？如果政府征收 1% 的财富税，那相当于多少所得税？ 从大多数政客谈论这个话题的方式就很明显，他们不仅不知道答案，甚至都没有意识到还存在这样一个问题。 事实上，它们之间的换算率大约是 20...">
+  <meta name="keywords" content="Paul Graham,AI,人工智能,机器学习,如何在财富税与所得税之间换算,中文翻译">
+  <meta name="author" content="Paul Graham">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/paulgraham/2026-05-01-winc.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/paulgraham/2026-05-01-winc.html">
+  <meta property="og:title" content="如何在财富税与所得税之间换算 - 人工智能文摘">
+  <meta property="og:description" content="【Paul Graham 文章中文翻译】如何在财富税与所得税之间换算？如果政府征收 1% 的财富税，那相当于多少所得税？ 从大多数政客谈论这个话题的方式就很明显，他们不仅不知道答案，甚至都没有意识到还存在这样一个问题。 事实上，它们之间的换算率大约是 20...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-05-01T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-05-01T00:00:00.000Z">
+  <meta property="article:author" content="Paul Graham">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/paulgraham/2026-05-01-winc.html">
+  <meta name="twitter:title" content="如何在财富税与所得税之间换算 - 人工智能文摘">
+  <meta name="twitter:description" content="【Paul Graham 文章中文翻译】如何在财富税与所得税之间换算？如果政府征收 1% 的财富税，那相当于多少所得税？ 从大多数政客谈论这个话题的方式就很明显，他们不仅不知道答案，甚至都没有意识到还存在这样一个问题。 事实上，它们之间的换算率大约是 20...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1779541718187">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-3">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">如何在财富税与所得税之间换算</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">How to Convert Between Wealth and Income Tax</span>
+            <span>|</span>
+            
+            <span>Paul Graham</span>
+            <span>|</span>
+            <span>2026-05-01</span>
+          </div>
+        </div>
+
+        <p>如何在财富税与所得税之间换算？如果政府征收 1% 的财富税，那相当于多少所得税？</p>
+<p>从大多数政客谈论这个话题的方式就很明显，他们不仅不知道答案，甚至都没有意识到还存在这样一个问题。</p>
+<p>事实上，它们之间的换算率大约是 20。1% 的财富税相当于 20% 的所得税。</p>
+<p>要在财富税税率和所得税税率之间换算，你必须除以资本回报率。这个 20 的换算率来自于假设无风险回报率为 5%。从历史上看，这还是一个偏乐观的假设。4% 可能更现实一些。但 5% 也可以凑合用。<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<p>如果我们举个例子，这个原理就会很清楚。假设你有 100 美元，这笔资本的回报率是 5%，并且所得税税率是 20%。5% 的回报率意味着一年结束时，你的 100 美元会额外赚到 5 美元。但你必须为这 5 美元缴纳 20% 的所得税，也就是 1 美元，所以你的税后收入是 4 美元。到年末，缴完税后，你拥有的是 100 美元 + 4 美元 = 104 美元。</p>
+<p>现在假设不是 20% 的所得税，而是 1% 的财富税。到年末，你的 100 美元和之前一样会额外赚到 5 美元。但这一年你必须按你那 100 美元的 1% 缴纳财富税，也就是 1 美元。所以到年末，你拥有的是 99 美元 + 5 美元 = 104 美元。</p>
+<p>每 1% 的财富税都相当于 20% 的所得税。</p>
+<p>从政客们谈论“区区 1%”财富税的方式就可以明显看出，他们并不明白这一点。尽管从数学上说是同一回事，但他们当中没有人会说要在所得税税率上“只增加 20%”。<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<p>政客们明白，额外增加 20% 的所得税会是很重的税负。事实上，如果美国某个州把最高所得税税率再加上 20%，那它的税负将会高得惊人。</p>
+<p>目前边际所得税税率最高的国家是丹麦，为 60.5%。美国联邦最高税率是 37%，而各州所得税税率的中位数是俄克拉何马州的 4.75%。所以在中位数情况下，一个州如果额外增加 20% 的所得税，总边际税率就会是 37% + 4.75% + 20%，也就是 61.75%。<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></p>
+<p>在中位数情况下，美国各州那些谈论“区区 1%”财富税的政客，实际上是在谈论让本州居民承受全世界最高的税负。这可不是一种可以轻率做出的决定。</p>
+<p>这就是为什么我认为，目前很少有政客真正理解如何在财富税和所得税之间换算。你可以从他们谈论这个话题的方式看出来，他们并不理解自己所提议之事有多么重大。但我对此仍然乐观：我们是可以教会他们的。这个答案并不难理解，只要你先意识到这个问题的存在。</p>
+<p><strong>注释</strong></p>
+<p><strong>感谢</strong> Trevor Blackwell、Jessica Livingston、Carolynn Levy、Jon Levy、Alex Tabarrok 和 Harj Taggar 阅读本文的草稿。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>如果你愿意承担损失本金的风险，就有可能获得更高的回报率。但在换算税率时，你应该使用无风险回报率，因为如果把财富税看作一种反向投资，它是绝对无风险的：你绝对欠政府这笔钱。虽然在谈论回报时，“无风险”这个词确实需要打引号，但此时你所谈论的那类风险，已经接近那种几乎末日般的风险了，以至于税率本身都会变得无关紧要。 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>同样的换算率也适用于资本利得。这个倍数的来源，在于这笔钱是每年都被征税，还是只征一次。事实上，这和你用来计算任何能产生收入的资产价值时所用的数学是一样的。 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>你可以在联邦所得税中扣除一部分州税，但可扣除金额有上限，这意味着在边际情况下，我们只需把这两个税率直接相加。 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+        
+        <div class="original-link">
+          <a href="https://www.paulgraham.com/winc.html" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "如何在财富税与所得税之间换算",
+  "author": {
+    "@type": "Person",
+    "name": "Paul Graham"
+  },
+  "datePublished": "2026-05-01T00:00:00.000Z",
+  "dateModified": "2026-05-01T00:00:00.000Z",
+  "description": "如何在财富税与所得税之间换算？如果政府征收 1% 的财富税，那相当于多少所得税？ 从大多数政客谈论这个话题的方式就很明显，他们不仅不知道答案，甚至都没有意识到还存在这样一个问题。 事实上，它们之间的换算率大约是 20...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/paulgraham/2026-05-01-winc.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

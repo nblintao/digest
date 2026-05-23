@@ -13,6 +13,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/paulgraham/2026-05-01-winc.html</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/karpathy/2026-04-30-sequoia-ascent-2026.html</loc>
     <lastmod>2026-04-30</lastmod>
     <changefreq>monthly</changefreq>
@@ -289,6 +295,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/author/paulgraham.html</loc>
+    
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/author/karpathy.html</loc>
     
     <changefreq>weekly</changefreq>
@@ -296,12 +308,6 @@
   </url>
   <url>
     <loc>https://digest.qcngt.com/author/anthropic.html</loc>
-    
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://digest.qcngt.com/author/paulgraham.html</loc>
     
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
