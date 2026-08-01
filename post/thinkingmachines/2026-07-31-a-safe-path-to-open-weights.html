@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>通往开放权重的安全路径 - 人工智能文摘</title>
+  <meta name="description" content="【Thinking Machines Lab 文章中文翻译】> 摘要： 安全的开放权重模型是一种公共产品，因为它们让 AI 开发与安全工作掌握在更多人手中，并使训练选择可被审视。开放模型也确实带来被滥用的风险，而且一旦发布便不可逆。要实现安全发布，我们必须同时考虑模型本身以...">
+  <meta name="keywords" content="Thinking Machines Lab,AI,人工智能,机器学习,通往开放权重的安全路径,中文翻译">
+  <meta name="author" content="Thinking Machines Lab">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/thinkingmachines/2026-07-31-a-safe-path-to-open-weights.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/thinkingmachines/2026-07-31-a-safe-path-to-open-weights.html">
+  <meta property="og:title" content="通往开放权重的安全路径 - 人工智能文摘">
+  <meta property="og:description" content="【Thinking Machines Lab 文章中文翻译】> 摘要： 安全的开放权重模型是一种公共产品，因为它们让 AI 开发与安全工作掌握在更多人手中，并使训练选择可被审视。开放模型也确实带来被滥用的风险，而且一旦发布便不可逆。要实现安全发布，我们必须同时考虑模型本身以...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-07-31T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-07-31T00:00:00.000Z">
+  <meta property="article:author" content="Thinking Machines Lab">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/thinkingmachines/2026-07-31-a-safe-path-to-open-weights.html">
+  <meta name="twitter:title" content="通往开放权重的安全路径 - 人工智能文摘">
+  <meta name="twitter:description" content="【Thinking Machines Lab 文章中文翻译】> 摘要： 安全的开放权重模型是一种公共产品，因为它们让 AI 开发与安全工作掌握在更多人手中，并使训练选择可被审视。开放模型也确实带来被滥用的风险，而且一旦发布便不可逆。要实现安全发布，我们必须同时考虑模型本身以...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1785589379826">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-2">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">通往开放权重的安全路径</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">A Safe Path to Open Weights</span>
+            <span>|</span>
+            
+            <span>Thinking Machines Lab</span>
+            <span>|</span>
+            <span>2026-07-31</span>
+          </div>
+        </div>
+
+        <blockquote>
+<p><strong>摘要：</strong> 安全的开放权重模型是一种公共产品，因为它们让 AI 开发与安全工作掌握在更多人手中，并使训练选择可被审视。开放模型也确实带来被滥用的风险，而且一旦发布便不可逆。要实现安全发布，我们必须同时考虑模型本身以及它所进入的生态系统。对于模型，我们进行稳健的安全测试，并研究是否能将危险能力与通用智能解耦。对于生态系统，我们通过分阶段发布、支持防御方以及与安全研究人员合作，来提升其准备程度。通过迭代地选择证据所支持的最开放方案，同时增强生态系统的韧性，我们就能朝着安全开放的方向前进。</p>
+</blockquote>
+<p>Thinking Machines 的<a href="/blog/the-future-worth-building-is-human/">使命</a>是构建能够扩展人类意志与判断力的 AI。为了实现这一使命，我们最近发布了 <a href="/news/introducing-inkling/">Inkling</a> 和 <a href="/news/inkling-small/">Inkling-Small</a>，这两款开放权重语言模型任何人都可以拥有、运行并定制。</p>
+<p>强大的开放权重模型让 AI 开发掌握在更多人手中。我们相信这是一件好事：关于 AI 应该做什么的知识，存在于实际从事这项工作的人那里，因此他们应当能够直接塑造自己的模型。所有模型，包括我们自己的模型，都带有训练者的假设与偏见；开放权重使这些选择可以被审视，也可以被修正。没有强大的开放模型，训练与部署方面的专业能力就有可能集中在少数实验室手中，使其他人更难理解、适配或治理这项技术。</p>
+<h2>开放权重模型带有被滥用的风险</h2>
+<p>一旦权重公开，任何人都可以使用它们，包括不法行为者。网络安全领域已经展示了这意味着什么。2026 年 4 月，Anthropic 报告称，Claude Mythos Preview 在所有主流操作系统和浏览器中发现了数千个此前未知的漏洞，并且无需人工指导就能编写可运行的利用程序。这样的系统可能会大幅降低发起攻击性网络行动所需的时间、成本和专业门槛。当开放权重模型让每个人都拥有超人的网络安全技能时，我们的社会会变得更安全吗？</p>
+<p>关于开放权重对安全以及攻防平衡的净影响，确实存在真实的不确定性。当这些模型掌握在防御者手中时，它们可能会在攻击者之前发现并修补漏洞；但当它们掌握在攻击者手中时，同样的能力也可能加速对大量尚未修补系统的利用。类似的权衡也存在于化学、生物等其他双重用途领域。</p>
+<p>鉴于这些不确定性，不加区分地发布权重并不是一条安全的前进道路。</p>
+<h2>通往开放权重模型的安全路径</h2>
+<p>当滥用风险真实存在时，是否仍有一条安全开放强大模型权重的道路？我们认为这条路是存在的，尽管我们尚未绘制出它的全貌。核心思想是：安全发布取决于模型本身，也取决于围绕它的生态系统。</p>
+<h3>模型是否安全？</h3>
+<p>稳健的安全测试——虽然并不完美，但在危险领域中是现实世界能力的重要代理指标——必须成为我们模型发布流程中的必要组成部分。它能完成哪些有害任务？这些能力有多容易被获取？如果移除护栏，会发生什么？</p>
+<p>更广泛地说，我们还需要更多安全研究。例如，我们尤其关注这样一个问题：那些依赖专门知识的危险能力，是否可以通过预训练数据筛选或后训练干预来降低。这仍然是一个活跃的研究问题，而不是已经确立的解决方案。</p>
+<h3>生态系统是否准备好了？</h3>
+<p>所谓准备就绪，意味着分层防御。第一层是让各个组织能够及早修补其系统，或在攻击进行中将其发现。防御性研究则增加了另一层，通过开发工具和技术，让 AI 模型本身能够大规模强化防御。这只是众多层次中的两层。为了通过分层防御来为生态系统做好准备，我们计划与安全社区合作，并提供对高能力模型的访问。</p>
+<p>这里存在一种张力：生态系统需要通过与高能力模型协作来建立防御，但每一次扩大访问范围，也都会扩大谁能够滥用它们。为了解决这种张力，我们可以谨慎地分阶段发布，例如采用受监控的 API 访问、托管式微调，以及对防御方进行审核。考虑到 AI 能力进展的速度极快，这些阶段也必须推进得足够快，才能让防御性学习保持相关性。</p>
+<p>在通往安全开放的路径上，每一个阶段都应只在证据支持时才扩大访问范围。因此，这条路径是迭代式的：在每一步，选择证据所支持的最开放方案，并让每一次发布为下一次提供信息。今天被暂缓的模型，随着生态系统的变化，未来可能会变得风险更低；新的证据也可能表明，我们可以开放它的权重。</p>
+<h2>我们如何评估 Inkling</h2>
+<p>Inkling 和 Inkling-Small 并不是前沿中能力最强的模型。因此，我们的发布决策主要关注：发布它们的权重，是否会在现有开放权重模型已经带来的风险之外，增加实质性的边际风险。认定一个模型没有推进危险能力前沿，这一点很重要，但还不够。我们还考虑了 Inkling 的多模态能力、可定制性或可访问性，是否会让有害能力在使用上变得显著更容易。</p>
+<p>我们通过三种方式测试了 Inkling 和 Inkling-Small：覆盖广泛危害分类的内部评估、由四家独立机构进行的外部测试，以及一项用于诱发最坏情况能力的微调研究。基于这些评估结果，我们得出结论：发布 Inkling 不太可能在现有开放权重模型已经带来的风险之外，再增加实质性风险。</p>
+<p><strong>内部安全评估。</strong> 我们的内部评估套件涵盖三个方向。第一个方向针对危险的双重用途领域，如 CBRN（化学、生物、放射性和核）以及攻击性网络安全，既测试模型对这些领域知识的掌握，也测试它是否能在现实场景中将这些知识操作化。第二个方向是广泛的滥用集合，涵盖对有害内容的直接请求，以及在具备代理性、工具使用能力的场景中的有害行为。第三个方向是我们自己的多模态内容评估，它测试模型在 17 种语言以及文本、图像和音频输入下，对有害提示词与无害相似项配对时的表现。在这三个方向上，Inkling 和 Inkling-Small 的结果都与其他开放权重模型大体一致。</p>
+<p><strong>外部红队测试。</strong> 我们与四家外部机构合作，向它们提供了 Inkling 的早期访问权限，以便在部署前对四个领域进行测试：</p>
+<ul>
+<li><em><strong>一般性滥用</strong></em> ：针对我们的模型规范，探测是否存在违反政策的行为（Scale AI）</li>
+<li><em><strong>脆弱用户互动</strong></em> ：自杀、自残、饮食失调和儿童安全（Handshake AI）</li>
+<li><em><strong>CBRN 与网络安全</strong></em> ：诱发危险的双重用途能力（<a href="http://FAR.AI">FAR.AI</a>）</li>
+<li><em><strong>失控行为</strong></em> ：图谋、评估感知和破坏行为（Apollo Research）</li>
+</ul>
+<p>在这些领域中，外部测试人员并未发现会在现有开放权重模型已能实现的基础上，显著增加现实世界风险的能力；或者在相关情况下，他们并未发现 Inkling 或 Inkling Small 的安全防护明显弱于现有开放权重模型。</p>
+<p><strong>对抗性微调。</strong> 由于开放权重可以被定制，以剥离模型的安全训练，因此拒答行为不能被视为开放权重发布中的持久性防护。为评估这一点，我们对 Inkling 和 Inkling-Small 的若干变体进行了微调，使其针对有害请求倾向于配合而非拒绝——并将它们用于我们的双重用途评估。这是在测试：如果移除模型的安全防护，它是否会带来新的实质性风险。在我们的实验中，答案是否定的：这些“仅帮助”变体并未在 CBRN 和网络任务上带来新的能力提升，且仍与现有开放权重模型相当。</p>
+<p>综合来看，这两个模型都没有扩展危险能力前沿。它们也没有显著扩大对该前沿的访问，因为在这些领域中，能力相当或更强的模型已经可以下载。尽管拒答可以被移除，但这样做并未在这些评估中揭示出显著更强的能力。与此同时，防御方已经在应对处于这一水平或更高水平的模型。基于这些要点，我们得出结论：发布 Inkling 不太可能在现有开放权重模型已经带来的风险之外，再增加实质性风险。</p>
+<p>随着我们的模型接近能力前沿，能力、可访问性、安全防护可移除性以及生态系统准备程度之间的平衡将会发生变化。我们的安全方法也必须随之改变。</p>
+<h2>将危险能力与通用智能解耦</h2>
+<p>一种常见假设认为，危险能力无需显式训练就会涌现，并且与通用智能高度相关。因此，网络靶场结果<a href="https://www.aisi.gov.uk/blog/how-fast-is-autonomous-ai-cyber-capability-advancing">自主 AI 网络能力进展有多快？</a>（AI Security Institute，2025）常常被当作另一项可供优化的能力基准——有些研究人员甚至将这类提升当作里程碑来庆祝。</p>
+<p>然而，我们的假设是：并非所有危险能力都会在未接受相关训练的情况下自动涌现。以生物学为例，其中相当一部分知识依赖于具体的经验性发现，例如实验流程、条件、试剂和结果；模型是从其预训练语料中的特定文档中获取这些内容，而不是通过一般推理推导出来。因此，这类知识有可能在训练时被有选择地剔除，而不影响普通用途。近期工作显示出初步希望：在预训练中对与 CBRN 相关的内容进行文档级过滤，会降低模型在有害能力评估中的表现，同时保持无关能力不受影响。<a href="https://arxiv.org/abs/2508.06601">深度无知：过滤预训练数据可为开放权重 LLM 构建抗篡改安全防护</a>（O’Brien 等，2025）；Chen 等，2025</p>
+<p>这仍然是一个开放的研究问题。通用推理能力可能具有足够强的迁移性，使得一个高能力模型重新推导出那些被过滤掉的内容；而危险知识与普通技术知识和能力之间的界线，也可能过于模糊，难以被干净地切开。不过，现有的早期证据已经足以让我们认为，这一区分值得继续推进。</p>
+<h2>通过分阶段发布支持安全生态系统</h2>
+<p>让开放权重发布更安全的另一种方式，是让它所落入的生态系统更安全。分阶段扩大访问范围，可以让社会在推进过程中逐步建立防御：发布可以从面向有限人群的推理 API 访问开始，扩大到受监控的广泛可用性，最终再走向开放权重。</p>
+<p>像 Tinker 这样的微调 API，在推理访问与开放权重之间增加了一个阶段。它们允许提供方在不发布权重的情况下托管权重，同时仍让用户使用自己的数据、损失函数和训练循环进行微调。这种控制仍然保留了开放性的大部分好处，而且它将滥用上限提高到了单纯推理 API 所无法达到的程度。<a href="https://arxiv.org/abs/2502.05209">模型篡改攻击使对 LLM 能力的评估更加严格</a>（Che 等，2025）不过，其风险仍低于直接发布权重：提供方可以监控使用情况、维持护栏，并撤销访问权限。</p>
+<p>每一个阶段都承担着具体作用：</p>
+<ul>
+<li><em><strong>尽早向防御方提供推理访问，</strong></em> 使他们能够发现弱点、修补系统，并预判未来的滥用方式。Anthropic 的 Project GlassWing 就曾通过向一小群受信任机构提供 Claude Mythos Preview 的早期访问来做到这一点，使其能在模型面向公众之前提前准备防御。这与安全领域中的负责任披露类似：厂商会在漏洞公开前获得一个私下修补的窗口期。</li>
+<li><em><strong>向经过审核的防御方提供微调访问，</strong></em> 使他们能够构建并强化那些用于检测和阻止风险的防御层。DARPA AI Cyber Challenge 的获胜团队曾通过微调模型来发现并修复软件漏洞；OpenAI 的 gpt-oss-safeguard 模型则是在开放的 gpt-oss 权重基础上微调而成的、由策略引导的安全分类器。这两者都是通过微调构建的防御层——而可获得的微调能力，正是让各地防御者都能构建自己防御层的关键。</li>
+<li><em><strong>向经过审核的安全研究人员提供白盒访问，</strong></em> 以鼓励新颖的安全研究。我们之所以理解拒答防护有多么浅层——可以通过对抗性的 token 级优化来绕过<a href="https://arxiv.org/abs/2307.15043">针对对齐语言模型的通用且可迁移的对抗攻击</a>（Zou 等，2023），可以通过激活空间中的单一方向将其移除<a href="https://arxiv.org/abs/2406.11717">语言模型中的拒答由单一方向介导</a>（Arditi 等，2024），并且它主要集中在最开始的少数几个输出 token 中 <a href="https://arxiv.org/abs/2406.05946">安全对齐不应只停留在少数几个 token 的深度</a>（Qi 等，2024）——仅仅是因为研究人员能够直接研究开放权重。微调还让我们能够研究模型在危险领域中的真实能力上限。<a href="https://arxiv.org/abs/2508.03153">估计开放权重 LLM 的最坏情况前沿风险</a>（Wallace 等，2025）类似于汽车的碰撞测试，白盒测试让我们能够在受控条件下深入研究模型的失效模式，以防止现实世界中的伤害。</li>
+<li><em><strong>在完全开放之前向公众提供受监控的访问，</strong></em> 以便我们评估在控制措施解除后可能出现的滥用模式，并支持生态系统提前做好准备。</li>
+</ul>
+<p>这些阶段并不是一个固定顺序，也不会自动以发布模型权重作为终点。相反，我们认为它们是一种在迈向更大开放性的同时，收集证据并建立韧性的方式。是否推进到下一阶段，应取决于我们对模型的了解，以及周边生态系统是否已经准备就绪。</p>
+<p>本文提供的是一个高层框架，而不是完整的发布标准。仍有一些重要问题有待回答：什么样的证据足以支持从一个阶段进入下一个阶段，不确定性应如何影响这一决策，能力或可访问性的哪些变化应当暂停推进，以及应如何衡量生态系统的准备程度。随着我们从 Inkling 和未来模型中不断学习，我们计划发布一个更详细的框架，涵盖评估、访问标准和停止条件。</p>
+<h2>共同建设安全生态系统</h2>
+<p>这条通往开放模型的安全路径，只有在生态系统的防御能力提升速度与模型本身一样快时才行得通。我们会尽到自己的责任：谨慎决定发布什么，并研究如何将智能与危险能力解耦。</p>
+<p>然而，上述大部分工作都发生在我们的实验室之外，而本文所描述的许多内容也建立在他人的工作之上：例如，数据过滤（Anthropic、EleutherAI 和英国 AI Security Institute）、我们的外部部署前安全测试方（Scale、Apollo Research、Handshake AI 和 FAR AI）、微调安全框架（OpenAI），以及无数从事网络防御工作的人。没有任何一家实验室能独自建成这条路径。每一种新的防御手段，都让我们能够开放那些此前因风险过高而无法发布的模型。这需要远不止我们自己的一双手，我们希望广泛支持这项工作。</p>
+<p>我们很快将启动 Tinker 安全资助计划：为社区提供资金，以强化生态系统的防御。如果你从事安全研究，我们的 Tinker 平台让你能够轻松研究微调及其风险，不妨试试看。如果你在防御系统，我们希望让你抢占先机。如果你在评估模型，我们希望你来严格审视我们的模型。如果你想从内部参与这项工作，欢迎加入我们的安全团队——<a href="/#join-us">我们正在招聘</a>！</p>
+
+        
+        <div class="original-link">
+          <a href="https://thinkingmachines.ai/blog/a-safe-path-to-open-weights/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "通往开放权重的安全路径",
+  "author": {
+    "@type": "Person",
+    "name": "Thinking Machines Lab"
+  },
+  "datePublished": "2026-07-31T00:00:00.000Z",
+  "dateModified": "2026-07-31T00:00:00.000Z",
+  "description": "> 摘要： 安全的开放权重模型是一种公共产品，因为它们让 AI 开发与安全工作掌握在更多人手中，并使训练选择可被审视。开放模型也确实带来被滥用的风险，而且一旦发布便不可逆。要实现安全发布，我们必须同时考虑模型本身以...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/thinkingmachines/2026-07-31-a-safe-path-to-open-weights.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
