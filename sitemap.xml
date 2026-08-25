@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/paulgraham/2026-08-01-prepare.html</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/thinkingmachines/2026-07-31-a-safe-path-to-open-weights.html</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
@@ -181,6 +187,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-10-01-announcing-tinker.html</loc>
+    <lastmod>2025-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/anthropic/2025-09-29-building-agents-with-the-claude-agent-sdk.html</loc>
     <lastmod>2025-09-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -188,12 +200,6 @@
   </url>
   <url>
     <loc>https://digest.qcngt.com/post/anthropic/2025-09-29-effective-context-engineering-for-ai-agents.html</loc>
-    <lastmod>2025-09-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-29-lora.html</loc>
     <lastmod>2025-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -241,8 +247,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-10-01-announcing-tinker.html</loc>
-    <lastmod>2025-10-01</lastmod>
+    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-29-lora.html</loc>
+    <lastmod>2025-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -313,13 +319,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digest.qcngt.com/author/thinkingmachines.html</loc>
+    <loc>https://digest.qcngt.com/author/paulgraham.html</loc>
     
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://digest.qcngt.com/author/paulgraham.html</loc>
+    <loc>https://digest.qcngt.com/author/thinkingmachines.html</loc>
     
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
