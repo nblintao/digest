@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>让创业公司变得更强大 - 人工智能文摘</title>
+  <meta name="description" content="【Paul Graham 文章中文翻译】我在和创业公司做 office hours 时，最有用的启发式问题之一就是问：怎样才能让这家公司变得更强大？问公司怎样才能赚更多钱，也是个不错的启发式问题，但它往往只会带来渐进式改进。而思考怎样让它变得更强大，有时却会让它...">
+  <meta name="keywords" content="Paul Graham,AI,人工智能,机器学习,让创业公司变得更强大,中文翻译">
+  <meta name="author" content="Paul Graham">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/paulgraham/2026-09-01-powerful.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/paulgraham/2026-09-01-powerful.html">
+  <meta property="og:title" content="让创业公司变得更强大 - 人工智能文摘">
+  <meta property="og:description" content="【Paul Graham 文章中文翻译】我在和创业公司做 office hours 时，最有用的启发式问题之一就是问：怎样才能让这家公司变得更强大？问公司怎样才能赚更多钱，也是个不错的启发式问题，但它往往只会带来渐进式改进。而思考怎样让它变得更强大，有时却会让它...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-09-01T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-09-01T00:00:00.000Z">
+  <meta property="article:author" content="Paul Graham">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/paulgraham/2026-09-01-powerful.html">
+  <meta name="twitter:title" content="让创业公司变得更强大 - 人工智能文摘">
+  <meta name="twitter:description" content="【Paul Graham 文章中文翻译】我在和创业公司做 office hours 时，最有用的启发式问题之一就是问：怎样才能让这家公司变得更强大？问公司怎样才能赚更多钱，也是个不错的启发式问题，但它往往只会带来渐进式改进。而思考怎样让它变得更强大，有时却会让它...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1789313104395">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-3">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">让创业公司变得更强大</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Making Startups Powerful</span>
+            <span>|</span>
+            
+            <span>Paul Graham</span>
+            <span>|</span>
+            <span>2026-09-01</span>
+          </div>
+        </div>
+
+        <p>我在和创业公司做 office hours 时，最有用的启发式问题之一就是问：怎样才能让这家公司变得更强大？问公司怎样才能赚更多钱，也是个不错的启发式问题，但它往往只会带来渐进式改进。而思考怎样让它变得更强大，有时却会让它的价值提升几个数量级。</p>
+<p>这个问题有很多不同的变体，取决于公司的类型。有没有办法把公司从一个单纯的组件供应商，转变成那个掌握客户关系的一方？或者一个相关的问题：有没有办法让资金流经你？资金流经你总是件好事。<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<p>有没有办法创造出某种类似应用商店的东西，让其他公司可以在你的产品之上构建？这样一来，他们为创造有价值之物所做的一切努力，也会让你变得更有价值。理想情况下，这还要和掌握客户关系、让资金流经你结合起来。<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<p>网络效应会让公司更强大，而我几乎总会思考如何引入网络效应。我把这当作一种挑战：看看是否能在那些你原本不会预期存在网络效应的事物中，也做出网络效应。<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> 令人惊讶的是，这种事其实相当常见。而一旦可行，有时会彻底改变这个想法；原本是一个服务，现在变成了一个市场。豪华版当然是完整的应用商店，但如果没有更直接的做法，你通常也可以通过让用户分享某些东西来诱发网络效应。比如，如果你选择加入，我们就会告诉你，相比其他用户你的表现如何。显而易见的 AI 版本，就是让用户选择是否允许你用他们与模型的交互来训练模型。很多人会抗拒这一点，但如果有些人不抗拒，那么他们能使用的模型就会优于其他人使用的基础版模型。</p>
+<p>很多时候，你可以通过把想法泛化来诱发网络效应，这会让创业公司变得双倍强大。比如，如果我在和一家构建“让智能体能够支付”的创业公司交流，我会问的第一个问题就是：这些智能体是否也能彼此支付？如果可以，你就变成了一个市场。而成为市场是如此有价值，以至于即便一开始并不明显智能体彼此之间能为什么付钱，也值得花很多时间去想出某种可能。如果你想出来了，甚至可能值得让整家公司朝那个方向倾斜；必要的话，甚至可以自己先做市，把它启动起来。</p>
+<p>这些对原始想法的假设性改造，并不总能产出什么有前景的东西。远非如此。但它们总是值得考虑；哪怕别的什么都没有，尝试改造一个想法也能帮助你更好地理解它。</p>
+<p>有些思考方式，会让想法开始显得几乎像实体一样。大多数程序员可能都体验过。摆弄创业想法也有这种感觉。尤其有一种改造方式，特别有“实体感”，那就是做全栈：你不再把技术卖给那些做 x 的公司，而是自己用这项技术去做 x，直接和它们竞争。你几乎能看见这个想法在伸展，把原本的客户吞进去。而现在你掌握了最外层的表面，那东西的形状大概也会随之改变。</p>
+<p>全栈还有一种变体，就是通过替客户完成他们最难的工作，一点点把客户“吃掉”。在极限情况下，是你在做所有脑力工作，而他们只是替你跑腿。到了那时，就像全栈的情况一样，真正的客户其实是他们的客户；最初的客户现在只不过成了一种提线木偶。</p>
+<p>我一直在寻找的另一类东西，是那些可能“小尾巴摇大狗”的部分。创业公司的历史里充满了这种例子。Paypal 最初是做手持设备安全的。他们创建 Paypal，本来只是为了演示自己的安全软件。但后来 eBay 卖家开始用它收款，几个月后，创始人们承认，这才是他们现在真正所处的业务，尽管这并非他们原本的打算。所以每当创始人们构建某个主产品之外的边缘性东西时，我总会问：这会不会才是真正的产品？</p>
+<p>当你注意到用户在“误用”你的产品，拿它去做你原本没打算让它做的事时，这是件令人兴奋的事。这意味着他们如此迫切地想要某样东西，以至于不仅会使用你提供的任何解决方案，甚至连那些本来不是解决方案的东西也会拿来用。当你看到这种情况时，不要因为用户“用错”了你的产品而恼火；去听听他们在传递什么信息，因为那可能很有价值。</p>
+<p>Paypal 之所以增长如此之快，是因为它帮助用户赚钱。很少有什么事比这更能让你变得强大。当你帮助用户赚钱时，他们会（a）很快采用你的产品；并且（b）愿意为它支付很多钱。所以你的收入会以双倍速度增长。我们资助过的最成功的公司中，大多数都在帮助用户赚钱，YC 本身也是如此。</p>
+<p>着眼长远会让你更强大，因为你遇到的大多数其他人都不会这么做。大多数和你竞争的创业公司，都是由希望被收购的机会主义者经营的。你打交道的大多数大公司，则是由那些预计自己不会在那里待超过几年、只关心本季度数字的高管经营的。所以，那些要到 10 年后才会见效的权衡，通常都会被低估。经典做法就是为了获取用户而提供极好的条件。一般来说，我会建议创业公司一开始按尽可能低的价格卖；先拿下所有用户，再去担心利润率。但通常也还有更深层、更结构性的方式来打长期战。<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></p>
+<p>慷慨会让你更强大。正如 Tim O'Reilly 所说，你应该创造比你攫取更多的价值。很多头脑冷硬的商业人士会把这当成理想主义的嬉皮士言论，但事实上，这才是通往真正富有的道路。把客户身上的每一分钱都榨出来，只是一种干扰。那样做顶多给你带来 2 倍回报。而如果你发现了某种可以为他们创造的新东西，轻轻松松就可能带来 10 倍甚至 100 倍回报。这是两种不同的世界观，而 O'Reilly 的那种方式，对那些做得到的人来说，赚得更多。<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup></p>
+<p>“慷慨带来力量”的经典例子，就是公司把软件开源。他们字面意义上把产品送了出去，但正因为送了出去，既让它成为标准，也让用户更信任它。这会让它传播开来，最终他们得到的是一个小得多的份额，但对应的是一个大得多、大得多的蛋糕。</p>
+<p>如果你不想彻底开源，也可以通过让产品具备可扩展性来获得其中一部分好处。这个连续谱的一端是应用商店，但如果你不限制扩展，也不对扩展收费，最终你可能会拥有一个更大的生态系统。<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup></p>
+<p>可扩展性的终极形态，就是让你的产品可以通过 API 被调用。很多公司会回避这一点，因为他们不喜欢随之而来的控制权损失。他们希望自己的软件只按他们原本设想的方式被使用。也许在某些特定领域，你确实希望在这方面保持僵硬，但我怀疑大多数时候这都是个错误。尤其是现在，智能体正在取代人类用户。谁知道它们会想做什么？所以，宁可偏向提供 API。尤其当你还是一家幼体阶段的创业公司、没什么可失去的时候。</p>
+<p>奇怪的是，把产品卖给更早期阶段的公司，会让你更强大。创始人往往会对此感到惊讶，因为你越早把产品卖给创业公司，它们的钱就越少。但如果你在它们一开始时就把它们变成客户，并且按使用量收费，那么你的收入就会按创业公司的增长速度一起增长。</p>
+<p>这就是为什么 Stripe 会刻意在公司最早可能的时刻就把它们签下来。对于支付基础设施来说，只要没坏，你就不会去修它；而 Stripe 没坏，所以装上它的公司永远不会流失。而且，向早期创业公司销售是如此直接。创始人很懂行，决策也快。如果你的产品最好，你就赢。相反，如果你做的东西要等到公司有了 500 人才能卖给它们，那你的处境就弱得多了。那时你做的是企业销售，周期漫长，而且众所周知，这并不是一个“最好产品获胜”的领域。</p>
+<p>当我问一家创业公司，客户得大到什么程度才会购买他们的产品时，我总是希望这个数字越低越好。如果不是，我总会问，是否有办法稍微调整一下产品，让他们能更早卖出去。理想状态是，他们现在就能把某个东西 <a href="ds.html"><em>Collison-install</em></a> 给同批创业者。<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup></p>
+<p>更一般地说，拥有那些决策快的客户，会让你更强大。不只是因为速度快，还因为决策快的客户往往是根据你有多优秀来做决定的。创业公司通常做的是最好的东西（如果你既小又平庸，你怎么可能活下来？），而当客户决策快时，做出最好的东西就会直接通向赚到最多的钱。相反，卖给医院和学区这样的客户，就像在泥里走路。每当我遇到一家卖给这类客户的创业公司，我都会问，他们是否至少能先从市场中某个决策更快的子集开始卖起。<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup></p>
+<p>还有一种和“尽早拿下客户”类似的策略，就是“尽早拿到数据”。Rippling 把这招用得非常漂亮。他们的目标一直都是：既成为处理员工数据的各类应用的操作系统，也成为运行在这个系统上的大多数应用。他们并不确切知道这最终会是什么样子；它必须逐步演化；所以他们从编写入职软件开始，因为员工数据的生命周期就是从那里开始的。而且，由于对他们来说，利害关系不只是入职软件这个市场本身，他们的入职软件做得远远好于“够用”所需的程度，因此传播得非常快。</p>
+<p>无论是资金、用户关系、客户阶段，还是数据，往上游走几乎总是好的。</p>
+<p>既然创业公司做的是最好的东西，那么它们在公平竞争的环境里最强。而它们最弱的，是那些被你会称之为“黑手党”的公司主导的市场。唱片公司是黑手党。PBM 是黑手党。在这些世界里，你不会因为产品最好而赢。事实上，你甚至可能只会在黑手党选择允许你存在的时候才存在。这并不是说它们无法被击败。它们大概是可以被击败的，但你得从侧面切入——通过某种方式让它们变得无关紧要，而不是正面进攻。这样一来，你的成功就不依赖于打败它们；打败它们只会成为你在另一个维度获胜时附带得到的好处。<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup></p>
+<p>很多时候，当你在探索如何让一家公司更强大时，你其实是在寻找不被其他公司拖后腿的方法。如果你是一个组件供应商，不得不活在另一家公司制造出来的（有时甚至是字面意义上的）盒子里，那么只要你能找到掌握客户关系的方法，就能逃出去。如果你卖给的是那些庞大而官僚的公司，那么你可以通过在它们更小、决策更快的时候就卖给它们，或者自己使用技术去和它们竞争，来摆脱这种限制。这个模式如此常见，以至于你可以把它当作一种启发式方法，用来生成让一个想法变得更大的方式。当前这个想法在哪些方面正被其他公司拖住？</p>
+<p>不过，同样常见的是，创业公司其实是被自己拖住了。我给创业公司的建议里，有一个令人惊讶的高比例都带着 “just” 这个词。<em>你不需要做 x。只要做 y。</em> 创业公司的想法之所以会被拧成一团，其中一种原因是它从别的东西演化而来；现在里面有一部分已经不需要了，只是他们自己还没意识到。但尤其对非常早期的创业公司来说，想法之所以复杂，往往是因为恐惧。公司在无意识地蜷缩起来，去做某件比自己本可以做的事更不雄心勃勃的东西。<em>只要做 y</em>，很多时候实际上等于 <em>只要站直</em>。而当他们真的站直时，就高大了许多。</p>
+<p>但所有这些让创业公司更强大的策略，都有一个共同点——更准确地说，都必须服从一个约束。它们都必须让客户的处境变得更好。你不能仅仅因为自己想要，就去加网络效应、让资金流经你，或者做全栈。只有当结果对客户更好时，你才能做这些事。否则就不会有人采用。</p>
+<p>这些是让创业公司在长期内变得强大的策略，但执行这些策略的创业公司，在执行之时通常并没有任何力量。事实上，创业公司一开始的这种弱小，正是为什么总体上它们对世界有益。新成立的创业公司太弱了，无法强迫任何人接受任何东西。它们变得强大的唯一方式，就是让客户的生活变得更好。实际上，这个约束如此严格，以至于你甚至可以反过来利用它生成想法。从客户的角度看，完美的世界会是什么样子？如果那个世界里有某个组成部分，是创业公司可以把自己转变成的，那它大概就应该这么做。</p>
+<p><strong>注释</strong></p>
+<p>部分原因在于，通常只有创始人才既有意愿也有能力去创造新东西。但另一个原因是，创始人经历过弱小。职业 CEO 把自己所管理公司的力量视为理所当然，而创始人记得那些公司弱小到必须取悦用户才能生存下来的日子。</p>
+<p>当你在打长期战时，这种看待世界的方式会显得很自然。如果你按季度思考，潜在客户看起来像是固定大小的。如果你按十年来思考，你就会看到它们有各自的轨迹。</p>
+<p><strong>感谢</strong> Sam Altman、Patrick Collison、Diana Hu、Pete Koomen、Jessica Livingston 和 Harj Taggar 阅读本文草稿，也感谢 Diana 提醒我关于代币流的问题。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>你也可以让代币流经你，而这通常也意味着资金会流经你，因为这些代币必须被购买。从理论上说，这会让你处于一个强势位置。你掌握了客户关系，而模型公司实际上成了组件供应商。问题在于，它们要吞掉你，甚至吞掉你的客户，会有多容易。 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>如果你没法创造一个应用商店，至少能不能定义不同公司产品之间如何交互的标准？在一个新领域里，往往还没有标准。但别担心你太小，提不出标准。如果你是这个领域最早的一批参与者之一，那么你大概和任何人一样清楚，这样的标准应该长什么样。而且大家都如此渴望标准，以至于第一个被提出来的标准往往就会胜出，不管是谁提的。 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>YC 本身就是一个“你原本不会预期存在网络效应”的事物中出现网络效应的例子。我们原本并不是有意这么做的，但我们很快就意识到，这正是我们无意中发现的东西。 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>有时甚至值得亏本销售。但这么做时要小心，因为如果你送出去的东西太多，你就会失去客户通过付费向你发出的信号。如果你的产品是一张 10 美元钞票，而你以 5 美元卖出，那么你的增长率就不会告诉你任何有用的信息。 <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>O'Reilly 这种看待世界的方式，在创始人中更常见。当公司从创造新产品转向从现有产品中榨取更多利润时，往往是因为控制权已经从创始人转移到了职业经理人手中。 <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>也许在这一点上的灵活性，将成为最终取代 Apple 的关键。你可以确定的一件事是：对于与其软硬件集成的东西，它们一定会采取限制性做法。 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>如果你把问题从“我们应该瞄准多大规模的客户？”换成“我们应该在客户生命周期的哪个阶段获得他们？”，就会清楚地看到，瞄准更大的公司，其实只是瞄准同一家公司更晚的阶段。只要你确信客户不会流失，为什么不早点把他们锁定？既然你可以直接卖给早期创业公司，然后随着它们一起成长，为什么还要去做缓慢而脆弱的企业销售？这种情形正是 YC 强调增长<em>率</em>而不是绝对数字的原因。如果你的增长率足够好，绝对数字会自己解决。而获得最快增长率的方法，就是卖给那些增长最快、决策也最快的客户。 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>在一个正常行业里，那些采用新技术较慢的客户，对创业公司来说代表着机会。他们越慢，你就越有可能通过做全栈来取胜。让向医院和学区销售显得如此惨淡的原因在于，你通常做不到这一点——尽管也存在一些绕过学校、直接服务学生的机会。 <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>显然，唱片公司和 PBM 的一个共同点是，它们里面都塞满了律师。所以，这大概是一种识别这类公司的方法。 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+        
+        <div class="original-link">
+          <a href="https://www.paulgraham.com/powerful.html" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "让创业公司变得更强大",
+  "author": {
+    "@type": "Person",
+    "name": "Paul Graham"
+  },
+  "datePublished": "2026-09-01T00:00:00.000Z",
+  "dateModified": "2026-09-01T00:00:00.000Z",
+  "description": "我在和创业公司做 office hours 时，最有用的启发式问题之一就是问：怎样才能让这家公司变得更强大？问公司怎样才能赚更多钱，也是个不错的启发式问题，但它往往只会带来渐进式改进。而思考怎样让它变得更强大，有时却会让它...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/paulgraham/2026-09-01-powerful.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

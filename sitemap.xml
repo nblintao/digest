@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://digest.qcngt.com/post/paulgraham/2026-09-01-powerful.html</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://digest.qcngt.com/post/paulgraham/2026-08-01-prepare.html</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -205,8 +211,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-26-modular-manifolds.html</loc>
-    <lastmod>2025-09-26</lastmod>
+    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-29-lora.html</loc>
+    <lastmod>2025-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -247,8 +253,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-29-lora.html</loc>
-    <lastmod>2025-09-29</lastmod>
+    <loc>https://digest.qcngt.com/post/thinkingmachines/2025-09-26-modular-manifolds.html</loc>
+    <lastmod>2025-09-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
