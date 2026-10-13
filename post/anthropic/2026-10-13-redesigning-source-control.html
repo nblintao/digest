@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>重塑 Anthropic 的源代码控制 - 人工智能文摘</title>
+  <meta name="description" content="【Anthropic 文章中文翻译】重塑 Anthropic 的源代码控制 随着我们每天的合并次数增长了十倍以上，源代码控制成了我们开发中最大的瓶颈。在这里，我们分享了如何在五个月内迁移到一个内部自研的版本控制系统。 在 Anthropic，编写代码已不再是构建系...">
+  <meta name="keywords" content="Anthropic,AI,人工智能,机器学习,重塑 Anthropic 的源代码控制,中文翻译">
+  <meta name="author" content="Anthropic">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/anthropic/2026-10-13-redesigning-source-control.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/anthropic/2026-10-13-redesigning-source-control.html">
+  <meta property="og:title" content="重塑 Anthropic 的源代码控制 - 人工智能文摘">
+  <meta property="og:description" content="【Anthropic 文章中文翻译】重塑 Anthropic 的源代码控制 随着我们每天的合并次数增长了十倍以上，源代码控制成了我们开发中最大的瓶颈。在这里，我们分享了如何在五个月内迁移到一个内部自研的版本控制系统。 在 Anthropic，编写代码已不再是构建系...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-10-13T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-10-13T00:00:00.000Z">
+  <meta property="article:author" content="Anthropic">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/anthropic/2026-10-13-redesigning-source-control.html">
+  <meta name="twitter:title" content="重塑 Anthropic 的源代码控制 - 人工智能文摘">
+  <meta name="twitter:description" content="【Anthropic 文章中文翻译】重塑 Anthropic 的源代码控制 随着我们每天的合并次数增长了十倍以上，源代码控制成了我们开发中最大的瓶颈。在这里，我们分享了如何在五个月内迁移到一个内部自研的版本控制系统。 在 Anthropic，编写代码已不再是构建系...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1791917095651">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-1">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">重塑 Anthropic 的源代码控制</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">Redesigning source control at Anthropic</span>
+            <span>|</span>
+            
+            <span>Anthropic</span>
+            <span>|</span>
+            <span>2026-10-13</span>
+          </div>
+        </div>
+
+        <h1>重塑 Anthropic 的源代码控制</h1>
+<p>随着我们每天的合并次数增长了十倍以上，源代码控制成了我们开发中最大的瓶颈。在这里，我们分享了如何在五个月内迁移到一个内部自研的版本控制系统。</p>
+<p>在 Anthropic，编写代码已不再是构建系统或开展研究的瓶颈。Claude 能够自主迭代研究循环、对复杂程序进行微优化，并以前所未见的速度和规模从零构建新服务。如今的瓶颈，是所有按人类规模构建的开发者基础设施：源代码控制、构建和 CI。</p>
+<p>在 2026 年 5 月，Anthropic 平均每天合并大约 2,500 次代码变更；截至 9 月，我们每天合并超过 30,000 次。我们预计这种增长速度短期内不会放缓；对代码合并的潜在需求几乎是无限的，而我们每消除一个瓶颈，都会立刻带来代码产出量的进一步增长。</p>
+<figure>
+  <img src="/images/anthropic/2026-10-13-redesigning-source-control-da92e66d.jpg" alt="">
+  <figcaption>2026 年 1 月至 9 月，我们的单体仓库每天合并的变更数。</figcaption>
+</figure>
+<p>为了支撑这种增长，我们构建了 Scion——一个内部版本控制系统，并在五个月内将我们的单体仓库从 git 完整迁移过去。我们还在同一时期构建并发布了一个代码审查界面（名为 Antique）、代码搜索、一个功能丰富的源代码控制 IAM 系统、管理和提交大量已审查代码的新方法等等。在这篇文章中，我们将重点介绍我们是如何具体构建 Scion 的。这是一个很有意思的案例研究：Claude 的代码编写能力，既是最初让我们陷入这种局面的原因，<em>也是</em>我们能够快速构建出一个高质量、可扩展系统来应对它的方式。</p>
+<h2>我们的单体仓库不断增长</h2>
+<p>在探讨我们构建了什么之前，我们应该先承认，我们的工作负载非常不同寻常。不出所料，Anthropic 使用 Claude 编写软件的程度远高于几乎所有其他公司，因此我们往往最先看到那些按人类规模设计的工具开始吃力的地方。源代码控制只是其中一个例子。虽然我们并不认为很多组织会在非常短期内遇到这些问题，但我们怀疑，用不了太久，其他使用 AI 编码工具的组织也会经历同样的压力点，这也是我们想分享我们构建了什么以及学到了什么的原因。</p>
+<p>Git 是一个去中心化系统：每个克隆都是一个完整、自包含的仓库，能够在完全离线的情况下计算 diff、读取历史和 blame，并检出任意修订版本。对于绝大多数仓库来说，这是正确的设计，而这也是 git 成为标准的重要原因之一。</p>
+<p>随着我们的单体仓库不断增长，它越来越不适合这个设计空间。仅主分支的历史就接近 100 GB，而一个<em>压缩后</em>的工作副本也超过 25 GB。仅 CI 每天就会执行大约 2,500 万次代码检出，这还不包括开发者环境、代理沙箱和研究任务。如果用最朴素的方式拉取，这意味着每天超过 600 PB 的 git 流量。</p>
+<p>Git 提供了一些用于处理仓库切片的工具，例如浅克隆、稀疏检出和 promisor remote。除此之外，对于大型单体仓库还有一些标准变通方案，比如内部 git 镜像，以及保存在 blob 存储中的仓库快照（seeds）。这些我们都用过——在峰值时期，我们运行了数百个内部 git 镜像来应对负载。这为我们争取了时间，但随着合并速率上升，它们也变得越来越难以运维。seeds 在每次刷新之间与 main 的最新提交越拉越远，而要让依赖历史的操作（如 diff 和 blame）在部分克隆上正常工作，也需要越来越多的精细维护。</p>
+<figure>
+  <img src="/images/anthropic/2026-10-13-redesigning-source-control-bd47932e.jpg" alt="">
+  <figcaption>扩展 git 检出的典型方案。</figcaption>
+</figure>
+<p>退一步看，我们注意到，和大多数公司一样，我们把 git 当作一个中心化系统来使用，只有一个权威副本，但我们几乎所有客户端都是天然在线的代理和任务。那些让 git 在分布式、离线工作中表现出色的特性，随着仓库增长，反而在积极削弱我们的扩展能力。于是我们问自己：如果从一开始就以“代理始终在线”为前提来设计源代码控制，它会是什么样子？</p>
+<h2>面向代理规模源代码控制的原则</h2>
+<p>随着代理式编码的兴起，关于软件如何开发的许多常见假设都在演变。我们在构建 Scion 时拥抱了这些变化，这使我们能够在若干核心原则上采取与 git 根本不同的方法。面向超大单体仓库的源代码控制已有先例，尤其是 Google 的 <a href="https://en.wikipedia.org/wiki/Piper_(source_control_system)">Piper</a> 和 Meta 的 <a href="https://sapling-scm.com/">Sapling</a>，因此我们能够在构建 Scion 时借鉴它们来之不易的经验。我们的原则是：</p>
+<p><strong>客户端始终在线。</strong> Git 假设客户端会离线工作，因此需要仓库的完整副本。由于我们几乎所有客户端都是代理和任务，我们围绕一个始终可达的服务器来设计 Scion 的客户端和协议，并让客户端在需要时再拉取数据。</p>
+<p><strong>客户端—服务器不对称。</strong> 在 git 中，每个客户端都能充当一个功能完整的服务器。在 Scion 中，服务器负责回答关于文件历史和 blame 的问题、创建提交、执行合并和 rebase 等。客户端维护一个有界的本地对象缓存，将工作副本文件布局到磁盘上，监控文件系统变化，并为用户提供一种符合人体工学的方式来与服务器协作。它几乎不能独立计算什么，但作为交换，它对本地数据的需求要少得多。</p>
+<p><strong>一个全面的源代码控制服务可以驱动许多新型应用。</strong> 在 git 中，一个需要向仓库提问的 CI 任务或工具——例如某一行最后是谁改的，或者两个提交之间是什么关系——必须维护一个本地仓库副本，或者寄希望于厂商特定 API 能提供答案。在 Scion 中，客户端使用的所有源代码控制查询也都通过 API 暴露出来，因此在很多情况下，任务根本不需要本地仓库。许多内部工具，比如我们的自动化二分查找和回滚流水线，如果没有这种廉价、可编程的源代码控制访问方式，就无法在大规模下实际运行。</p>
+<p><strong>一切都必须支持水平扩展。</strong> 在峰值时期，我们运行了数百个 git 镜像，这对容量造成了显著压力，而且一旦仓库增长到超出镜像磁盘或内存限制，就不再可扩展。在 Scion 中，仓库数据是分布式的，每个组件都可以独立扩展；在任何地方都不存在仓库的完整物化副本，哪怕在服务器上也没有。这里也没有 packfile（git 的对象压缩包）这种等价物，因此不需要进行仓库维护。</p>
+<p><strong>提交必须廉价、增量化且无锁。</strong> 在 git 中，你先在本地提交，然后再 push 共享你的工作。在 Scion 中，每一次提交、rebase 或 merge 都发生在服务器上，因此没有什么需要 push，但这些操作中的每一个都必须足够快。创建一个提交并更新其下游数据结构的成本，必须随变更大小扩展，而不是随整个仓库大小扩展，否则服务器就无法跟上。Scion 中的开发生命周期会弱化 refs（指向提交的指针，如分支和标签）的使用，除了 main ref 或发布分支，因为每台服务器都必须达成一致的<em>全局</em>状态，是一个迫在眉睫的扩展性问题。</p>
+<p><strong>工作副本是可选的，并且天然稀疏。</strong> 由于我们的单体仓库非常大，而且 CI 每天要检出数千万次代码，我们希望尽可能避免检出。在 Scion 中，例如一个需要获取某个提交与其 merge base 之间 diff 的 CI 任务，可以直接向服务器请求。写操作也是如此：许多写入型工作负载也可以跳过检出，完全通过 API 运行。Scion 的协议以稀疏检出为中心，它只包含客户端请求的目录；同时还支持虚拟化检出，按需物化文件，因此当任务确实需要磁盘上的文件时，客户端只需为它实际读取的内容付费。</p>
+<h2>Scion 的工作原理</h2>
+<p>理解这些原则在构建 Scion 时是如何在实践中结合起来的，会很有帮助。这些洞见也可以应用于其他源代码控制系统，或者更广泛地应用于软件开发生命周期的其他阶段。</p>
+<h3>数据结构</h3>
+<p>在 Scion 中，工作单元是一个“changeset”，也就是预写日志中的一条记录。一个 changeset 存储了你对 git 提交所期待的大部分内容。但 git 提交存的是指向树的指针，而 changeset 存的是相对于其第一个父提交发生变化的文件列表，1 以及指向 blob 存储中压缩文件内容的按内容寻址指针。changeset 在服务器端创建，并且会立刻在所有地方可用。</p>
+<figure>
+  <img src="/images/anthropic/2026-10-13-redesigning-source-control-b42a4504.jpg" alt="">
+  <figcaption>Scion 中 changeset 的结构。</figcaption>
+</figure>
+<p>这种结构让我们能够以非常高的吞吐量接收 changeset，因为这里没有需要接收的 packfile，没有锁，也不需要跨服务器协调，更没有需要移动的 refs。严格来说，Scion 确实支持 refs，但由于创建和获取提交都不依赖它们，移动一个 ref 只是对单个 Spanner 行执行一次 compare-and-swap，而且这一步与创建 changeset 是分开的。</p>
+<p>一个 changeset 只记录发生了什么变化，因此仅靠它本身，无法快速回答诸如“最后是谁编辑了这一行”或“哪些提交影响了这个文件”之类的问题。为了回答这些问题，Scion 会从 changeset 构建额外的数据结构，包括用于文件 blame 和路径历史的专用结构，以及用于提交图的跳表。我们把所有不直接属于 changeset 的内容都称为“派生数据”，并通过一种通用机制来计算它们。每一种派生数据都以递归方式定义，因此它在某个 changeset 上的值，是由该 changeset 的父节点上的值计算出来的。</p>
+<p>这种机制有三个好处。第一，当某种新数据结构能让某个操作更快时，我们可以很容易地添加一种新的派生数据。第二，对于每一种类型，我们都可以选择是急切计算，还是延后计算，从而避免物化我们并不需要的数据。第三，由于客户端永远看不到这些数据结构的内部实现，我们可以在不修改客户端的情况下对它们进行优化。随着系统增长，我们已经多次添加新的派生数据类型，例如用于执行拷贝检测或基于路径的文件搜索的新索引。</p>
+<h3>扩展 Scion</h3>
+<p>一小组 Scion 服务器为客户端所需的任何操作提供源代码控制 API，例如获取 changeset、计算 diff、查找 merge base 和拉取 blob。所有源代码控制数据都按内容寻址，因此一旦存储，某条数据就永远不会改变，任何服务器都可以在不与其他服务器确认的情况下缓存它。因此，这些服务器支持水平扩展，并且几乎不需要协调。它们本质上是大型缓存，同时还能按需计算派生数据，并将结果写回 Spanner。</p>
+<p>Scion 的众多使用方不再需要维护自己的本地仓库。过去，对于那些需要向源代码控制提问的 CI 任务或工具来说，拉取和维护仓库本身就是一个显著的维护负担，尤其是涉及提交祖先关系和 blame 的问题时。在迁移早期，在我们还没有自己的客户端、仓库格式或协议之前，Scion 只回答这些“元数据”查询。拉取文件内容和物化工作副本是数据量大得多的操作，因此它们需要一套自己的设计。</p>
+<p>Scion 的 scn 客户端在多个重要方面偏离了 git 的 fetch 协议，因此它天然适合一种高度可扩展、且 CPU 消耗显著低于 git 服务器的架构。Scion 的协商不会告诉服务器客户端已经拥有什么；相反，它只围绕客户端想要的树和 blob 进行。从一个根树开始，客户端检查本地存储中缺失的树，并递归请求它们，然后对 blob 重复这一过程。每个请求都针对一个永不变化的特定对象，因此任何缓存都可以响应它，而整体架构也非常接近传统的分层缓存。这个过程同样高效且可恢复，因为这里不存在单个数 GB 大小的 packfile 响应。稀疏检出，甚至虚拟化检出，也不需要特殊支持，因为客户端根本不会请求它不想要的树。</p>
+<p>在整个集群中，客户端通过 socket 与一个守护进程 scion-daemon 通信，该守护进程为整台节点存储对象。我们的大多数节点都需要访问单体仓库，而同一节点上的任务会复用大部分相同对象。每个 daemon 都从一个定期刷新的快照启动，然后只与其所在区域的树和 blob 缓存服务器通信，这些服务器称为 scion-cache。这些缓存服务器直接以 daemon 将要消费的磁盘格式从内存中流式传输对象，因此它们不需要花时间去计算客户端缺失的对象，也不需要执行 delta 压缩。当缓存中缺少某个对象时，它会向权威的 scion-servers 请求，后者会按需从 Spanner 或云存储中读取。</p>
+<p>scion-daemon、scion-cache 和 scion-server 都会对该协议的相同 RPC 作出响应，因此客户端不需要知道缓存拓扑。理论上任何一层都可以与任何其他层通信，但我们严格执行分层，以隔离故障域。我们希望避免这样一种情况：某个区域性 scion-cache 的故障压垮上游 scion-servers，并导致整个系统宕机。</p>
+<figure>
+  <img src="/images/anthropic/2026-10-13-redesigning-source-control-f112e103.jpg" alt="">
+  <figcaption>Scion 的检出架构。</figcaption>
+</figure>
+<p>该系统的每一层缓存命中率都保持在 99% 以上，而且不需要长期状态，因此在需要时很容易扩容。如今，我们的 Scion 基础设施占用在 CPU 和内存需求上比之前的 git 镜像基础设施小了 200 倍。CI 和研究任务检出代码的速度提升了两个数量级（从分钟级降到秒级），这释放了整个集群中相当可观的容量；仅 CI 一项就实现了 25% 的 CPU 容量收益。客户端和缓存都不需要执行仓库维护，这也简化了我们任务的生命周期管理。</p>
+<h2>构建 Scion 过程中我们学到了什么</h2>
+<p>我们开始构建 Scion 的时间，大致与 <a href="https://www.anthropic.com/claude/mythos">Claude Mythos Preview</a> 和 <a href="https://www.anthropic.com/news/introducing-claude-tag">Claude Tag</a> 在内部可用的时间相近。这两个发布一方面同时放大了对 Scion 的需求，**另一方面也切实加快了我们构建它的速度。</p>
+<p>这里有一个特别鲜明的例子。年初时，我们基本上手写了 git 到 Scion 的第一版导入流水线原型。我们原以为它已经不错了——直到我们拿到 Claude Mythos Preview 的一个早期内部快照。我们让它重写整个东西，而无需进一步说明，它就产出了一个版本：内存消耗降低了 20 倍，速度提升了 4 倍，同时保留了所有关于导入顺序和数据结构的隐式不变量。</p>
+<figure>
+  <img src="/images/anthropic/2026-10-13-redesigning-source-control-4b528d5f.jpg" alt="">
+  <figcaption>2026 年 1 月至 9 月，Scion 和 Antique 代码库每周合并的变更数。</figcaption>
+</figure>
+<p>我们在构建和运行 Scion 过程中学到的东西，为“构建代理规模软件”可能是什么样子提供了一些有趣的启示。</p>
+<p><strong>小团队快速开发将变得更加常见。</strong> 一个由七人组成的团队构建了 Scion <em>以及</em> Antique（我们的代码审查工具，光这个我们就完全可以再写一整篇博客），更不用说另外半打相关系统，并在五个月内完成了全面迁移。我们完成这一切的同时，每天合并的代码量还增长了 10 倍。过去，开发并部署这样一个源代码控制系统，往往需要一家公司花上数年时间进行迭代迁移，并投入更多工程师。我们认为，这种快速、灵活的迁移方式未来会变得更加常见。</p>
+<p><strong>工程师的价值丝毫未减，但他们的工作正在变化。</strong> 所有参与这个系统的工程师，现在都会认为 Claude 在<em>写</em>代码这件事上比他们更强。但我们的工程师仍然提供了无可替代的价值：他们理解高层级的跨系统组件，以及设计层面的权衡，能够围绕我们想解决的问题和已知需要达到的规模做出明智选择。很多时候，我们发现工程师的角色是对 Claude 说“不”。代理有时会为了满足某种本不该被允许的模式，而违反系统的核心约束。这在我们的迁移过程中尤其常见。例如，有多个系统试图通过线性读取提交日志，来蛮力查找某个变更何时合并进 main，而不是去询问我们的代码审查工具。Anthropic 也大量使用对抗性评审，虽然这在很多方面都极其有效，但它也可能目光短浅，因此需要熟练的工程师引导 Claude，不要因为假设性的担忧而对系统某些部分过度设计。比如，有一次这样的评审对信任另一个内部服务过于防御，结果导致 Claude 添加了过多的校验和复杂性。我们的团队成员仍然会审查系统的每一个变更请求，但他们现在审视的是变更的<em>意图</em>，而不是逐行阅读每一行代码。</p>
+<p><strong>我们得以大幅提升优化和质量。</strong> 由于 Claude 能以远快于我们自己的速度编写海量代码，Scion 成了我们做过的测试最充分、防御最完善的代码库之一。即便在如此紧张的时间表下，我们仍然能够构建出对每一种非平凡基础设施和源代码控制交互的密封模拟，以及模糊测试和复杂的限流机制。Claude 还轻松发现了显著的优化点——例如，一个针对祖先查询的算法级优化，而这个优化绕过了我们某个索引——这类工作本来可能需要专家花上数天甚至数周来分析和调优……然后它第二天又把这一切再做了一遍。</p>
+<figure>
+  <img src="/images/anthropic/2026-10-13-redesigning-source-control-8df0de20.jpg" alt="">
+  <figcaption>在原生 Scion 仓库上观测到的性能提升。</figcaption>
+</figure>
+<p><strong>我们为单体仓库安全的新形态打下了基础。</strong> 在一个庞大的单体仓库中，管理安全性、信息安全和合规性，与管理规模和体量同样重要。我们从一开始就带着这些目标来构建 Scion。它支持对仓库进行丰富的访问控制，也支持对单个目录施加权限，从而在不失去单体仓库优势的前提下保护最敏感的代码。此外，我们构建的代码审查工具能够表达复杂的语义审批约束，这使我们可以区分诸如仅评论变更这样的简单情况，与敏感的逻辑变更，从而让人工审查者把注意力集中在最关键的变更上。</p>
+<p><strong>一种新的卓越运维水平是可能的。</strong> 我们的团队大量使用 Claude Tag，这帮助我们监控系统的每个组件。例如，我们创建了一些 Slack 频道，在其中让 Claude 以近乎偏执的专注度盯住某一个组件的健康状况。我们把这些 Claude 称为“superfans”。我们有 scion-daemon superfan、scion-cache superfan、Antique 合并队列 superfan，等等。它们可以访问我们的遥测和日志，表现得就像一位经验丰富的工程师，而他唯一要做的事就是不断刷新图表、寻找任何异常。我们当然也为所有系统设置了传统告警，但我们的 superfans 能发现微妙而新颖的问题，相比之下，这些告警都显得有些单薄。</p>
+<p><strong>我们正在彻底重审自己的先验认知。</strong> 这个项目促使我们非常认真地重新审视其他那些按人类规模设计的工作流。例如，一个规范的合并队列，在代理规模下其实并没有太大意义。当测试运行期间有数百甚至数千个变更可能被合并时，CI 到底意味着什么？我们一直无法有效复制业界标准的“合并队列上的全局仓库锁”，因此我们转而投入到合并后和部署前的自动化测试中。这确实意味着并发变更可能发生冲突，但 Claude 通常能比人类甚至发现这些冲突还要更快地修复它们。</p>
+<h2>为更广泛的生态系统做出贡献</h2>
+<p>我们认为，Scion 只是对日益强大的 AI 代理所引发扩展性问题的一部分答案。我们分享这些细节，是为了作为一个示例，说明团队如何应对类似挑战，尽管我们并不认为我们的解决方案，或者我们的考量，适用于所有场景。</p>
+<p>Scion 绝不是一个适合通用场景、可替代 git 的方案。我们在这里概述的这些概念，实际上只对真正巨大的单体仓库才有意义——要么有数万名工程师，要么有大量高产写代码的代理群体。除此之外，Anthropic 的特殊之处还在于，我们能够为内部使用投入的 token 数量，远远超过其他任何企业在现实中愿意投入的水平。我们这样做既是为了满足自身的软件开发需求，也是为了测试 Claude 的能力。</p>
+<p>从实际角度看，很难以一种对其他组织广泛有用的形式提供 Scion。它与 git 有显著分歧，这意味着公司需要迁移开发生命周期中的每一个环节，而且它还需要自己的代码审查、代码搜索和 CI。我们内部版本的这些组件都高度定制化，因此其他组织很难采用；而我们也担心，如果尝试构建一个试图取悦所有人的公共版本，最终反而不会真正有用。</p>
+<p>不过，我们预计，在接下来的 6 到 12 个月里，这类问题会变得越来越普遍，而让每一家使用 git 的公司都独自面对类似挑战，将是对工程资源的低效使用。鉴于此，我们认为我们能做的最有影响力的**事情，就是分享我们的思考，让其他开发者能够把 Scion 中一些最成功的部分应用到 git 上，而不必偏离其整体模型。git 服务器不必和 git 客户端以同样的方式工作；已经存在一些新型服务器架构，能够带来显著的扩展性提升。git 平台可以像 Scion 一样提供全面的服务器端 RPC，甚至可能以 forge 之间标准化的方式提供，让 git 客户端学会与之通信。协商协议也不必完全保持今天的样子，而 git 中各种稀疏和浅层特性也可以被改进得更易于组合。</p>
+<p>最后，我们想承认，git 社区已经花了将近二十年时间，为数百万开发者扩展这个平台。我们的贡献要窄得多：分享我们对代理式软件开发如何与这些系统交互的早期观察，以便我们能够与 GitHub、GitLab 和 OSS 社区合作，支持开发者不断变化的需求。当软件开发生命周期与 AI 指数级发展相交汇时，我们都身处其中。</p>
+<h2>致谢</h2>
+<p>本文由 Nick G. 和源代码控制团队撰写：S.G.、R.K.、Dan C.、Garrett H.、Ben L.、Colin M.、Joe P.。我们感谢 Vilas J. 和 Sergiu D. 在这段雄心勃勃的旅程中对源代码控制团队的支持，也感谢 Amir O. 对 Antique 的早期贡献。</p>
+<h2>脚注</h2>
+<ol>
+<li>相对于合并提交的第一个父提交来存储变更文件，是一种风格选择；在实践中，我们发现，在单体仓库的 trunk-based development 中，人们只关心主线提交上的历史或 blame。</li>
+</ol>
+<h2>获取开发者新闻通讯</h2>
+<p>产品更新、操作指南、社区聚焦等更多内容。每月发送到你的收件箱。</p>
+<p>如果你希望接收我们的每月开发者新闻通讯，请提供你的电子邮件地址。你可以随时取消订阅。</p>
+
+        
+        <div class="original-link">
+          <a href="https://www.anthropic.com/engineering/redesigning-source-control" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "重塑 Anthropic 的源代码控制",
+  "author": {
+    "@type": "Person",
+    "name": "Anthropic"
+  },
+  "datePublished": "2026-10-13T00:00:00.000Z",
+  "dateModified": "2026-10-13T00:00:00.000Z",
+  "description": "重塑 Anthropic 的源代码控制 随着我们每天的合并次数增长了十倍以上，源代码控制成了我们开发中最大的瓶颈。在这里，我们分享了如何在五个月内迁移到一个内部自研的版本控制系统。 在 Anthropic，编写代码已不再是构建系...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/anthropic/2026-10-13-redesigning-source-control.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
