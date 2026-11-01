@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-L21J1MSBQH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-L21J1MSBQH');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 基本 SEO -->
+  <title>HackerTube：别看 YouTube，来看 HackerTube！ - 人工智能文摘</title>
+  <meta name="description" content="【Andrej Karpathy 文章中文翻译】那是周五晚上 11 点，我很累，于是打开 YouTube 想看点东西，结果发现映入眼帘的是一整面已经彻底劣化的垃圾内容墙。夸张到离谱的缩略图、对那些老掉牙话题的愚蠢推荐、真正堪称“白痴文化”级别的糟糕内容。我相信这个算法对...">
+  <meta name="keywords" content="Andrej Karpathy,AI,人工智能,机器学习,HackerTube：别看 YouTube，来看 HackerTube！,中文翻译">
+  <meta name="author" content="Andrej Karpathy">
+
+  <!-- 规范链接 -->
+  <link rel="canonical" href="https://digest.qcngt.com/post/karpathy/2026-10-31-hacker-tube.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="人工智能文摘" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://digest.qcngt.com/post/karpathy/2026-10-31-hacker-tube.html">
+  <meta property="og:title" content="HackerTube：别看 YouTube，来看 HackerTube！ - 人工智能文摘">
+  <meta property="og:description" content="【Andrej Karpathy 文章中文翻译】那是周五晚上 11 点，我很累，于是打开 YouTube 想看点东西，结果发现映入眼帘的是一整面已经彻底劣化的垃圾内容墙。夸张到离谱的缩略图、对那些老掉牙话题的愚蠢推荐、真正堪称“白痴文化”级别的糟糕内容。我相信这个算法对...">
+  <meta property="og:image" content="https://digest.qcngt.com/logo.png">
+  <meta property="og:site_name" content="人工智能文摘">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="article:published_time" content="2026-10-31T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-10-31T00:00:00.000Z">
+  <meta property="article:author" content="Andrej Karpathy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://digest.qcngt.com/post/karpathy/2026-10-31-hacker-tube.html">
+  <meta name="twitter:title" content="HackerTube：别看 YouTube，来看 HackerTube！ - 人工智能文摘">
+  <meta name="twitter:description" content="【Andrej Karpathy 文章中文翻译】那是周五晚上 11 点，我很累，于是打开 YouTube 想看点东西，结果发现映入眼帘的是一整面已经彻底劣化的垃圾内容墙。夸张到离谱的缩略图、对那些老掉牙话题的愚蠢推荐、真正堪称“白痴文化”级别的糟糕内容。我相信这个算法对...">
+  <meta name="twitter:image" content="https://digest.qcngt.com/logo.png">
+
+  <!-- 样式和脚本 -->
+  <link rel="stylesheet" href="/style.css?v=1793554105464">
+  <!-- KaTeX CSS for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="site-title">人工智能文摘</a>
+        <nav>
+          <button class="menu-toggle" aria-label="切换菜单">☰</button>
+          <ul>
+            <li><a href="/author/paulgraham.html">Paul Graham</a></li>
+            <li><a href="/author/karpathy.html">Andrej Karpathy</a></li>
+            <li><a href="/author/thinkingmachines.html">Thinking Machines</a></li>
+            <li><a href="/author/anthropic.html">Anthropic</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+  <div class="container">
+    <article class="author-0">
+      <div class="article-content">
+        <div class="article-header">
+          <h1 class="article-title">HackerTube：别看 YouTube，来看 HackerTube！</h1>
+          <div class="article-meta">
+            
+            <span class="article-original-title" title="原文标题">HackerTube</span>
+            <span>|</span>
+            
+            <span>Andrej Karpathy</span>
+            <span>|</span>
+            <span>2026-10-31</span>
+          </div>
+        </div>
+
+        <p>那是周五晚上 11 点，我很累，于是打开 YouTube 想看点东西，结果发现映入眼帘的是一整面已经彻底劣化的垃圾内容墙。夸张到离谱的缩略图、对那些老掉牙话题的愚蠢推荐、真正堪称“白痴文化”级别的糟糕内容。我相信这个算法对互联网上的普通中位数用户来说运作得很好，但它显然不适合我。所以今天早上（周六），我叫来了我的 Opus 5.5，给了它一个任务：我们来写一个自己的 YouTube 克隆版，内容来源就基于 Hacker News 上推荐过的视频。然后 Opus 给我带回来了这个：<a href="https://hackertube.org/">hackertube.org</a>！</p>
+<p><img src="https://bear-images.sfo2.cdn.digitaloceanspaces.com/karpathy/image-2.webp" alt="image"></p>
+<p>Opus 下载了 <a href="https://huggingface.co/datasets/open-index/hacker-news">HackerNews 的所有评论</a>，对其进行了筛选，并在一个 Workflow（Claude Code 的功能）里跑了 Sonnet，去除了垃圾内容，最终将范围缩小到 4 万条推荐 YouTube 视频的评论。总共我们得到了 6,454 个 YouTube 视频，它们是在 2007-2026 年间由 HN 上的一些用户推荐的，覆盖 150 个主题。然后我们再把这些内容包上一层 YouTube 风格的 UI，弄个域名，部署到 VPS，上安全措施、做加固、做优化，大功告成！</p>
+<p>HackerTube：</p>
+<ul>
+<li>包含高质量内容</li>
+<li>使用视频 50% 进度处的画面作为缩略图，而不是上传者设置的缩略图</li>
+<li>提供自定义且优质的 ForYou 推荐，无需任何用户账号，状态保存在本地浏览器会话中</li>
+<li>支持键盘快捷键</li>
+<li>提供站点数据导出，你可以把它交给自己的智能体，轻松创建你自己的版本</li>
+</ul>
+<p>现在这件事大约只需要 ~2 小时。我终于又能顺畅呼吸了。谢谢你，Opus 5.5 &lt;3。</p>
+<hr>
+<p><strong>编辑</strong>：再稍微补充一点我的流程。我使用的是 Claude Code（Mac 桌面应用）。我默认使用 Medium effort 模式下的 Opus 5.5。现在我实际上已经不再 <em>做</em> 任何接近传统工程的事情了（读/写代码、在终端里运行命令，诸如此类），我只需要和 Claude 对话，让它把一切都做完。在这个例子里，我唯一做的“手工活”是：1）我得在 Google Cloud 的界面里创建某种 API key，用来查询 YouTube 的视频元数据；2）我启动了一台 VPS；3）我买了这个域名。我是在 Claude 真正干活的间隙处理这些事情的，所以这多少还是有点像团队合作 :) 等服务器起来之后，我把 IP 给了 Claude，告诉它去更新、部署、加固安全、强化并优化代码，然后它就把整件事都完成了。</p>
+
+        
+        <div class="original-link">
+          <a href="https://karpathy.bearblog.dev/hacker-tube/" target="_blank" rel="noopener noreferrer">
+            查看原文 →
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "HackerTube：别看 YouTube，来看 HackerTube！",
+  "author": {
+    "@type": "Person",
+    "name": "Andrej Karpathy"
+  },
+  "datePublished": "2026-10-31T00:00:00.000Z",
+  "dateModified": "2026-10-31T00:00:00.000Z",
+  "description": "那是周五晚上 11 点，我很累，于是打开 YouTube 想看点东西，结果发现映入眼帘的是一整面已经彻底劣化的垃圾内容墙。夸张到离谱的缩略图、对那些老掉牙话题的愚蠢推荐、真正堪称“白痴文化”级别的糟糕内容。我相信这个算法对...",
+  "publisher": {
+    "@type": "Organization",
+    "name": "人工智能文摘",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://digest.qcngt.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://digest.qcngt.com/post/karpathy/2026-10-31-hacker-tube.html"
+  }
+}
+    </script>
+  </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 人工智能文摘 - 精选 AI 领域优质文章中文翻译</p>
+      <p>版权归原文作者所有，仅供学习交流 | <a href="mailto:nblintao+digest@gmail.com">联系方式</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 汉堡菜单切换
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          navMenu.classList.toggle('active');
+        });
+
+        // 点击页面其他地方关闭菜单
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('nav')) {
+            navMenu.classList.remove('active');
+          }
+        });
+
+        // 点击菜单项后关闭菜单
+        navMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
